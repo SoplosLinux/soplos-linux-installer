@@ -566,9 +566,9 @@ fn target_kernel(ctx: &Ctx) -> String {
     versions.pop().unwrap_or_default()
 }
 
-/// The whole step. Returns whether the NVIDIA driver is installed, so the
-/// boot loader step adds nvidia-drm.modeset=1.
-pub fn install(ctx: &mut Ctx) -> bool {
+/// The scan: what the hardware needs and what it does not, read once before
+/// the kernel step.
+pub fn scan(ctx: &mut Ctx) -> DriverPlan {
     let lspci = ctx.read("lspci", &[]).unwrap_or_default();
     let lsusb = ctx.read("lsusb", &[]).unwrap_or_default();
     let installed: Vec<String> = ctx
@@ -587,9 +587,14 @@ pub fn install(ctx: &mut Ctx) -> bool {
     for line in &plan.summary {
         ctx.log(line);
     }
-    let kver = target_kernel(ctx);
+    plan
+}
 
-    // What the hardware does not need goes first.
+/// What the hardware does not need. It runs before the kernel step, so the
+/// new kernel does not build DKMS modules (VirtualBox Guest Additions,
+/// NVIDIA) that are about to go.
+pub fn remove(ctx: &mut Ctx, plan: &DriverPlan) {
+    let kver = target_kernel(ctx);
     if plan.purge_nvidia {
         let _ = run_script(ctx, &kver, "NVIDIA/CUDA without an NVIDIA GPU", NVIDIA_UNINSTALL);
     }
@@ -603,6 +608,12 @@ pub fn install(ctx: &mut Ctx) -> bool {
             ctx.log(&format!("WARNING: {e}"));
         }
     }
+}
+
+/// What is missing, built for the new kernel. Returns whether the NVIDIA
+/// driver is installed, so the boot loader step adds nvidia-drm.modeset=1.
+pub fn install(ctx: &mut Ctx, plan: &DriverPlan) -> bool {
+    let kver = target_kernel(ctx);
 
     // What is missing. One by one if the batch fails, so one package that
     // the repositories lack does not cost the others.

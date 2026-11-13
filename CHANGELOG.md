@@ -28,6 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Fixed
 - GRUB: the `/etc/default/grub` of the image is kept, so the Soplos theme
   shows; only the kernel parameters the installation needs are added.
+- The drivers the hardware does not need (VirtualBox Guest Additions,
+  NVIDIA, the tools of another hypervisor) are removed before the new
+  kernel is installed, so it does not build their DKMS modules for nothing.
+- The x86-64 level of the processor is read from the dynamic linker, as
+  Soplos Kernel Installer shows it, and no longer from the flags alone: an
+  Intel N150 under Proxmox got the v2 kernel instead of v3.
 
 ## [3.0.0-alpha] - 2026-11-14
 

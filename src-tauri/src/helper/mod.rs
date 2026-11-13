@@ -120,10 +120,14 @@ pub fn run() -> i32 {
         system::display_manager(&mut ctx, &edition, &plan)?;
         step(&ctx, "packages");
         system::packages(&mut ctx, &edition, start_of("packages"), start_of("kernel") - 1)?;
+        // The drivers the hardware does not need go before the new kernel,
+        // so it does not build their DKMS modules for nothing.
+        let drivers_plan = drivers::scan(&mut ctx);
+        drivers::remove(&mut ctx, &drivers_plan);
         step(&ctx, "kernel");
         kernel::install(&mut ctx);
         step(&ctx, "drivers");
-        if drivers::install(&mut ctx) {
+        if drivers::install(&mut ctx, &drivers_plan) {
             info.extra.push("nvidia-drm.modeset=1".into());
         }
         step(&ctx, "bootloader");

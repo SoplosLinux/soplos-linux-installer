@@ -237,11 +237,13 @@ editions.
 
 ## 7b. Kernel
 
-After the packages and before the drivers (`src-tauri/src/helper/kernel.rs`):
-the latest stock kernel of Soplos for the x86-64 level of the processor,
-`linux-soplos-v1` to `-v4`, from the Soplos Kernels repository the image
-already has enabled. The level is read from the CPU flags as Soplos Kernel
-Installer does. Once it is in, the kernel of the image is purged with its
+After the packages (`src-tauri/src/helper/kernel.rs`), between the removal
+of the drivers the hardware does not need and the installation of the
+missing ones, so DKMS builds only what stays: the latest stock kernel of
+Soplos for the x86-64 level of the processor, `linux-soplos-v1` to `-v4`,
+from the Soplos Kernels repository the image already has enabled. The
+level is the one the dynamic linker reports as supported (`ld.so --help`),
+as Soplos Kernel Installer shows it; the CPU flags only if that fails. Once it is in, the kernel of the image is purged with its
 headers (user decision, 2026-11-13: one kernel only). If the package cannot
 be installed, the kernel of the image stays and the installation goes on.
 

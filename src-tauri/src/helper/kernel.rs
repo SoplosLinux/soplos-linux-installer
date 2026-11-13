@@ -1,11 +1,13 @@
 // The kernel: the latest stock kernel of Soplos, built for the x86-64 level of
-// the processor (linux-soplos-v1 to -v4), from the Soplos Kernels repository
+// the processor (read from the dynamic linker, as Kernel Installer shows it) (linux-soplos-v1 to -v4), from the Soplos Kernels repository
 // the image already has enabled, as Soplos Kernel Installer 3.0 installs it
 // (commands/soplos_kernels.rs, commands/hardware.rs). The kernel of the image
 // is removed once the new one is in: the user does not want two
 // (2026-11-13).
 //
-// It runs before the drivers, so DKMS builds them for the new kernel. If the
+// The drivers the hardware does not need are removed before it, and the
+// missing ones installed after, so DKMS builds only what stays, and builds
+// it for the new kernel. If the
 // repository cannot be reached or the package is missing, the kernel of the
 // image stays and the installation goes on.
 
@@ -32,7 +34,26 @@ pub fn psabi_from_flags(flags: &str) -> u8 {
     4
 }
 
+/// The level the dynamic linker reports as supported ("x86-64-v3
+/// (supported, searched)"), as Kernel Installer shows it. It checks what
+/// the processor really allows, also inside a virtual machine.
+pub fn psabi_from_ld(help: &str) -> Option<u8> {
+    [4u8, 3, 2].into_iter().find(|level| {
+        let marker = format!("x86-64-v{level}");
+        help.lines().any(|l| l.trim_start().starts_with(&marker) && l.contains("(supported"))
+    })
+}
+
 fn psabi_level() -> u8 {
+    for ld in ["/lib64/ld-linux-x86-64.so.2", "/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"] {
+        if let Ok(out) = std::process::Command::new(ld).arg("--help").output() {
+            let text = String::from_utf8_lossy(&out.stdout).to_string() + &String::from_utf8_lossy(&out.stderr);
+            if text.contains("glibc-hwcaps") {
+                return psabi_from_ld(&text).unwrap_or(1);
+            }
+        }
+    }
+    // No dynamic linker answer: the flags of the processor.
     let cpuinfo = std::fs::read_to_string("/proc/cpuinfo").unwrap_or_default();
     let flags = cpuinfo
         .lines()
@@ -125,7 +146,14 @@ pub fn install(ctx: &mut Ctx) {
 
 #[cfg(test)]
 mod tests {
-    use super::psabi_from_flags;
+    use super::{psabi_from_flags, psabi_from_ld};
+
+    #[test]
+    fn ld_levels() {
+        let help = "Subdirectories of glibc-hwcaps directories, in priority order:\n  x86-64-v4\n  x86-64-v3 (supported, searched)\n  x86-64-v2 (supported, searched)\n";
+        assert_eq!(psabi_from_ld(help), Some(3));
+        assert_eq!(psabi_from_ld("  x86-64-v4\n  x86-64-v3\n  x86-64-v2\n"), None);
+    }
 
     #[test]
     fn psabi_levels() {

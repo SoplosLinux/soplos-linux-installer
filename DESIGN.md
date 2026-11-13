@@ -27,6 +27,11 @@ Soplos Welcome does.
 - Soplos Welcome Live starts it through its `installer.json`, which goes from
   Calamares to SLI:
   `{"name": "SLI", "paths": ["/usr/bin/soplos-linux-installer"], "needs_root": false}`.
+- NumLock (Tyron): Welcome Live's tools leave the mark
+  `/etc/soplos-linux-installer/numlock-off` in the live session to turn it
+  off; the last step of the helper then comments out
+  `greeter-setup-script=/usr/bin/numlockx on` in lightdm.conf and purges
+  numlockx, as the Tyron Calamares did.
 - The window runs as the live user and never as root.
 - The disk work is done by the same binary in helper mode
   (`soplos-linux-installer --helper`), started with `sudo -n`. The live user has

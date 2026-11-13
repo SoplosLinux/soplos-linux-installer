@@ -556,7 +556,34 @@ fn kernels(ctx: &mut Ctx) -> Vec<String> {
 }
 
 /// Step 11: the live leftovers out, the resolver and the log back.
+/// The mark Soplos Welcome Live leaves in the live session when the user
+/// turns NumLock off in its tools (Tyron).
+const NUMLOCK_OFF_MARK: &str = "/etc/soplos-linux-installer/numlock-off";
+
+/// NumLock off, as the Tyron Calamares did it (disable-numlockx and
+/// packages.conf): the greeter no longer turns it on, and numlockx goes.
+fn numlock_off(ctx: &mut Ctx) -> Result<(), String> {
+    ctx.log("NumLock: turned off in Soplos Welcome Live.");
+    let lightdm = t("/etc/lightdm/lightdm.conf");
+    if ctx.dry_run || Path::new(&lightdm).exists() {
+        ctx.edit(&lightdm, "NumLock off in the greeter", |text| {
+            let lines: Vec<String> = text
+                .lines()
+                .map(|l| if l.starts_with("greeter-setup-script=/usr/bin/numlockx on") { format!("#{l}") } else { l.to_string() })
+                .collect();
+            lines.join("\n") + "\n"
+        })?;
+    }
+    if !installed(ctx, &["numlockx".to_string()]).is_empty() {
+        ctx.run_progress("chroot", &[TARGET, "apt-get", "-y", "purge", "numlockx"], 0, 0)?;
+    }
+    Ok(())
+}
+
 pub fn finish(ctx: &mut Ctx, edition: &EditionData) -> Result<(), String> {
+    if Path::new(NUMLOCK_OFF_MARK).exists() {
+        numlock_off(ctx)?;
+    }
     for file in &edition.remove_files {
         ctx.run("rm", &["-rf", &t(file)], None)?;
     }

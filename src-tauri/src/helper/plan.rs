@@ -17,6 +17,27 @@ pub struct Plan {
     pub bootloader: String,
     pub disk: DiskPlan,
     pub user: UserPlan,
+    pub kernel: KernelPlan,
+}
+
+#[derive(Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase", default)]
+pub struct KernelPlan {
+    /// The Soplos kernel without "linux-soplos" and the level: "" is the
+    /// stock one, "lts", "zen", "lts-bore-ntsync"...
+    pub flavor: String,
+    /// "minimal": the image as it is, no driver, kernel or update;
+    /// "standard": drivers and the kernel; "full": and the updates.
+    pub mode: String,
+}
+
+impl KernelPlan {
+    pub fn minimal(&self) -> bool {
+        self.mode == "minimal"
+    }
+    pub fn update(&self) -> bool {
+        self.mode == "full"
+    }
 }
 
 #[derive(Deserialize, Default, Debug)]

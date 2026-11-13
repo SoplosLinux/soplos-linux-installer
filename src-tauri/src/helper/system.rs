@@ -396,6 +396,30 @@ pub fn packages(ctx: &mut Ctx, edition: &EditionData, from: u8, to: u8) -> Resul
     Ok(())
 }
 
+/// The updates of the repositories, when the user asked for them (kernel
+/// step of the window). It runs after the new kernel is in and the old one
+/// gone, so no update is fetched for the kernel that leaves, and before the
+/// drivers, so DKMS builds against the system already up to date. The
+/// configuration files the image ships are kept. A failed update does not
+/// stop the installation: the system is left consistent and Soplos updates
+/// it later.
+pub fn update(ctx: &mut Ctx, from: u8, to: u8) {
+    let args = [
+        TARGET,
+        "apt-get",
+        "-y",
+        "-o",
+        "Dpkg::Options::=--force-confdef",
+        "-o",
+        "Dpkg::Options::=--force-confold",
+        "full-upgrade",
+    ];
+    if let Err(e) = ctx.run_progress("chroot", &args, from, to) {
+        ctx.log(&format!("WARNING: the system was not updated ({e})."));
+        let _ = ctx.chroot(&["dpkg", "--configure", "-a"], None);
+    }
+}
+
 /// The kernel command line every boot loader starts from.
 fn cmdline(info: &BootInfo, with_root: bool) -> String {
     let mut parts: Vec<String> = Vec::new();

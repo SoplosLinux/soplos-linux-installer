@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [3.0.0-1-alpha] - 2026-11-14
+## [3.0.0-beta] - 2026-11-14
 
 ### Added
+- Kernel step, after the boot loader: the kind of installation, minimal
+  (the image as it is), standard (drivers and the kernel chosen) or
+  complete (and the system brought up to date with `apt-get full-upgrade`,
+  preselected); and the Soplos kernels the repository has for the level of
+  the processor, read as Soplos Kernel Installer reads them: stock (the
+  recommended one), BORE + NTsync, Zen, RT and X3D, in their latest or
+  their LTS branch. If the kernel chosen cannot be installed, the stock one
+  is tried. The summary shows both. Alt+1 to Alt+7 open the steps.
 - The latest stock Soplos kernel for the x86-64 level of the processor
   (`linux-soplos-v1` to `-v4`, detected as Soplos Kernel Installer does),
   installed before the drivers so they are built for it; the kernel of the

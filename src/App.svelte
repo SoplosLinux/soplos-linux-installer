@@ -16,17 +16,19 @@
   import Welcome from "./views/Welcome.svelte";
   import Location from "./views/Location.svelte";
   import Bootloader from "./views/Bootloader.svelte";
+  import Kernel from "./views/Kernel.svelte";
   import Disk from "./views/Disk.svelte";
   import User from "./views/User.svelte";
   import Summary from "./views/Summary.svelte";
   import Install from "./views/Install.svelte";
   import Finished from "./views/Finished.svelte";
-  import { Sparkles, Globe, Power, HardDrive, User as UserIcon, ClipboardList, Download, Flag } from "lucide-svelte";
+  import { Sparkles, Globe, Power, Cpu, HardDrive, User as UserIcon, ClipboardList, Download, Flag } from "lucide-svelte";
 
   const icons: Record<string, ComponentType> = {
     welcome: Sparkles,
     location: Globe,
     bootloader: Power,
+    kernel: Cpu,
     disk: HardDrive,
     user: UserIcon,
     summary: ClipboardList,
@@ -38,6 +40,7 @@
     welcome: Welcome,
     location: Location,
     bootloader: Bootloader,
+    kernel: Kernel,
     disk: Disk,
     user: User,
     summary: Summary,
@@ -129,7 +132,7 @@
   // The installer can be used without the mouse, as Calamares. Holding Alt
   // underlines a letter of each button and Alt + that letter presses it
   // (lib/mnemonics.ts). Besides:
-  //   Alt+Right / Alt+Left  next / back       Alt+1..6  a step already reached
+  //   Alt+Right / Alt+Left  next / back       Alt+1..7  a step already reached
   //   F1 about, Ctrl+Q quit (not while the installation runs). Enter and
   //   Escape answer the dialogs (Modal.svelte).
   // The list is in README.md.
@@ -157,7 +160,7 @@
       else next();
     } else if (e.key === "ArrowLeft" && collecting) {
       back();
-    } else if (/^[1-6]$/.test(e.key) && collecting && Number(e.key) - 1 <= $reached) {
+    } else if (/^[1-7]$/.test(e.key) && collecting && Number(e.key) - 1 <= $reached) {
       goTo(Number(e.key) - 1);
     } else if ($mnemonicActions[keyOf(e.key)]) {
       $mnemonicActions[keyOf(e.key)]();

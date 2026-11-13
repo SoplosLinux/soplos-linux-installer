@@ -99,6 +99,35 @@
     "secureBootMok": "Secure Boot mit MOK",
     "secureBootNote": "Alle drei erlauben Secure Boot. GRUB und systemd-boot starten mit der Signatur von Debian, zum Beispiel mit einem Debian-Kernel. Limine wird mit Ihrem eigenen Schlüssel (MOK) über Soplos Kernel Installer signiert."
   },
+  "kernel": {
+    "mode": "Art der Installation",
+    "modes": {
+      "minimal": "Minimal",
+      "minimalDetail": "Kopiert das System so, wie es im Abbild ist, mit seinem Kernel.",
+      "standard": "Standard",
+      "standardDetail": "Fügt den gewählten Kernel und die Treiber für diesen Computer hinzu.",
+      "full": "Vollständig",
+      "fullDetail": "Die Standardinstallation, mit dem System auf dem neuesten Stand."
+    },
+    "level": "Dein Prozessor unterstützt {level}",
+    "levelUnknown": "Die Stufe deines Prozessors konnte nicht gelesen werden",
+    "levelDetail": "der Kernel wird dafür kompiliert installiert.",
+    "minimalNote": "der Kernel des Abbilds bleibt.",
+    "branch": "Zweig",
+    "latest": "Neueste",
+    "lts": "LTS",
+    "loading": "Die Kernel des Soplos-Repositorys werden gelesen…",
+    "none": "Das Kernel-Repository von Soplos konnte nicht gelesen werden. Während der Installation wird der Stock-Kernel von Soplos für deinen Prozessor versucht; lässt er sich nicht installieren, bleibt der Kernel des Abbilds.",
+    "noBranch": "Nicht in diesem Zweig",
+    "flavors": {
+      "stock": "Der Soplos-Kernel für jeden Tag: ausgewogen, stabil und auf den drei Editionen getestet.",
+      "bore-ntsync": "Mit dem BORE-Scheduler und NTsync: ein flinkerer Desktop und Windows-Spiele, die mit Wine und Proton besser laufen.",
+      "zen": "Für den Desktop abgestimmt: geringe Latenz und flüssige Reaktion unter Last.",
+      "rt": "Echtzeit: für Audio- und Videoproduktion und Arbeiten, die genaues Timing brauchen.",
+      "x3d": "Abgestimmt auf AMD-Ryzen-X3D-Prozessoren und ihren 3D V-Cache.",
+      "other": "Ein weiterer Kernel des Soplos-Repositorys."
+    }
+  },
   "disk": {
     "disk": "Laufwerk",
     "noDisks": "Es wurde kein Laufwerk für die Installation gefunden.",
@@ -243,7 +272,10 @@
     "wipes": "Alles auf {disk} wird gelöscht.",
     "shrinks": "{part} wird auf {size} verkleinert. Die Daten bleiben erhalten.",
     "formats": "{part} wird als {fs} formatiert.",
-    "creates": "{count, plural, one {# neue Partition wird erstellt.} other {# neue Partitionen werden erstellt.}}"
+    "creates": "{count, plural, one {# neue Partition wird erstellt.} other {# neue Partitionen werden erstellt.}}",
+    "installation": "Installation",
+    "kernel": "Kernel",
+    "imageKernel": "Der Kernel des Abbilds"
   },
   "install": {
     "dryRunDone": "Probelauf ohne Fehler beendet.",
@@ -260,7 +292,8 @@
       "bootloader": "Bootloader",
       "finish": "Letzte Anpassungen",
       "drivers": "Treiber",
-      "kernel": "Kernel"
+      "kernel": "Kernel",
+      "update": "Aktualisierungen"
     },
     "showDetails": "Details anzeigen",
     "hideDetails": "Präsentation anzeigen",
@@ -282,6 +315,11 @@
       "label": "Bootloader",
       "title": "Bootloader",
       "subtitle": "Das Programm, das Soplos Linux beim Einschalten des Computers startet"
+    },
+    "kernel": {
+      "label": "Kernel",
+      "title": "Kernel",
+      "subtitle": "Die Art der Installation und der Kernel von Soplos Linux"
     },
     "disk": {
       "label": "Festplatte",

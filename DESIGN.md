@@ -61,7 +61,21 @@ The values come from the edition file (section 10).
      signatures of Debian (systemd-boot needs shim-signed and the signed
      systemd-boot package, to verify), Limine signed with the user's MOK
      from Soplos Kernel Installer. No warning against any of them.
-4. **Disk.**
+4. **Kernel.**
+   - The x86-64 level of the processor (section 7b) and the Soplos kernels
+     the repository has for it, read as Soplos Kernel Installer reads them:
+     stock (preselected, recommended), BORE + NTsync, Zen, RT, X3D and any
+     other the repository adds, each in its latest or its LTS branch. The
+     level is not a choice: a kernel for a higher level would not boot.
+   - The kind of installation, each adding to the one before:
+     **minimal** copies the image as it is (its kernel, no driver changes);
+     **standard** removes the drivers the hardware does not need, installs
+     the kernel chosen and the missing drivers; **complete** (preselected)
+     also runs `apt-get full-upgrade` after the new kernel and before the
+     drivers. With minimal the kernel cards are disabled.
+   - Without the repository the stock kernel is still tried during the
+     installation, and the kernel of the image stays if it fails.
+5. **Disk.**
    - Pick the disk.
    - Pick the mode: erase the disk, install alongside another system, or
      manual.
@@ -69,15 +83,15 @@ The values come from the edition file (section 10).
      (LUKS) and swap (none / swap / swap for hibernation; "swap" is the
      default).
    - A live preview of the partitions that will be created.
-5. **User:**
+6. **User:**
    - full name, login name, computer name and password;
    - the choice of using the same password for root or a different one, as
      Calamares does.
-6. **Summary** of everything that will be done, plus the last confirmation
+7. **Summary** of everything that will be done, plus the last confirmation
    before any disk is touched.
-7. **Installation:** progress bar, current step, and the motion graphics
+8. **Installation:** progress bar, current step, and the motion graphics
    (section 9). A "Show details" toggle reveals the log.
-8. **Finished:** restart now (checked by default) or keep using the live
+9. **Finished:** restart now (checked by default) or keep using the live
    session.
 
 Incompatible options are blocked in the UI, not just warned about. Examples:

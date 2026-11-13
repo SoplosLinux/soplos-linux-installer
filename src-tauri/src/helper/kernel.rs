@@ -44,7 +44,7 @@ pub fn psabi_from_ld(help: &str) -> Option<u8> {
     })
 }
 
-fn psabi_level() -> u8 {
+pub fn psabi_level() -> u8 {
     for ld in ["/lib64/ld-linux-x86-64.so.2", "/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"] {
         if let Ok(out) = std::process::Command::new(ld).arg("--help").output() {
             let text = String::from_utf8_lossy(&out.stdout).to_string() + &String::from_utf8_lossy(&out.stderr);
@@ -98,14 +98,35 @@ fn packages_of(ctx: &mut Ctx, release: &str) -> Vec<String> {
     out
 }
 
-/// The whole step.
-pub fn install(ctx: &mut Ctx) {
+/// The package of a flavor for a level: ("lts-zen", 3) -> linux-soplos-lts-zen-v3.
+/// A flavor that is not a plain name falls back to the stock kernel.
+pub fn package_for(flavor: &str, level: u8) -> String {
+    let clean = !flavor.is_empty()
+        && flavor.split('-').all(|part| !part.is_empty() && part.chars().all(|c| c.is_ascii_lowercase() || c.is_ascii_digit()));
+    if clean {
+        format!("linux-soplos-{flavor}-v{level}")
+    } else {
+        format!("linux-soplos-v{level}")
+    }
+}
+
+/// The whole step: the kernel chosen in the window (the stock one by
+/// default), the stock one if that fails, the kernel of the image if both do.
+pub fn install(ctx: &mut Ctx, flavor: &str) {
     let level = psabi_level();
-    let package = format!("linux-soplos-v{level}");
-    ctx.log(&format!("Processor: x86-64-v{level} -> {package}"));
+    let chosen = package_for(flavor, level);
+    let stock = package_for("", level);
+    ctx.log(&format!("Processor: x86-64-v{level} -> {chosen}"));
     let before = releases(ctx);
 
-    if let Err(e) = ctx.run_progress("chroot", &[TARGET, "apt-get", "-y", "install", &package], 0, 0) {
+    let mut installed = ctx.run_progress("chroot", &[TARGET, "apt-get", "-y", "install", &chosen], 0, 0);
+    if let Err(e) = &installed {
+        if chosen != stock {
+            ctx.log(&format!("WARNING: {chosen} was not installed ({e}); trying {stock}."));
+            installed = ctx.run_progress("chroot", &[TARGET, "apt-get", "-y", "install", &stock], 0, 0);
+        }
+    }
+    if let Err(e) = installed {
         ctx.log(&format!("WARNING: the Soplos kernel was not installed ({e}); the kernel of the image stays."));
         return;
     }
@@ -146,7 +167,14 @@ pub fn install(ctx: &mut Ctx) {
 
 #[cfg(test)]
 mod tests {
-    use super::{psabi_from_flags, psabi_from_ld};
+    use super::{package_for, psabi_from_flags, psabi_from_ld};
+
+    #[test]
+    fn packages() {
+        assert_eq!(package_for("", 3), "linux-soplos-v3");
+        assert_eq!(package_for("lts-zen", 2), "linux-soplos-lts-zen-v2");
+        assert_eq!(package_for("zen; rm -rf /", 3), "linux-soplos-v3");
+    }
 
     #[test]
     fn ld_levels() {

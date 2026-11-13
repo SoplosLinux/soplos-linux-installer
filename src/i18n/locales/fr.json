@@ -99,6 +99,35 @@
     "secureBootMok": "Secure Boot avec MOK",
     "secureBootNote": "Les trois permettent Secure Boot. GRUB et systemd-boot démarrent avec la signature de Debian, par exemple avec un noyau Debian. Limine est signé avec votre propre clé (MOK) depuis Soplos Kernel Installer."
   },
+  "kernel": {
+    "mode": "Type d'installation",
+    "modes": {
+      "minimal": "Minimale",
+      "minimalDetail": "Copie le système tel qu'il est sur l'image, avec son noyau.",
+      "standard": "Standard",
+      "standardDetail": "Ajoute le noyau choisi et les pilotes de cet ordinateur.",
+      "full": "Complète",
+      "fullDetail": "La standard, avec le système mis à jour."
+    },
+    "level": "Votre processeur prend en charge {level}",
+    "levelUnknown": "Le niveau de votre processeur n'a pas pu être lu",
+    "levelDetail": "le noyau est installé compilé pour lui.",
+    "minimalNote": "le noyau de l'image reste.",
+    "branch": "Branche",
+    "latest": "Dernière",
+    "lts": "LTS",
+    "loading": "Lecture des noyaux du dépôt Soplos…",
+    "none": "Le dépôt de noyaux Soplos n'a pas pu être lu. Pendant l'installation, le noyau stock de Soplos pour votre processeur sera tenté ; s'il ne peut pas être installé, le noyau de l'image reste.",
+    "noBranch": "Absent de cette branche",
+    "flavors": {
+      "stock": "Le noyau Soplos de tous les jours : équilibré, stable et testé sur les trois éditions.",
+      "bore-ntsync": "Avec l'ordonnanceur BORE et NTsync : un bureau plus vif et des jeux Windows qui tournent mieux avec Wine et Proton.",
+      "zen": "Réglé pour le bureau : faible latence et réponse fluide sous charge.",
+      "rt": "Temps réel : pour la production audio et vidéo et les travaux qui exigent un timing exact.",
+      "x3d": "Réglé pour les processeurs AMD Ryzen X3D et leur 3D V-Cache.",
+      "other": "Un autre noyau du dépôt Soplos."
+    }
+  },
   "disk": {
     "disk": "Disque",
     "noDisks": "Aucun disque n’a été trouvé pour l’installation.",
@@ -243,7 +272,10 @@
     "wipes": "Tout ce qui se trouve sur {disk} sera effacé.",
     "shrinks": "{part} sera réduite à {size}. Ses données sont conservées.",
     "formats": "{part} sera formatée en {fs}.",
-    "creates": "{count, plural, one {# nouvelle partition sera créée.} other {# nouvelles partitions seront créées.}}"
+    "creates": "{count, plural, one {# nouvelle partition sera créée.} other {# nouvelles partitions seront créées.}}",
+    "installation": "Installation",
+    "kernel": "Noyau",
+    "imageKernel": "Le noyau de l'image"
   },
   "install": {
     "dryRunDone": "Essai terminé sans erreur.",
@@ -260,7 +292,8 @@
       "bootloader": "Chargeur d’amorçage",
       "finish": "Derniers réglages",
       "drivers": "Pilotes",
-      "kernel": "Noyau"
+      "kernel": "Noyau",
+      "update": "Mises à jour"
     },
     "showDetails": "Afficher les détails",
     "hideDetails": "Voir la présentation",
@@ -282,6 +315,11 @@
       "label": "Amorçage",
       "title": "Chargeur d'amorçage",
       "subtitle": "Le programme qui démarre Soplos Linux à l'allumage de l'ordinateur"
+    },
+    "kernel": {
+      "label": "Noyau",
+      "title": "Noyau",
+      "subtitle": "Le type d'installation et le noyau de Soplos Linux"
     },
     "disk": {
       "label": "Disque",

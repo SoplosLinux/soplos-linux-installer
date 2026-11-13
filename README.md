@@ -1,6 +1,6 @@
 # Soplos Linux Installer 3.0
 
-![Version](https://img.shields.io/badge/version-3.0.0--1--alpha-blue)
+![Version](https://img.shields.io/badge/version-3.0.0--beta-blue)
 ![License](https://img.shields.io/badge/license-GPL--3.0--or--later-green)
 ![Platform](https://img.shields.io/badge/platform-Linux-lightgrey)
 ![Tauri](https://img.shields.io/badge/Tauri-2-orange)
@@ -12,13 +12,14 @@ The installer of Soplos Linux, for Tyron (Xfce), Tyson (Plasma) and Boro
 
 | ![Welcome](src-tauri/resources/screenshots/screenshot01.png) Welcome: the language of the installer and the requirements of the edition | ![Location](src-tauri/resources/screenshots/screenshot02.png) Location: the map, the language, the formats and the keyboard |
 |:---:|:---:|
-| ![Boot loader](src-tauri/resources/screenshots/screenshot03.png) Boot loader: GRUB, systemd-boot or Limine | ![Disk](src-tauri/resources/screenshots/screenshot04.png) Disk: the disk as it will be, before anything is touched |
-| ![User](src-tauri/resources/screenshots/screenshot05.png) User: the account, the computer name and the passwords | ![Summary](src-tauri/resources/screenshots/screenshot06.png) Summary: everything chosen, and what will be done to the disk |
-| ![Editions](src-tauri/resources/screenshots/screenshot07.png) Installation: the presentation of the three editions | ![Programs](src-tauri/resources/screenshots/screenshot08.png) Installation: the programs of Soplos, one by one |
+| ![Boot loader](src-tauri/resources/screenshots/screenshot03.png) Boot loader: GRUB, systemd-boot or Limine | ![Kernel](src-tauri/resources/screenshots/screenshot04.png) Kernel: the kind of installation and the Soplos kernel for the processor |
+| ![Disk](src-tauri/resources/screenshots/screenshot05.png) Disk: the disk as it will be, before anything is touched | ![User](src-tauri/resources/screenshots/screenshot06.png) User: the account, the computer name and the passwords |
+| ![Summary](src-tauri/resources/screenshots/screenshot07.png) Summary: everything chosen, and what will be done to the disk | ![Editions](src-tauri/resources/screenshots/screenshot08.png) Installation: the presentation of the three editions |
+| ![Programs](src-tauri/resources/screenshots/screenshot09.png) Installation: the programs of Soplos, one by one | |
 
 ## Status
 
-Alpha. Every step of the window is written, and the helper installs the
+Beta. Every step of the window is written, and the helper installs the
 system: partitions, encryption, the copy of the system, its configuration,
 the user, the packages, the drivers and the boot loader. The complete
 design is in [DESIGN.md](DESIGN.md).
@@ -38,7 +39,7 @@ The installer can be used without the mouse, as Calamares.
   one letter of each button; the letters come from the labels in the
   language chosen (for example *Next* and *Back*, or *Siguiente* and *Atrás*).
 - **Alt+Right / Alt+Left:** next / back.
-- **Alt+1 … Alt+6:** a step already reached.
+- **Alt+1 … Alt+7:** a step already reached.
 - **Tab / Shift+Tab** move between the fields; **Space** or **Enter** press
   the button or option in focus.
 - **Enter / Escape** accept or cancel a dialog.
@@ -48,6 +49,10 @@ The installer can be used without the mouse, as Calamares.
 
 - **Boot loader of your choice:** GRUB, systemd-boot or Limine on UEFI, GRUB
   or Limine on BIOS, with the partitions each one needs.
+- **Kind of installation and kernel:** minimal (the image as it is),
+  standard (drivers and the kernel chosen) or complete (and the system
+  brought up to date); the Soplos kernels for the level of the processor:
+  stock, BORE + NTsync, Zen, RT or X3D, latest or LTS.
 - **Disk:** erase the disk, install alongside another system, or manual
   partitioning; btrfs (with the `@` and `@home` subvolumes Timeshift uses),
   ext4 or xfs; optional encryption; swap.

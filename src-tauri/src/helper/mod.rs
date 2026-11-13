@@ -48,16 +48,17 @@ fn emit(event: &Event) {
 
 /// The steps in order, each with the percentage the bar is at when it
 /// starts. The copy takes most of the time and moves the bar by itself.
-const STEPS: [(&str, u8); 11] = [
+const STEPS: [(&str, u8); 12] = [
     ("partition", 0),
     ("format", 3),
     ("copy", 6),
     ("configure", 56),
     ("users", 60),
     ("packages", 63),
-    ("kernel", 68),
-    ("drivers", 74),
-    ("bootloader", 84),
+    ("kernel", 67),
+    ("update", 73),
+    ("drivers", 78),
+    ("bootloader", 86),
     ("finish", 95),
     ("unmount", 98),
 ];
@@ -120,15 +121,22 @@ pub fn run() -> i32 {
         system::display_manager(&mut ctx, &edition, &plan)?;
         step(&ctx, "packages");
         system::packages(&mut ctx, &edition, start_of("packages"), start_of("kernel") - 1)?;
-        // The drivers the hardware does not need go before the new kernel,
-        // so it does not build their DKMS modules for nothing.
-        let drivers_plan = drivers::scan(&mut ctx);
-        drivers::remove(&mut ctx, &drivers_plan);
-        step(&ctx, "kernel");
-        kernel::install(&mut ctx);
-        step(&ctx, "drivers");
-        if drivers::install(&mut ctx, &drivers_plan) {
-            info.extra.push("nvidia-drm.modeset=1".into());
+        // The minimal installation leaves the image as it is. The others
+        // remove the drivers the hardware does not need before the new
+        // kernel, so it does not build their DKMS modules for nothing.
+        if !plan.kernel.minimal() {
+            let drivers_plan = drivers::scan(&mut ctx);
+            drivers::remove(&mut ctx, &drivers_plan);
+            step(&ctx, "kernel");
+            kernel::install(&mut ctx, &plan.kernel.flavor);
+            if plan.kernel.update() {
+                step(&ctx, "update");
+                system::update(&mut ctx, start_of("update"), start_of("drivers") - 1);
+            }
+            step(&ctx, "drivers");
+            if drivers::install(&mut ctx, &drivers_plan) {
+                info.extra.push("nvidia-drm.modeset=1".into());
+            }
         }
         step(&ctx, "bootloader");
         system::bootloader(&mut ctx, &plan, &edition, &info, plan.disk.mode == "alongside")?;

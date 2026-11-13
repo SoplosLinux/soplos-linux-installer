@@ -8,6 +8,7 @@
   import { cityOf, countryName, localeName, type Layout as KeyboardLayout, type Zone } from "../lib/location";
   import { type Disk, type BarItem, GUID, fsColor, fsLabel, formatSize } from "../lib/partitioning";
   import PartitionBar from "../components/PartitionBar.svelte";
+  import { kernelName } from "../lib/kernels";
 
   // DESIGN.md, section 4.6: everything chosen, and what will be done to the
   // disk, before the last confirmation. Each block leads back to its step.
@@ -124,10 +125,12 @@
     {
       step: "bootloader",
       icon: Power,
-      title: $_("steps.bootloader.title"),
+      title: `${$_("steps.bootloader.title")} · ${$_("steps.kernel.title")}`,
       rows: [
         [$_("summary.firmware"), $plan.firmware === "bios" ? "BIOS (legacy)" : "UEFI"],
         [$_("summary.bootloader"), BOOTLOADER[$plan.bootloader] ?? ""],
+        [$_("summary.installation"), $_(`kernel.modes.${$plan.kernel.mode}`)],
+        [$_("summary.kernel"), $plan.kernel.mode === "minimal" ? $_("summary.imageKernel") : kernelName($plan.kernel.flavor)],
       ],
     },
     {

@@ -99,6 +99,35 @@
     "secureBootMok": "Secure Boot cu MOK",
     "secureBootNote": "Toate trei permit Secure Boot. GRUB și systemd-boot pornesc cu semnătura Debian, de exemplu cu un nucleu Debian. Limine se semnează cu propria cheie (MOK) din Soplos Kernel Installer."
   },
+  "kernel": {
+    "mode": "Tipul instalării",
+    "modes": {
+      "minimal": "Minimă",
+      "minimalDetail": "Copiază sistemul așa cum este în imagine, cu kernelul său.",
+      "standard": "Standard",
+      "standardDetail": "Adaugă kernelul ales și driverele pentru acest calculator.",
+      "full": "Completă",
+      "fullDetail": "Cea standard, cu sistemul actualizat."
+    },
+    "level": "Procesorul tău suportă {level}",
+    "levelUnknown": "Nivelul procesorului nu a putut fi citit",
+    "levelDetail": "kernelul se instalează compilat pentru el.",
+    "minimalNote": "rămâne kernelul imaginii.",
+    "branch": "Ramură",
+    "latest": "Cea mai nouă",
+    "lts": "LTS",
+    "loading": "Se citesc kernelurile din depozitul Soplos…",
+    "none": "Depozitul de kerneluri Soplos nu a putut fi citit. În timpul instalării se încearcă kernelul stock Soplos pentru procesorul tău; dacă nu se poate instala, rămâne kernelul imaginii.",
+    "noBranch": "Nu există în această ramură",
+    "flavors": {
+      "stock": "Kernelul Soplos de zi cu zi: echilibrat, stabil și testat pe cele trei ediții.",
+      "bore-ntsync": "Cu planificatorul BORE și NTsync: un desktop mai vioi și jocuri Windows care merg mai bine cu Wine și Proton.",
+      "zen": "Reglat pentru desktop: latență mică și răspuns fluid sub sarcină.",
+      "rt": "Timp real: pentru producție audio și video și lucrări care cer sincronizare exactă.",
+      "x3d": "Reglat pentru procesoarele AMD Ryzen X3D și 3D V-Cache-ul lor.",
+      "other": "Un alt kernel din depozitul Soplos."
+    }
+  },
   "disk": {
     "disk": "Disc",
     "noDisks": "Nu s-a găsit niciun disc pe care să se instaleze.",
@@ -243,7 +272,10 @@
     "wipes": "Tot ce se află pe {disk} va fi șters.",
     "shrinks": "{part} va fi micșorată la {size}. Datele ei se păstrează.",
     "formats": "{part} va fi formatată ca {fs}.",
-    "creates": "{count, plural, one {Se va crea # partiție nouă.} few {Se vor crea # partiții noi.} other {Se vor crea # de partiții noi.}}"
+    "creates": "{count, plural, one {Se va crea # partiție nouă.} few {Se vor crea # partiții noi.} other {Se vor crea # de partiții noi.}}",
+    "installation": "Instalare",
+    "kernel": "Kernel",
+    "imageKernel": "Kernelul imaginii"
   },
   "install": {
     "dryRunDone": "Proba s-a încheiat fără erori.",
@@ -260,7 +292,8 @@
       "bootloader": "Program de pornire",
       "finish": "Ultimele ajustări",
       "drivers": "Drivere",
-      "kernel": "Nucleu"
+      "kernel": "Nucleu",
+      "update": "Actualizări"
     },
     "showDetails": "Arată detaliile",
     "hideDetails": "Arată prezentarea",
@@ -282,6 +315,11 @@
       "label": "Pornire",
       "title": "Încărcător de pornire",
       "subtitle": "Programul care pornește Soplos Linux când se aprinde calculatorul"
+    },
+    "kernel": {
+      "label": "Kernel",
+      "title": "Kernel",
+      "subtitle": "Tipul instalării și kernelul Soplos Linux"
     },
     "disk": {
       "label": "Disc",

@@ -28,6 +28,7 @@ pub fn run() {
             commands::location::set_live_keyboard,
             commands::disks::list_disks,
             commands::disks::partition_min_size,
+            commands::kernels::get_kernels,
             commands::install::start_install,
             commands::install::reboot,
         ])

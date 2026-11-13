@@ -2,7 +2,7 @@ import { writable } from "svelte/store";
 import type { Layout } from "./partitioning";
 
 /**
- * The steps of the installer, in order. The first six collect the plan,
+ * The steps of the installer, in order. The first seven collect the plan,
  * "install" runs it and "finished" closes the installation. The sidebar lists
  * them all; only the steps already reached can be revisited, and none once
  * the installation has started.
@@ -11,7 +11,7 @@ import type { Layout } from "./partitioning";
  * first: the installer must also work on its own, as Calamares does, so
  * another distribution could use it.
  */
-export const STEPS = ["welcome", "location", "bootloader", "disk", "user", "summary", "install", "finished"] as const;
+export const STEPS = ["welcome", "location", "bootloader", "kernel", "disk", "user", "summary", "install", "finished"] as const;
 export type StepId = (typeof STEPS)[number];
 
 /** The index of the step on screen. */
@@ -40,6 +40,14 @@ export interface InstallPlan {
   keyboard: { layout: string; variant: string };
   firmware: "uefi" | "bios" | "";
   bootloader: "grub" | "systemd-boot" | "limine" | "";
+  kernel: {
+    /** The Soplos kernel without "linux-soplos" and the level: "" is the
+     *  stock one, "lts", "zen", "lts-bore-ntsync"... (views/Kernel.svelte). */
+    flavor: string;
+    /** "minimal": the image as it is; "standard": drivers and the kernel
+     *  chosen; "full": and the system brought up to date. */
+    mode: "minimal" | "standard" | "full";
+  };
   disk: {
     device: string;
     mode: "erase" | "alongside" | "manual" | "";
@@ -72,6 +80,7 @@ export const plan = writable<InstallPlan>({
   keyboard: { layout: "", variant: "" },
   firmware: "",
   bootloader: "grub",
+  kernel: { flavor: "", mode: "full" },
   disk: { device: "", mode: "", filesystem: "btrfs", encrypt: false, passphrase: "", swap: "swap", shrink: null, layout: null },
   user: { fullName: "", login: "", hostname: "", password: "", sameRootPassword: true, rootPassword: "" },
 });

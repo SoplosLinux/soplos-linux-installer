@@ -5,11 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.0-1-alpha] - 2026-11-14
+
+### Added
+- The latest stock Soplos kernel for the x86-64 level of the processor
+  (`linux-soplos-v1` to `-v4`, detected as Soplos Kernel Installer does),
+  installed before the drivers so they are built for it; the kernel of the
+  image is then removed. If it cannot be installed, the kernel of the image
+  stays.
+- Drivers, with the hardware scan and the driver flows of Soplos Welcome:
+  what the hardware does not need is removed (NVIDIA/CUDA without an NVIDIA
+  GPU, AMD/ROCm without an AMD GPU, Broadcom without a Broadcom adapter,
+  guest tools of virtual machines on real hardware or of another
+  hypervisor) and what is missing is installed (AMD and Intel graphics,
+  Wi-Fi firmware, audio, Bluetooth, printers, the guest tools of the
+  virtual machine, VirtualBox Guest Additions, Mac fan and battery tools).
+  NVIDIA: the 620 branch for Turing and newer, 580 for Maxwell and Pascal,
+  with the Soplos DKMS patches; every other card stays on nouveau. Hybrid
+  laptops get `prime-run`. A driver that fails does not stop the
+  installation.
+
+### Fixed
+- GRUB: the `/etc/default/grub` of the image is kept, so the Soplos theme
+  shows; only the kernel parameters the installation needs are added.
+
 ## [3.0.0-alpha] - 2026-11-14
 
 First version of the installer that replaces Calamares. Every screen is
-written and the helper carries out the whole installation, drivers
-included. The design is in `DESIGN.md`.
+written and the helper carries out the whole installation. The design is
+in `DESIGN.md`.
 
 ### Added
 - The window of the 3.0 family: no system frame, a light and a dark theme
@@ -47,22 +71,6 @@ included. The design is in `DESIGN.md`.
   the live packages out and Soplos Welcome in, GRUB, systemd-boot or Limine,
   the initramfs, and the live leftovers removed. With `--dry-run`
   (`SLI_DRY_RUN=1`) it only lists the commands.
-- The latest stock Soplos kernel for the x86-64 level of the processor
-  (`linux-soplos-v1` to `-v4`, detected as Soplos Kernel Installer does),
-  installed before the drivers so they are built for it; the kernel of the
-  image is then removed. If it cannot be installed, the kernel of the image
-  stays.
-- Drivers, with the hardware scan and the driver flows of Soplos Welcome:
-  what the hardware does not need is removed (NVIDIA/CUDA without an NVIDIA
-  GPU, AMD/ROCm without an AMD GPU, Broadcom without a Broadcom adapter,
-  guest tools of virtual machines on real hardware or of another
-  hypervisor) and what is missing is installed (AMD and Intel graphics,
-  Wi-Fi firmware, audio, Bluetooth, printers, the guest tools of the
-  virtual machine, VirtualBox Guest Additions, Mac fan and battery tools).
-  NVIDIA: the 620 branch for Turing and newer, 580 for Maxwell and Pascal,
-  with the Soplos DKMS patches; every other card stays on nouveau. Hybrid
-  laptops get `prime-run`. A driver that fails does not stop the
-  installation.
 - What differs between editions is in their data files
   (`/usr/share/soplos-linux-installer/editions/`).
 - Keyboard: hold Alt to see the letter of each button, Alt and that letter

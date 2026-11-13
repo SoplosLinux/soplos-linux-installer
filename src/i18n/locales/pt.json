@@ -1,0 +1,318 @@
+{
+  "app": {
+    "window": {
+      "minimize": "Minimizar",
+      "maximize": "Maximizar",
+      "restore": "Restaurar",
+      "close": "Fechar"
+    }
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "close": "Fechar"
+  },
+  "sidebar": {
+    "switchToLight": "Mudar para o tema claro",
+    "switchToDark": "Mudar para o tema escuro",
+    "aboutTooltip": "Acerca do Soplos Linux Installer (F1)"
+  },
+  "about": {
+    "version": "Versão {version}",
+    "tagline": "O instalador do Soplos Linux",
+    "copyright": "Copyright © 2026 Sergi Perich",
+    "license": "Licenciado sob a GPL-3.0 ou posterior"
+  },
+  "nav": {
+    "back": "Voltar",
+    "next": "Seguinte",
+    "install": "Instalar",
+    "restart": "Reiniciar agora"
+  },
+  "confirm": {
+    "title": "Iniciar a instalação?",
+    "body": "As alterações escolhidas para o disco são feitas agora e não podem ser desfeitas. Certifique-se de que tem uma cópia de tudo o que quer manter.",
+    "accept": "Instalar"
+  },
+  "welcome": {
+    "greeting": "Bem-vindo ao Soplos Linux",
+    "intro": "Este instalador copia o Soplos Linux para o seu computador, configura o gestor de arranque que escolher e instala os controladores de que o seu hardware precisa.",
+    "language": "Idioma do instalador",
+    "checks": {
+      "title": "Requisitos",
+      "titleFor": "Requisitos do {edition}",
+      "retry": "Verificar novamente",
+      "checking": "A verificar…",
+      "disk": "Espaço em disco",
+      "diskDetail": "{size} GB no maior disco. São necessários {required} GB",
+      "diskFound": "{size} GB no maior disco",
+      "diskNone": "Não foi encontrado nenhum disco onde instalar",
+      "memory": "Memória",
+      "memoryDetail": "{size} GB. São necessários {required} GB",
+      "memoryFound": "{size} GB",
+      "internet": "Ligação à internet",
+      "internetOk": "Ligado. Os controladores e o Soplos Welcome são transferidos durante a instalação",
+      "internetFail": "Sem ligação. É necessária para transferir os controladores e o Soplos Welcome",
+      "power": "Alimentação",
+      "powerAc": "Ligado à corrente",
+      "powerBattery": "A funcionar com bateria. Ligue o carregador: se se esgotar a meio da instalação, o sistema não arrancará"
+    }
+  },
+  "location": {
+    "region": "Região",
+    "zone": "Cidade",
+    "detecting": "A procurar a sua localização…",
+    "localTime": "Hora local: {time}",
+    "languageTitle": "Idioma",
+    "language": "Sistema",
+    "formats": "Formatos",
+    "keyboard": "Teclado",
+    "layout": "Disposição",
+    "variant": "Variante",
+    "variantDefault": "Predefinida",
+    "test": "Escreva aqui para testar o teclado",
+    "regions": {
+      "Africa": "África",
+      "America": "América",
+      "Antarctica": "Antártida",
+      "Arctic": "Ártico",
+      "Asia": "Ásia",
+      "Atlantic": "Atlântico",
+      "Australia": "Austrália",
+      "Europe": "Europa",
+      "Indian": "Índico",
+      "Pacific": "Pacífico"
+    },
+    "zoomOut": "Ver o mapa inteiro"
+  },
+  "bootloader": {
+    "firmwareUefi": "Este computador arranca em modo UEFI",
+    "firmwareUefiDetail": "Pode escolher qualquer um dos três gestores de arranque.",
+    "firmwareBios": "Este computador arranca em modo BIOS (legacy)",
+    "firmwareBiosDetail": "Em BIOS só funcionam o GRUB e o Limine.",
+    "grub": "O habitual no Debian e no Soplos. Mostra um menu com todos os sistemas do computador.",
+    "systemdBoot": "Mínimo e muito rápido. Arranca os kernels diretamente da partição EFI, com um menu simples.",
+    "limine": "Moderno, rápido e com o tema do Soplos. Compilado e mantido pelo próprio Soplos.",
+    "recommended": "Recomendado",
+    "uefiAndBios": "UEFI e BIOS",
+    "onlyUefi": "Só UEFI",
+    "secureBootMok": "Secure Boot com MOK",
+    "secureBootNote": "Os três permitem o Secure Boot. O GRUB e o systemd-boot arrancam com a assinatura do Debian, por exemplo com um kernel do Debian. O Limine é assinado com a sua própria chave (MOK) a partir do Soplos Kernel Installer."
+  },
+  "disk": {
+    "disk": "Disco",
+    "noDisks": "Não foi encontrado nenhum disco onde instalar.",
+    "now": "Agora",
+    "after": "Depois",
+    "mode": "Como instalar",
+    "modes": {
+      "erase": "Apagar o disco",
+      "eraseDetail": "O Soplos ocupa todo o disco. Perde-se tudo o que lá estiver.",
+      "eraseUnavailable": "O disco é demasiado pequeno.",
+      "alongside": "Ao lado de outro sistema",
+      "alongsideDetail": "Reduz uma partição e instala o Soplos no espaço libertado.",
+      "alongsideUnavailable": "Nenhuma partição pode ser reduzida.",
+      "manual": "Manual",
+      "manualDetail": "Decide as partições, os seus usos e sistemas de ficheiros.",
+      "manualUnavailable": ""
+    },
+    "shrinkWhich": "Partição a reduzir",
+    "measuring": "A medir o espaço usado…",
+    "shrinkErrors": {
+      "hibernated": "O Windows está em hibernação ou tem o arranque rápido ativo. Arranque o Windows, desative o arranque rápido e desligue-o por completo antes de continuar.",
+      "unreadable": "Não foi possível medir o espaço usado desta partição. Pode estar danificada: verifique-a a partir do seu sistema.",
+      "unsupported": "Este sistema de ficheiros não pode ser reduzido.",
+      "nosudo": "Não foi possível ler a partição: são necessárias permissões de administrador.",
+      "full": "Não há espaço livre suficiente nesta partição para instalar o Soplos."
+    },
+    "keepsOther": "O outro sistema: {size}",
+    "forSoplos": "Soplos Linux: {size}",
+    "filesystem": "Sistema de ficheiros",
+    "btrfsNote": "instantâneos com o Timeshift",
+    "swap": "Swap",
+    "swapNone": "Sem swap",
+    "swapNormal": "Swap (8 GiB)",
+    "swapHibernate": "Swap com hibernação ({size})",
+    "encrypt": "Cifrar o sistema",
+    "encryptNote": "Será pedida uma palavra-passe em cada arranque",
+    "passphrase": "Palavra-passe de cifra",
+    "passphraseConfirm": "Repita a palavra-passe",
+    "roles": {
+      "esp": "Partição EFI",
+      "biosgrub": "Arranque BIOS",
+      "boot": "/boot",
+      "kernels": "Kernels (FAT)",
+      "root": "Sistema (/)",
+      "home": "Dados pessoais (/home)",
+      "swap": "Swap",
+      "other": "Outra"
+    },
+    "actions": {
+      "keep": "Mantém-se",
+      "shrink": "Reduz-se",
+      "use": "Usa-se",
+      "format": "Formata-se",
+      "create": "Nova"
+    },
+    "problems": {
+      "noRoot": "Falta uma partição para o sistema (/).",
+      "rootSmall": "A partição do sistema (/) precisa de pelo menos {size}.",
+      "duplicateMount": "Há duas partições com o mesmo uso.",
+      "noEsp": "Falta uma partição EFI (FAT32) para /boot/efi.",
+      "espSmall": "Com este gestor de arranque a partição EFI deve ser pelo menos tão grande como /boot.",
+      "noBiosGrub": "Em BIOS com tabela GPT é precisa uma partição de arranque BIOS (1 MiB).",
+      "noLimineFat": "O Limine em BIOS precisa de uma partição FAT32 para /boot/limine.",
+      "needsFormat": "/, /boot e /home precisam de ext4, btrfs ou xfs: marque-as para formatar.",
+      "noRoomForSwap": "Com esta swap não cabe no disco: escolha «Sem swap».",
+      "mbrFour": "O MBR permite no máximo 4 partições primárias."
+    },
+    "wipesAll": "Será apagado tudo o que há em {disk}.",
+    "deletes": "Estas partições serão eliminadas: {list}.",
+    "backupNote": "Reduzir uma partição é seguro, mas faça antes uma cópia dos seus dados caso falhe a corrente.",
+    "partitions": "Partições",
+    "newTableActive": "Tabela nova (GPT): será apagado tudo",
+    "reset": "Desfazer alterações",
+    "uses": {
+      "none": "Sem uso",
+      "root": "/ (sistema)",
+      "home": "/home",
+      "boot": "/boot",
+      "esp": "/boot/efi (EFI)",
+      "limine": "/boot/limine",
+      "swap": "Swap",
+      "biosgrub": "Arranque BIOS"
+    },
+    "newPartition": "Nova partição",
+    "use": "Uso",
+    "format": "Formatar",
+    "delete": "Eliminar",
+    "create": "Criar partição",
+    "add": "Adicionar",
+    "freeSpace": "Espaço livre",
+    "noTable": "Sem tabela de partições",
+    "empty": "O disco está vazio.",
+    "table": "Tabela",
+    "mbrTooBig": "O MBR não suporta discos com mais de 2 TiB",
+    "atStart": "No início",
+    "atEnd": "No fim",
+    "deleteAll": "Eliminar todas",
+    "required": "Necessárias:",
+    "manualHint": "Crie as partições no espaço livre."
+  },
+  "user": {
+    "account": "A sua conta",
+    "fullName": "Nome completo",
+    "login": "Nome de utilizador",
+    "loginHint": "Para iniciar sessão. Minúsculas, números, - e _",
+    "hostname": "Nome do computador",
+    "hostnameHint": "Como o computador será visto na rede",
+    "password": "Palavra-passe",
+    "repeat": "Repita a palavra-passe",
+    "sameRoot": "Usar a mesma palavra-passe para o administrador (root)",
+    "rootPassword": "Palavra-passe de root",
+    "show": "Mostrar",
+    "hide": "Ocultar",
+    "strength": {
+      "1": "Fraca",
+      "2": "Aceitável",
+      "3": "Forte"
+    },
+    "problems": {
+      "loginEmpty": "Escreva um nome de utilizador",
+      "loginChars": "Só minúsculas, números, - e _, a começar por uma letra",
+      "loginLong": "No máximo 32 caracteres",
+      "loginReserved": "Esse nome já é usado pelo sistema",
+      "hostnameEmpty": "Escreva um nome para o computador",
+      "hostnameChars": "Só letras, números e -, sem começar nem acabar em -",
+      "hostnameLong": "No máximo 63 caracteres",
+      "mismatch": "As palavras-passe não coincidem"
+    }
+  },
+  "summary": {
+    "change": "Alterar",
+    "firmware": "Firmware",
+    "bootloader": "Gestor de arranque",
+    "encryption": "Cifra",
+    "yes": "Sim",
+    "no": "Não",
+    "root": "Administrador (root)",
+    "rootSame": "A mesma palavra-passe da sua conta",
+    "rootOwn": "Palavra-passe própria",
+    "swapPlain": "Swap de 8 GiB",
+    "swapHibernate": "Swap com hibernação",
+    "wipes": "Será apagado tudo o que há em {disk}.",
+    "shrinks": "{part} será reduzida para {size}. Os seus dados mantêm-se.",
+    "formats": "{part} será formatada como {fs}.",
+    "creates": "{count, plural, one {Será criada # partição nova.} other {Serão criadas # partições novas.}}"
+  },
+  "install": {
+    "dryRunDone": "Ensaio terminado sem erros.",
+    "failed": "Parou: {message}",
+    "back": "Voltar ao resumo",
+    "steps": {
+      "partition": "Partições",
+      "format": "Formatação e montagem",
+      "unmount": "Desmontagem",
+      "copy": "Cópia do sistema",
+      "configure": "Configuração",
+      "users": "Utilizador",
+      "packages": "Pacotes",
+      "bootloader": "Gestor de arranque",
+      "finish": "Últimos ajustes",
+      "drivers": "Controladores",
+      "kernel": "Kernel"
+    },
+    "showDetails": "Mostrar detalhes",
+    "hideDetails": "Ver a apresentação",
+    "starting": "A preparar a instalação…",
+    "close": "Fechar o instalador"
+  },
+  "steps": {
+    "welcome": {
+      "label": "Boas-vindas",
+      "title": "Boas-vindas",
+      "subtitle": "Escolha o seu idioma e verifique se o computador está pronto"
+    },
+    "location": {
+      "label": "Localização",
+      "title": "Localização",
+      "subtitle": "Fuso horário, idioma do sistema e teclado"
+    },
+    "bootloader": {
+      "label": "Arranque",
+      "title": "Gestor de arranque",
+      "subtitle": "O programa que inicia o Soplos Linux quando o computador é ligado"
+    },
+    "disk": {
+      "label": "Disco",
+      "title": "Disco",
+      "subtitle": "Onde o Soplos Linux é instalado"
+    },
+    "user": {
+      "label": "Utilizador",
+      "title": "Utilizador",
+      "subtitle": "A sua conta e o nome do computador"
+    },
+    "summary": {
+      "label": "Resumo",
+      "title": "Resumo",
+      "subtitle": "Reveja tudo antes de a instalação começar"
+    },
+    "install": {
+      "label": "Instalação",
+      "title": "A instalar o Soplos Linux",
+      "subtitle": "Demora alguns minutos. Mantenha o computador ligado à internet"
+    },
+    "finished": {
+      "label": "Fim",
+      "title": "Instalação concluída",
+      "subtitle": "O Soplos Linux está instalado no seu computador"
+    }
+  },
+  "finished": {
+    "done": "O {name} está instalado no seu computador.",
+    "restart": "Reinicie para começar a usá-lo. Também pode continuar na sessão live e reiniciar quando quiser.",
+    "media": "Quando o computador se desligar, retire a pen USB ou o DVD de instalação.",
+    "welcome": "No primeiro início de sessão abre-se o Soplos Welcome, com os controladores, as atualizações e tudo o necessário para configurar o computador à sua maneira."
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "kicker": "Bienvenido a",
+  "introText": "Mientras se instala, conoce las herramientas que te van a acompañar.",
+  "editions": {
+    "tyron": "Xfce, <b>ligero y rápido</b>.",
+    "tyson": "Plasma, <b>potente y a tu medida</b>.",
+    "boro": "GNOME, <b>limpio y moderno</b>."
+  },
+  "outroTitle": "Una familia.",
+  "outroText": "Tyron, Tyson y Boro comparten las mismas herramientas. Soplos Welcome te espera en el primer inicio.",
+  "apps": {
+    "welcome": {
+      "cat": "Bienvenida",
+      "tag": "Tu equipo, <b>puesto a punto</b>.",
+      "desc": "Un único lugar para actualizar el sistema, instalar controladores y kernels, reforzar la seguridad y optimizar para juegos.",
+      "chips": [
+        "Actualizar",
+        "Controladores",
+        "Seguridad",
+        "Gaming"
+      ]
+    },
+    "store": {
+      "cat": "Software",
+      "tag": "Todo el software, <b>en un solo lugar</b>.",
+      "desc": "Encuentra, instala, actualiza y elimina aplicaciones de APT, Flatpak, Snap y AppImage, y aplica actualizaciones de firmware con fwupd.",
+      "chips": [
+        "APT · Flatpak · Snap",
+        "AppStream y Flathub",
+        "Firmware con fwupd"
+      ]
+    },
+    "theme-manager": {
+      "cat": "Escritorio · Tyron",
+      "tag": "Temas completos <b>para Tyron</b>.",
+      "desc": "El gestor de temas de Xfce: aplica, crea, exporta e importa temas de escritorio, explora fondos de pantalla y configura el panel.",
+      "chips": [
+        "Galería de temas",
+        "Fondos",
+        "Panel"
+      ]
+    },
+    "look-manager": {
+      "cat": "Escritorio · Tyson",
+      "tag": "El aspecto de Plasma, <b>a tu manera</b>.",
+      "desc": "Temas y disposición del escritorio para Tyson: lo que Theme Manager y Layout Switcher hacen en Xfce y GNOME, ahora en Plasma.",
+      "chips": [
+        "Temas",
+        "Disposición",
+        "Plasma"
+      ]
+    },
+    "layout-switcher": {
+      "cat": "Escritorio · Boro",
+      "tag": "Cuatro escritorios GNOME, <b>un solo clic</b>.",
+      "desc": "Soplos, Dock, Tiling y GNOME. Instala las extensiones que faltan y aplica los ajustes de cada disposición.",
+      "chips": [
+        "Soplos",
+        "Dock",
+        "Tiling",
+        "GNOME"
+      ]
+    },
+    "gaming-panel": {
+      "cat": "Gaming",
+      "tag": "Rendimiento, <b>al instante</b>.",
+      "desc": "Un panel superpuesto que se abre con Ctrl+Shift+G y controla GameMode en vivo mientras juegas.",
+      "chips": [
+        "Ctrl+Shift+G",
+        "GameMode en vivo",
+        "Boro · Tyson · Tyron"
+      ]
+    },
+    "appimage-manager": {
+      "cat": "Software",
+      "tag": "Tus AppImage, <b>integradas en el escritorio</b>.",
+      "desc": "Las mueve a ~/AppImages, extrae su icono, crea la entrada de menú y comprueba actualizaciones en GitHub, GitLab o Codeberg.",
+      "chips": [
+        "Entrada de menú",
+        "Icono y metadatos",
+        "Actualizaciones"
+      ]
+    },
+    "webapp-manager": {
+      "cat": "Escritorio",
+      "tag": "Cualquier web, <b>como aplicación</b>.",
+      "desc": "Convierte un sitio en su propia app: ventana propia, icono propio en la barra y perfil de navegador aislado.",
+      "chips": [
+        "Ventana propia",
+        "Perfil aislado",
+        "Tu navegador"
+      ]
+    },
+    "kernel-installer": {
+      "cat": "Sistema",
+      "tag": "Descarga, parchea <b>e instala el kernel</b>.",
+      "desc": "Un asistente gráfico para llevar el kernel de Linux desde el código fuente hasta tu arranque.",
+      "chips": [
+        "Descargar",
+        "Parchear",
+        "Compilar e instalar"
+      ]
+    },
+    "grub-editor": {
+      "cat": "Arranque",
+      "tag": "El cargador de arranque, <b>sin tocar un archivo</b>.",
+      "desc": "Elige la entrada por defecto y el tiempo de espera, edita los parámetros del kernel y cambia el aspecto del menú.",
+      "chips": [
+        "Parámetros del kernel",
+        "Temas y fondos",
+        "Colores y fuentes"
+      ]
+    },
+    "plymouth-manager": {
+      "cat": "Arranque",
+      "tag": "La pantalla de arranque, <b>a tu gusto</b>.",
+      "desc": "Galería de temas con vista previa real, instalación desde archivo y borrado de los que ya no quieres.",
+      "chips": [
+        "Vista previa real",
+        "Instalar desde archivo",
+        "X11 y Wayland"
+      ]
+    },
+    "repo-selector": {
+      "cat": "Sistema",
+      "tag": "Repositorios APT <b>bajo control</b>.",
+      "desc": "Activa o desactiva repositorios, moderniza los .list a DEB822, encuentra el mirror más rápido con una prueba real y gestiona las claves GPG.",
+      "chips": [
+        "DEB822",
+        "Prueba de velocidad",
+        "Claves GPG"
+      ]
+    },
+    "system-service": {
+      "cat": "Sistema",
+      "tag": "Servicios systemd, <b>sin línea de comandos</b>.",
+      "desc": "Inicia, detiene y habilita servicios y temporizadores, lee los registros y descubre qué ralentiza el arranque. Cada cambio se puede deshacer.",
+      "chips": [
+        "Servicios y timers",
+        "Registros",
+        "Deshacer cambios"
+      ]
+    },
+    "sys-cleaner": {
+      "cat": "Mantenimiento",
+      "tag": "Recupera espacio, <b>solo lo que confirmes</b>.",
+      "desc": "Busca cachés, registros, temporales, restos de Flatpak y Snap y kernels antiguos, y te explica qué es cada cosa antes de borrar.",
+      "chips": [
+        "Cachés y logs",
+        "Kernels antiguos",
+        "Tú decides"
+      ]
+    }
+  },
+  "soplos": {
+    "cat": "La distribución",
+    "tag": "Debian, <b>listo para usar</b>.",
+    "desc": "La base estable de Debian con kernels propios, instantáneas con Timeshift sobre btrfs y tres escritorios que comparten las mismas herramientas.",
+    "chips": [
+      "Base Debian",
+      "Kernels Soplos",
+      "Timeshift y btrfs",
+      "GRUB · systemd-boot · Limine"
+    ]
+  },
+  "familyCat": "Las ediciones",
+  "familyTitle": "Tres ediciones",
+  "installing": "Instalando",
+  "cards": {
+    "tyron": "Ligero y rápido. Funciona bien con poca memoria.",
+    "tyson": "Potente y personalizable hasta el último detalle.",
+    "boro": "Limpio y moderno, con cuatro disposiciones a elegir."
+  },
+  "editionSlides": {
+    "tyron": [
+      {
+        "cat": "Tyron · Xfce",
+        "tag": "Ligero, <b>rápido y estable</b>.",
+        "desc": "Xfce consume muy poca memoria y arranca en segundos: da nueva vida a los equipos modestos y vuela en los modernos.",
+        "chips": [
+          "Poca memoria",
+          "Arranque rápido",
+          "Muy estable"
+        ]
+      },
+      {
+        "cat": "Tyron · Xfce",
+        "tag": "Clásico <b>y a tu manera</b>.",
+        "desc": "Panel, menú y escritorio de siempre, y todo configurable: con Theme Manager cambias el tema completo, los fondos y el panel en un momento.",
+        "chips": [
+          "Panel a medida",
+          "Theme Manager",
+          "Fondos"
+        ]
+      }
+    ],
+    "tyson": [
+      {
+        "cat": "Tyson · KDE Plasma",
+        "tag": "Potente <b>y moderno</b>.",
+        "desc": "KDE Plasma reúne efectos cuidados, widgets en el escritorio y en el panel y opciones para todo, con Wayland de serie.",
+        "chips": [
+          "Widgets",
+          "Wayland",
+          "Efectos"
+        ]
+      },
+      {
+        "cat": "Tyson · KDE Plasma",
+        "tag": "Tu escritorio, <b>pieza a pieza</b>.",
+        "desc": "Paneles, temas, iconos y disposición: Look Manager reúne en un solo sitio todo lo que hace de Plasma un escritorio a tu medida.",
+        "chips": [
+          "Look Manager",
+          "Temas",
+          "Disposición"
+        ]
+      }
+    ],
+    "boro": [
+      {
+        "cat": "Boro · GNOME",
+        "tag": "Limpio, <b>sin distracciones</b>.",
+        "desc": "GNOME pone el foco en lo que haces: una vista de actividades para encontrarlo todo, espacios de trabajo dinámicos y gestos del panel táctil.",
+        "chips": [
+          "Actividades",
+          "Espacios de trabajo",
+          "Gestos"
+        ]
+      },
+      {
+        "cat": "Boro · GNOME",
+        "tag": "Cuatro escritorios <b>en uno</b>.",
+        "desc": "Con Layout Switcher eliges entre Soplos, Dock, Tiling y GNOME puro: del escritorio tradicional al mosaico, con un solo clic.",
+        "chips": [
+          "Soplos",
+          "Dock",
+          "Tiling",
+          "GNOME"
+        ]
+      }
+    ]
+  }
+}

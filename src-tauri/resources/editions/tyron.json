@@ -1,0 +1,41 @@
+{
+  "codename": "tyron",
+  "name": "Soplos Linux Tyron",
+  "requirements": {
+    "diskGb": 18,
+    "memoryGb": 1.8
+  },
+  "internetProbe": "https://raw.githubusercontent.com/SoplosLinux/soplos-kernels/main/",
+  "geoipUrl": "https://geoip.kde.org/v1/calamares",
+  "displayManager": "lightdm",
+  "removePackages": [
+    "live-config",
+    "live-config-doc",
+    "live-config-systemd",
+    "calamares-settings-debian",
+    "calamares",
+    "soplos-welcome-live",
+    "soplos-linux-installer"
+  ],
+  "installPackages": [
+    "soplos-welcome"
+  ],
+  "lightdmBackground": "/usr/share/backgrounds/soplos/006.jpg",
+  "removeFiles": [
+    "/etc/calamares",
+    "/usr/share/applications/calamares-install-soplos.desktop",
+    "/etc/sudoers.d/liveuser",
+    "/usr/local/bin/remove-liveuser.sh",
+    "/usr/local/bin/setup-desktop.sh",
+    "/usr/local/bin/remove-calamares.sh",
+    "/usr/local/bin/remove-sourceslist.sh",
+    "/usr/local/bin/remove-data.sh",
+    "/usr/local/bin/clean-modules.sh",
+    "/etc/apt/sources.list",
+    "/etc/sudoers.d/restart-lightdm",
+    "/usr/local/bin/configure-lightdm.sh",
+    "/usr/local/bin/remove-apps.sh",
+    "/usr/local/bin/disable-numlockx",
+    "/usr/local/bin/restart-lightdm"
+  ]
+}

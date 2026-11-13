@@ -1,0 +1,243 @@
+{
+  "kicker": "Welcome to",
+  "introText": "While it installs, meet the tools that will come with you.",
+  "editions": {
+    "tyron": "Xfce, <b>light and fast</b>.",
+    "tyson": "Plasma, <b>powerful and yours to shape</b>.",
+    "boro": "GNOME, <b>clean and modern</b>."
+  },
+  "outroTitle": "One family.",
+  "outroText": "Tyron, Tyson and Boro share the same tools. Soplos Welcome is waiting for you at the first start.",
+  "apps": {
+    "welcome": {
+      "cat": "Welcome",
+      "tag": "Your computer, <b>ready to go</b>.",
+      "desc": "One place to update the system, install drivers and kernels, harden security and tune it for gaming.",
+      "chips": [
+        "Update",
+        "Drivers",
+        "Security",
+        "Gaming"
+      ]
+    },
+    "store": {
+      "cat": "Software",
+      "tag": "All the software, <b>in one place</b>.",
+      "desc": "Find, install, update and remove apps from APT, Flatpak, Snap and AppImage, and apply firmware updates with fwupd.",
+      "chips": [
+        "APT · Flatpak · Snap",
+        "AppStream and Flathub",
+        "Firmware with fwupd"
+      ]
+    },
+    "theme-manager": {
+      "cat": "Desktop · Tyron",
+      "tag": "Complete themes <b>for Tyron</b>.",
+      "desc": "The Xfce theme manager: apply, create, export and import desktop themes, browse wallpapers and set up the panel.",
+      "chips": [
+        "Theme gallery",
+        "Wallpapers",
+        "Panel"
+      ]
+    },
+    "look-manager": {
+      "cat": "Desktop · Tyson",
+      "tag": "The look of Plasma, <b>your way</b>.",
+      "desc": "Themes and desktop layout for Tyson: what Theme Manager and Layout Switcher do on Xfce and GNOME, now on Plasma.",
+      "chips": [
+        "Themes",
+        "Layout",
+        "Plasma"
+      ]
+    },
+    "layout-switcher": {
+      "cat": "Desktop · Boro",
+      "tag": "Four GNOME desktops, <b>one click</b>.",
+      "desc": "Soplos, Dock, Tiling and GNOME. It installs the missing extensions and applies the settings of each layout.",
+      "chips": [
+        "Soplos",
+        "Dock",
+        "Tiling",
+        "GNOME"
+      ]
+    },
+    "gaming-panel": {
+      "cat": "Gaming",
+      "tag": "Performance, <b>instantly</b>.",
+      "desc": "An overlay panel that opens with Ctrl+Shift+G and controls GameMode live while you play.",
+      "chips": [
+        "Ctrl+Shift+G",
+        "Live GameMode",
+        "Boro · Tyson · Tyron"
+      ]
+    },
+    "appimage-manager": {
+      "cat": "Software",
+      "tag": "Your AppImages, <b>part of the desktop</b>.",
+      "desc": "It moves them to ~/AppImages, extracts their icon, creates the menu entry and checks for updates on GitHub, GitLab or Codeberg.",
+      "chips": [
+        "Menu entry",
+        "Icon and metadata",
+        "Updates"
+      ]
+    },
+    "webapp-manager": {
+      "cat": "Desktop",
+      "tag": "Any website, <b>as an app</b>.",
+      "desc": "Turns a site into its own app: its own window, its own icon in the panel and an isolated browser profile.",
+      "chips": [
+        "Own window",
+        "Isolated profile",
+        "Your browser"
+      ]
+    },
+    "kernel-installer": {
+      "cat": "System",
+      "tag": "Download, patch <b>and install the kernel</b>.",
+      "desc": "A graphical assistant that takes the Linux kernel from source code to your boot.",
+      "chips": [
+        "Download",
+        "Patch",
+        "Build and install"
+      ]
+    },
+    "grub-editor": {
+      "cat": "Boot",
+      "tag": "The boot loader, <b>without touching a file</b>.",
+      "desc": "Choose the default entry and the timeout, edit the kernel parameters and change the look of the menu.",
+      "chips": [
+        "Kernel parameters",
+        "Themes and backgrounds",
+        "Colors and fonts"
+      ]
+    },
+    "plymouth-manager": {
+      "cat": "Boot",
+      "tag": "The boot screen, <b>as you like it</b>.",
+      "desc": "A theme gallery with a real preview, installation from a file and removal of the ones you no longer want.",
+      "chips": [
+        "Real preview",
+        "Install from a file",
+        "X11 and Wayland"
+      ]
+    },
+    "repo-selector": {
+      "cat": "System",
+      "tag": "APT repositories <b>under control</b>.",
+      "desc": "Turn repositories on or off, move .list files to DEB822, find the fastest mirror with a real test and manage the GPG keys.",
+      "chips": [
+        "DEB822",
+        "Speed test",
+        "GPG keys"
+      ]
+    },
+    "system-service": {
+      "cat": "System",
+      "tag": "systemd services, <b>no command line</b>.",
+      "desc": "Start, stop and enable services and timers, read the logs and find out what slows the boot down. Every change can be undone.",
+      "chips": [
+        "Services and timers",
+        "Logs",
+        "Undo changes"
+      ]
+    },
+    "sys-cleaner": {
+      "cat": "Maintenance",
+      "tag": "Get space back, <b>only what you confirm</b>.",
+      "desc": "It looks for caches, logs, temporary files, Flatpak and Snap leftovers and old kernels, and explains each one before deleting.",
+      "chips": [
+        "Caches and logs",
+        "Old kernels",
+        "You decide"
+      ]
+    }
+  },
+  "soplos": {
+    "cat": "The distribution",
+    "tag": "Debian, <b>ready to use</b>.",
+    "desc": "The stable base of Debian with its own kernels, Timeshift snapshots on btrfs and three desktops that share the same tools.",
+    "chips": [
+      "Debian base",
+      "Soplos kernels",
+      "Timeshift and btrfs",
+      "GRUB · systemd-boot · Limine"
+    ]
+  },
+  "familyCat": "The editions",
+  "familyTitle": "Three editions",
+  "installing": "Installing",
+  "cards": {
+    "tyron": "Light and fast. Runs well with little memory.",
+    "tyson": "Powerful and customizable down to the last detail.",
+    "boro": "Clean and modern, with four layouts to choose from."
+  },
+  "editionSlides": {
+    "tyron": [
+      {
+        "cat": "Tyron · Xfce",
+        "tag": "Light, <b>fast and stable</b>.",
+        "desc": "Xfce uses very little memory and starts in seconds: it gives modest computers a new life and flies on modern ones.",
+        "chips": [
+          "Little memory",
+          "Fast start",
+          "Very stable"
+        ]
+      },
+      {
+        "cat": "Tyron · Xfce",
+        "tag": "Classic <b>and your way</b>.",
+        "desc": "The panel, menu and desktop you know, and all of it configurable: with Theme Manager you change the whole theme, the wallpapers and the panel in a moment.",
+        "chips": [
+          "Panel to measure",
+          "Theme Manager",
+          "Wallpapers"
+        ]
+      }
+    ],
+    "tyson": [
+      {
+        "cat": "Tyson · KDE Plasma",
+        "tag": "Powerful <b>and modern</b>.",
+        "desc": "KDE Plasma brings polished effects, widgets on the desktop and the panel and options for everything, with Wayland out of the box.",
+        "chips": [
+          "Widgets",
+          "Wayland",
+          "Effects"
+        ]
+      },
+      {
+        "cat": "Tyson · KDE Plasma",
+        "tag": "Your desktop, <b>piece by piece</b>.",
+        "desc": "Panels, themes, icons and layout: Look Manager gathers in one place everything that makes Plasma a desktop made to measure.",
+        "chips": [
+          "Look Manager",
+          "Themes",
+          "Layout"
+        ]
+      }
+    ],
+    "boro": [
+      {
+        "cat": "Boro · GNOME",
+        "tag": "Clean, <b>no distractions</b>.",
+        "desc": "GNOME keeps the focus on what you do: an activities overview to find everything, dynamic workspaces and touchpad gestures.",
+        "chips": [
+          "Activities",
+          "Workspaces",
+          "Gestures"
+        ]
+      },
+      {
+        "cat": "Boro · GNOME",
+        "tag": "Four desktops <b>in one</b>.",
+        "desc": "With Layout Switcher you choose between Soplos, Dock, Tiling and plain GNOME: from the traditional desktop to tiling, in one click.",
+        "chips": [
+          "Soplos",
+          "Dock",
+          "Tiling",
+          "GNOME"
+        ]
+      }
+    ]
+  }
+}

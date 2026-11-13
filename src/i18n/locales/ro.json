@@ -1,0 +1,318 @@
+{
+  "app": {
+    "window": {
+      "minimize": "Minimizează",
+      "maximize": "Maximizează",
+      "restore": "Restaurează",
+      "close": "Închide"
+    }
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Anulează",
+    "close": "Închide"
+  },
+  "sidebar": {
+    "switchToLight": "Treci la tema luminoasă",
+    "switchToDark": "Treci la tema întunecată",
+    "aboutTooltip": "Despre Soplos Linux Installer (F1)"
+  },
+  "about": {
+    "version": "Versiunea {version}",
+    "tagline": "Programul de instalare al Soplos Linux",
+    "copyright": "Copyright © 2026 Sergi Perich",
+    "license": "Licențiat sub GPL-3.0 sau ulterioară"
+  },
+  "nav": {
+    "back": "Înapoi",
+    "next": "Înainte",
+    "install": "Instalează",
+    "restart": "Repornește acum"
+  },
+  "confirm": {
+    "title": "Începi instalarea?",
+    "body": "Modificările alese pentru disc se fac acum și nu pot fi anulate. Asigură-te că ai o copie a tot ce vrei să păstrezi.",
+    "accept": "Instalează"
+  },
+  "welcome": {
+    "greeting": "Bun venit la Soplos Linux",
+    "intro": "Acest program copiază Soplos Linux pe calculatorul tău, configurează încărcătorul de pornire pe care îl alegi și instalează driverele de care are nevoie hardware-ul tău.",
+    "language": "Limba programului de instalare",
+    "checks": {
+      "title": "Cerințe",
+      "titleFor": "Cerințele pentru {edition}",
+      "retry": "Verifică din nou",
+      "checking": "Se verifică…",
+      "disk": "Spațiu pe disc",
+      "diskDetail": "{size} GB pe cel mai mare disc. Sunt necesari {required} GB",
+      "diskFound": "{size} GB pe cel mai mare disc",
+      "diskNone": "Nu s-a găsit niciun disc pe care să se instaleze",
+      "memory": "Memorie",
+      "memoryDetail": "{size} GB. Sunt necesari {required} GB",
+      "memoryFound": "{size} GB",
+      "internet": "Conexiune la internet",
+      "internetOk": "Conectat. Driverele și Soplos Welcome se descarcă în timpul instalării",
+      "internetFail": "Neconectat. Este necesară pentru a descărca driverele și Soplos Welcome",
+      "power": "Alimentare",
+      "powerAc": "Conectat la priză",
+      "powerBattery": "Funcționează pe baterie. Conectați încărcătorul: dacă se descarcă în timpul instalării, sistemul nu va porni"
+    }
+  },
+  "location": {
+    "region": "Regiune",
+    "zone": "Oraș",
+    "detecting": "Se caută locația…",
+    "localTime": "Ora locală: {time}",
+    "languageTitle": "Limbă",
+    "language": "Sistem",
+    "formats": "Formate",
+    "keyboard": "Tastatură",
+    "layout": "Aranjament",
+    "variant": "Variantă",
+    "variantDefault": "Implicită",
+    "test": "Scrieți aici pentru a testa tastatura",
+    "regions": {
+      "Africa": "Africa",
+      "America": "America",
+      "Antarctica": "Antarctica",
+      "Arctic": "Arctica",
+      "Asia": "Asia",
+      "Atlantic": "Atlantic",
+      "Australia": "Australia",
+      "Europe": "Europa",
+      "Indian": "Oceanul Indian",
+      "Pacific": "Pacific"
+    },
+    "zoomOut": "Vezi toată harta"
+  },
+  "bootloader": {
+    "firmwareUefi": "Acest computer pornește în modul UEFI",
+    "firmwareUefiDetail": "Puteți alege oricare dintre cele trei programe de pornire.",
+    "firmwareBios": "Acest computer pornește în modul BIOS (legacy)",
+    "firmwareBiosDetail": "Cu BIOS funcționează doar GRUB și Limine.",
+    "grub": "Cel obișnuit în Debian și Soplos. Afișează un meniu cu toate sistemele de pe computer.",
+    "systemdBoot": "Minimal și foarte rapid. Pornește nucleele direct de pe partiția EFI, cu un meniu simplu.",
+    "limine": "Modern, rapid și cu tema Soplos. Compilat și întreținut chiar de Soplos.",
+    "recommended": "Recomandat",
+    "uefiAndBios": "UEFI și BIOS",
+    "onlyUefi": "Doar UEFI",
+    "secureBootMok": "Secure Boot cu MOK",
+    "secureBootNote": "Toate trei permit Secure Boot. GRUB și systemd-boot pornesc cu semnătura Debian, de exemplu cu un nucleu Debian. Limine se semnează cu propria cheie (MOK) din Soplos Kernel Installer."
+  },
+  "disk": {
+    "disk": "Disc",
+    "noDisks": "Nu s-a găsit niciun disc pe care să se instaleze.",
+    "now": "Acum",
+    "after": "După",
+    "mode": "Mod de instalare",
+    "modes": {
+      "erase": "Șterge discul",
+      "eraseDetail": "Soplos ocupă tot discul. Tot ce se află pe el se pierde.",
+      "eraseUnavailable": "Discul este prea mic.",
+      "alongside": "Alături de alt sistem",
+      "alongsideDetail": "Micșorează o partiție și instalează Soplos în spațiul eliberat.",
+      "alongsideUnavailable": "Nicio partiție nu poate fi micșorată.",
+      "manual": "Manual",
+      "manualDetail": "Decideți partițiile, utilizările și sistemele lor de fișiere.",
+      "manualUnavailable": ""
+    },
+    "shrinkWhich": "Partiția de micșorat",
+    "measuring": "Se măsoară spațiul folosit…",
+    "shrinkErrors": {
+      "hibernated": "Windows este în hibernare sau are pornirea rapidă activată. Porniți Windows, dezactivați pornirea rapidă și opriți-l complet înainte de a continua.",
+      "unreadable": "Spațiul folosit al acestei partiții nu a putut fi măsurat. Poate fi deteriorată: verificați-o din sistemul ei.",
+      "unsupported": "Acest sistem de fișiere nu poate fi micșorat.",
+      "nosudo": "Partiția nu a putut fi citită: sunt necesare drepturi de administrator.",
+      "full": "Nu există suficient spațiu liber în această partiție pentru a instala Soplos."
+    },
+    "keepsOther": "Celălalt sistem: {size}",
+    "forSoplos": "Soplos Linux: {size}",
+    "filesystem": "Sistem de fișiere",
+    "btrfsNote": "instantanee cu Timeshift",
+    "swap": "Swap",
+    "swapNone": "Fără swap",
+    "swapNormal": "Swap (8 GiB)",
+    "swapHibernate": "Swap cu hibernare ({size})",
+    "encrypt": "Criptează sistemul",
+    "encryptNote": "Se va cere o parolă la fiecare pornire",
+    "passphrase": "Parola de criptare",
+    "passphraseConfirm": "Repetați parola",
+    "roles": {
+      "esp": "Partiție EFI",
+      "biosgrub": "Pornire BIOS",
+      "boot": "/boot",
+      "kernels": "Nuclee (FAT)",
+      "root": "Sistem (/)",
+      "home": "Date personale (/home)",
+      "swap": "Swap",
+      "other": "Alta"
+    },
+    "actions": {
+      "keep": "Se păstrează",
+      "shrink": "Se micșorează",
+      "use": "Se folosește",
+      "format": "Se formatează",
+      "create": "Nouă"
+    },
+    "problems": {
+      "noRoot": "Lipsește o partiție pentru sistem (/).",
+      "rootSmall": "Partiția de sistem (/) are nevoie de cel puțin {size}.",
+      "duplicateMount": "Două partiții au aceeași utilizare.",
+      "noEsp": "Lipsește o partiție EFI (FAT32) pentru /boot/efi.",
+      "espSmall": "Cu acest program de pornire partiția EFI trebuie să fie cel puțin cât /boot.",
+      "noBiosGrub": "BIOS cu tabel GPT are nevoie de o partiție de pornire BIOS (1 MiB).",
+      "noLimineFat": "Limine pe BIOS are nevoie de o partiție FAT32 pentru /boot/limine.",
+      "needsFormat": "/, /boot și /home au nevoie de ext4, btrfs sau xfs: marcați-le pentru formatare.",
+      "noRoomForSwap": "Cu acest swap nu încape pe disc: alegeți „Fără swap”.",
+      "mbrFour": "MBR permite cel mult 4 partiții primare."
+    },
+    "wipesAll": "Tot ce se află pe {disk} va fi șters.",
+    "deletes": "Aceste partiții vor fi șterse: {list}.",
+    "backupNote": "Micșorarea unei partiții este sigură, dar faceți mai întâi o copie a datelor în caz că se întrerupe curentul.",
+    "partitions": "Partiții",
+    "newTableActive": "Tabel nou (GPT): totul va fi șters",
+    "reset": "Anulează modificările",
+    "uses": {
+      "none": "Nefolosită",
+      "root": "/ (sistem)",
+      "home": "/home",
+      "boot": "/boot",
+      "esp": "/boot/efi (EFI)",
+      "limine": "/boot/limine",
+      "swap": "Swap",
+      "biosgrub": "Pornire BIOS"
+    },
+    "newPartition": "Partiție nouă",
+    "use": "Utilizare",
+    "format": "Formatează",
+    "delete": "Șterge",
+    "create": "Creează partiție",
+    "add": "Adaugă",
+    "freeSpace": "Spațiu liber",
+    "noTable": "Fără tabel de partiții",
+    "empty": "Discul este gol.",
+    "table": "Tabel",
+    "mbrTooBig": "MBR nu acceptă discuri mai mari de 2 TiB",
+    "atStart": "La început",
+    "atEnd": "La sfârșit",
+    "deleteAll": "Șterge toate",
+    "required": "Necesare:",
+    "manualHint": "Creați partițiile în spațiul liber."
+  },
+  "user": {
+    "account": "Contul dvs.",
+    "fullName": "Nume complet",
+    "login": "Nume de utilizator",
+    "loginHint": "Pentru autentificare. Litere mici, cifre, - și _",
+    "hostname": "Numele computerului",
+    "hostnameHint": "Așa va apărea computerul în rețea",
+    "password": "Parolă",
+    "repeat": "Repetați parola",
+    "sameRoot": "Folosește aceeași parolă pentru administrator (root)",
+    "rootPassword": "Parola root",
+    "show": "Arată",
+    "hide": "Ascunde",
+    "strength": {
+      "1": "Slabă",
+      "2": "Acceptabilă",
+      "3": "Puternică"
+    },
+    "problems": {
+      "loginEmpty": "Scrieți un nume de utilizator",
+      "loginChars": "Doar litere mici, cifre, - și _, începând cu o literă",
+      "loginLong": "Cel mult 32 de caractere",
+      "loginReserved": "Acest nume este deja folosit de sistem",
+      "hostnameEmpty": "Scrieți un nume pentru computer",
+      "hostnameChars": "Doar litere, cifre și -, fără - la început sau la sfârșit",
+      "hostnameLong": "Cel mult 63 de caractere",
+      "mismatch": "Parolele nu se potrivesc"
+    }
+  },
+  "summary": {
+    "change": "Modifică",
+    "firmware": "Firmware",
+    "bootloader": "Program de pornire",
+    "encryption": "Criptare",
+    "yes": "Da",
+    "no": "Nu",
+    "root": "Administrator (root)",
+    "rootSame": "Aceeași parolă ca a contului dvs.",
+    "rootOwn": "Parolă proprie",
+    "swapPlain": "Swap de 8 GiB",
+    "swapHibernate": "Swap cu hibernare",
+    "wipes": "Tot ce se află pe {disk} va fi șters.",
+    "shrinks": "{part} va fi micșorată la {size}. Datele ei se păstrează.",
+    "formats": "{part} va fi formatată ca {fs}.",
+    "creates": "{count, plural, one {Se va crea # partiție nouă.} few {Se vor crea # partiții noi.} other {Se vor crea # de partiții noi.}}"
+  },
+  "install": {
+    "dryRunDone": "Proba s-a încheiat fără erori.",
+    "failed": "S-a oprit: {message}",
+    "back": "Înapoi la rezumat",
+    "steps": {
+      "partition": "Partiții",
+      "format": "Formatare și montare",
+      "unmount": "Demontare",
+      "copy": "Copierea sistemului",
+      "configure": "Configurare",
+      "users": "Utilizator",
+      "packages": "Pachete",
+      "bootloader": "Program de pornire",
+      "finish": "Ultimele ajustări",
+      "drivers": "Drivere",
+      "kernel": "Nucleu"
+    },
+    "showDetails": "Arată detaliile",
+    "hideDetails": "Arată prezentarea",
+    "starting": "Se pregătește instalarea…",
+    "close": "Închide programul de instalare"
+  },
+  "steps": {
+    "welcome": {
+      "label": "Bun venit",
+      "title": "Bun venit",
+      "subtitle": "Alege limba și verifică dacă calculatorul este pregătit"
+    },
+    "location": {
+      "label": "Locație",
+      "title": "Locație",
+      "subtitle": "Fus orar, limba sistemului și tastatură"
+    },
+    "bootloader": {
+      "label": "Pornire",
+      "title": "Încărcător de pornire",
+      "subtitle": "Programul care pornește Soplos Linux când se aprinde calculatorul"
+    },
+    "disk": {
+      "label": "Disc",
+      "title": "Disc",
+      "subtitle": "Unde se instalează Soplos Linux"
+    },
+    "user": {
+      "label": "Utilizator",
+      "title": "Utilizator",
+      "subtitle": "Contul tău și numele calculatorului"
+    },
+    "summary": {
+      "label": "Rezumat",
+      "title": "Rezumat",
+      "subtitle": "Verifică totul înainte să înceapă instalarea"
+    },
+    "install": {
+      "label": "Instalare",
+      "title": "Se instalează Soplos Linux",
+      "subtitle": "Durează câteva minute. Păstrează calculatorul conectat la internet"
+    },
+    "finished": {
+      "label": "Gata",
+      "title": "Instalare încheiată",
+      "subtitle": "Soplos Linux este instalat pe calculatorul tău"
+    }
+  },
+  "finished": {
+    "done": "{name} este instalat pe computerul dvs.",
+    "restart": "Reporniți pentru a începe să-l folosiți. Puteți rămâne și în sesiunea live și reporni când doriți.",
+    "media": "Când computerul se oprește, scoateți stick-ul USB sau DVD-ul de instalare.",
+    "welcome": "La prima autentificare se deschide Soplos Welcome, cu driverele, actualizările și tot ce trebuie pentru a configura computerul după gustul dvs."
+  }
+}

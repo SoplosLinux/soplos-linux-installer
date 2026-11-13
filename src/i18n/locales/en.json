@@ -1,0 +1,318 @@
+{
+  "app": {
+    "window": {
+      "minimize": "Minimize",
+      "maximize": "Maximize",
+      "restore": "Restore",
+      "close": "Close"
+    }
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "sidebar": {
+    "switchToLight": "Switch to the light theme",
+    "switchToDark": "Switch to the dark theme",
+    "aboutTooltip": "About Soplos Linux Installer (F1)"
+  },
+  "about": {
+    "version": "Version {version}",
+    "tagline": "The installer of Soplos Linux",
+    "copyright": "Copyright © 2026 Sergi Perich",
+    "license": "Licensed under the GPL-3.0-or-later"
+  },
+  "nav": {
+    "back": "Back",
+    "next": "Next",
+    "install": "Install",
+    "restart": "Restart now"
+  },
+  "confirm": {
+    "title": "Start the installation?",
+    "body": "The changes chosen for the disk are made now and cannot be undone. Make sure you have a copy of anything you want to keep.",
+    "accept": "Install"
+  },
+  "welcome": {
+    "greeting": "Welcome to Soplos Linux",
+    "intro": "This installer copies Soplos Linux to your computer, sets up the boot loader you choose and installs the drivers your hardware needs.",
+    "language": "Language of the installer",
+    "checks": {
+      "title": "Requirements",
+      "titleFor": "Requirements of {edition}",
+      "retry": "Check again",
+      "checking": "Checking…",
+      "disk": "Disk space",
+      "diskDetail": "{size} GB on the largest disk. {required} GB are needed",
+      "diskFound": "{size} GB on the largest disk",
+      "diskNone": "No disk was found to install on",
+      "memory": "Memory",
+      "memoryDetail": "{size} GB. {required} GB are needed",
+      "memoryFound": "{size} GB",
+      "internet": "Internet connection",
+      "internetOk": "Connected. The drivers and Soplos Welcome are downloaded during the installation",
+      "internetFail": "Not connected. It is needed to download the drivers and Soplos Welcome",
+      "power": "Power",
+      "powerAc": "Plugged in",
+      "powerBattery": "Running on battery. Plug in the charger: if it runs out in the middle of the installation, the system will not start"
+    }
+  },
+  "location": {
+    "region": "Region",
+    "zone": "City",
+    "detecting": "Finding your location…",
+    "localTime": "Local time: {time}",
+    "languageTitle": "Language",
+    "language": "System",
+    "formats": "Formats",
+    "keyboard": "Keyboard",
+    "layout": "Layout",
+    "variant": "Variant",
+    "variantDefault": "Default",
+    "test": "Type here to test the keyboard",
+    "regions": {
+      "Africa": "Africa",
+      "America": "America",
+      "Antarctica": "Antarctica",
+      "Arctic": "Arctic",
+      "Asia": "Asia",
+      "Atlantic": "Atlantic",
+      "Australia": "Australia",
+      "Europe": "Europe",
+      "Indian": "Indian Ocean",
+      "Pacific": "Pacific"
+    },
+    "zoomOut": "Show the whole map"
+  },
+  "bootloader": {
+    "firmwareUefi": "This computer starts in UEFI mode",
+    "firmwareUefiDetail": "You can choose any of the three boot loaders.",
+    "firmwareBios": "This computer starts in BIOS (legacy) mode",
+    "firmwareBiosDetail": "With BIOS only GRUB and Limine work.",
+    "grub": "The usual one in Debian and Soplos. It shows a menu with every system on the computer.",
+    "systemdBoot": "Minimal and very fast. It starts the kernels straight from the EFI partition, with a simple menu.",
+    "limine": "Modern, fast and with the Soplos theme. Built and maintained by Soplos itself.",
+    "recommended": "Recommended",
+    "uefiAndBios": "UEFI and BIOS",
+    "onlyUefi": "UEFI only",
+    "secureBootMok": "Secure Boot with MOK",
+    "secureBootNote": "All three allow Secure Boot. GRUB and systemd-boot boot with the signature of Debian, for example with a Debian kernel. Limine is signed with your own key (MOK) from Soplos Kernel Installer."
+  },
+  "disk": {
+    "disk": "Disk",
+    "noDisks": "No disk was found to install on.",
+    "now": "Now",
+    "after": "After",
+    "mode": "How to install",
+    "modes": {
+      "erase": "Erase the disk",
+      "eraseDetail": "Soplos takes the whole disk. Everything on it is lost.",
+      "eraseUnavailable": "The disk is too small.",
+      "alongside": "Alongside another system",
+      "alongsideDetail": "Shrinks a partition and installs Soplos in the space freed.",
+      "alongsideUnavailable": "No partition can be shrunk.",
+      "manual": "Manual",
+      "manualDetail": "You decide the partitions, their uses and file systems.",
+      "manualUnavailable": ""
+    },
+    "shrinkWhich": "Partition to shrink",
+    "measuring": "Measuring the space in use…",
+    "shrinkErrors": {
+      "hibernated": "Windows is hibernated or has Fast Startup on. Start Windows, turn off Fast Startup and shut it down completely before going on.",
+      "unreadable": "The space in use of this partition could not be measured. It may be damaged: check it from its own system.",
+      "unsupported": "This file system cannot be shrunk.",
+      "nosudo": "The partition could not be read: administrator rights are needed.",
+      "full": "There is not enough free space in this partition to install Soplos."
+    },
+    "keepsOther": "The other system: {size}",
+    "forSoplos": "Soplos Linux: {size}",
+    "filesystem": "File system",
+    "btrfsNote": "snapshots with Timeshift",
+    "swap": "Swap",
+    "swapNone": "No swap",
+    "swapNormal": "Swap (8 GiB)",
+    "swapHibernate": "Swap with hibernation ({size})",
+    "encrypt": "Encrypt the system",
+    "encryptNote": "A passphrase is asked at every start",
+    "passphrase": "Encryption passphrase",
+    "passphraseConfirm": "Repeat the passphrase",
+    "roles": {
+      "esp": "EFI partition",
+      "biosgrub": "BIOS boot",
+      "boot": "/boot",
+      "kernels": "Kernels (FAT)",
+      "root": "System (/)",
+      "home": "Personal data (/home)",
+      "swap": "Swap",
+      "other": "Other"
+    },
+    "actions": {
+      "keep": "Kept",
+      "shrink": "Shrunk",
+      "use": "Used",
+      "format": "Formatted",
+      "create": "New"
+    },
+    "problems": {
+      "noRoot": "A partition for the system (/) is missing.",
+      "rootSmall": "The system partition (/) needs at least {size}.",
+      "duplicateMount": "Two partitions have the same use.",
+      "noEsp": "An EFI partition (FAT32) for /boot/efi is missing.",
+      "espSmall": "With this boot loader the EFI partition must be at least as big as /boot.",
+      "noBiosGrub": "BIOS with a GPT table needs a BIOS boot partition (1 MiB).",
+      "noLimineFat": "Limine on BIOS needs a FAT32 partition for /boot/limine.",
+      "needsFormat": "/, /boot and /home need ext4, btrfs or xfs: mark them to be formatted.",
+      "noRoomForSwap": "With this swap it does not fit on the disk: choose “No swap”.",
+      "mbrFour": "MBR allows 4 primary partitions at most."
+    },
+    "wipesAll": "Everything on {disk} will be erased.",
+    "deletes": "These partitions will be deleted: {list}.",
+    "backupNote": "Shrinking a partition is safe, but back up your data first in case the power fails.",
+    "partitions": "Partitions",
+    "newTableActive": "New table (GPT): everything will be erased",
+    "reset": "Undo changes",
+    "uses": {
+      "none": "Unused",
+      "root": "/ (system)",
+      "home": "/home",
+      "boot": "/boot",
+      "esp": "/boot/efi (EFI)",
+      "limine": "/boot/limine",
+      "swap": "Swap",
+      "biosgrub": "BIOS boot"
+    },
+    "newPartition": "New partition",
+    "use": "Use",
+    "format": "Format",
+    "delete": "Delete",
+    "create": "Create partition",
+    "add": "Add",
+    "freeSpace": "Free space",
+    "noTable": "No partition table",
+    "empty": "The disk is empty.",
+    "table": "Table",
+    "mbrTooBig": "MBR does not support disks over 2 TiB",
+    "atStart": "At the start",
+    "atEnd": "At the end",
+    "deleteAll": "Delete all",
+    "required": "Needed:",
+    "manualHint": "Create the partitions in the free space."
+  },
+  "user": {
+    "account": "Your account",
+    "fullName": "Full name",
+    "login": "Username",
+    "loginHint": "To log in. Lowercase letters, numbers, - and _",
+    "hostname": "Computer name",
+    "hostnameHint": "How the computer is seen on the network",
+    "password": "Password",
+    "repeat": "Repeat the password",
+    "sameRoot": "Use the same password for the administrator (root)",
+    "rootPassword": "Root password",
+    "show": "Show",
+    "hide": "Hide",
+    "strength": {
+      "1": "Weak",
+      "2": "Fair",
+      "3": "Strong"
+    },
+    "problems": {
+      "loginEmpty": "Write a username",
+      "loginChars": "Only lowercase letters, numbers, - and _, starting with a letter",
+      "loginLong": "32 characters at most",
+      "loginReserved": "That name is already used by the system",
+      "hostnameEmpty": "Write a name for the computer",
+      "hostnameChars": "Only letters, numbers and -, not starting or ending with -",
+      "hostnameLong": "63 characters at most",
+      "mismatch": "The passwords do not match"
+    }
+  },
+  "summary": {
+    "change": "Change",
+    "firmware": "Firmware",
+    "bootloader": "Boot loader",
+    "encryption": "Encryption",
+    "yes": "Yes",
+    "no": "No",
+    "root": "Administrator (root)",
+    "rootSame": "The same password as your account",
+    "rootOwn": "Its own password",
+    "swapPlain": "8 GiB swap",
+    "swapHibernate": "Swap with hibernation",
+    "wipes": "Everything on {disk} will be erased.",
+    "shrinks": "{part} will be shrunk to {size}. Its data is kept.",
+    "formats": "{part} will be formatted as {fs}.",
+    "creates": "{count, plural, one {# new partition will be created.} other {# new partitions will be created.}}"
+  },
+  "install": {
+    "dryRunDone": "Dry run finished without errors.",
+    "failed": "It stopped: {message}",
+    "back": "Back to the summary",
+    "steps": {
+      "partition": "Partitions",
+      "format": "Formatting and mounting",
+      "unmount": "Unmounting",
+      "copy": "Copying the system",
+      "configure": "Configuration",
+      "users": "User",
+      "packages": "Packages",
+      "bootloader": "Boot loader",
+      "finish": "Final touches",
+      "drivers": "Drivers",
+      "kernel": "Kernel"
+    },
+    "showDetails": "Show details",
+    "hideDetails": "Show the presentation",
+    "starting": "Preparing the installation…",
+    "close": "Close the installer"
+  },
+  "steps": {
+    "welcome": {
+      "label": "Welcome",
+      "title": "Welcome",
+      "subtitle": "Choose your language and check that the computer is ready"
+    },
+    "location": {
+      "label": "Location",
+      "title": "Location",
+      "subtitle": "Time zone, language of the system and keyboard"
+    },
+    "bootloader": {
+      "label": "Boot loader",
+      "title": "Boot loader",
+      "subtitle": "The program that starts Soplos Linux when the computer is switched on"
+    },
+    "disk": {
+      "label": "Disk",
+      "title": "Disk",
+      "subtitle": "Where Soplos Linux is installed"
+    },
+    "user": {
+      "label": "User",
+      "title": "User",
+      "subtitle": "Your account and the name of the computer"
+    },
+    "summary": {
+      "label": "Summary",
+      "title": "Summary",
+      "subtitle": "Check everything before the installation starts"
+    },
+    "install": {
+      "label": "Installation",
+      "title": "Installing Soplos Linux",
+      "subtitle": "This takes a few minutes. Keep the computer connected to the internet"
+    },
+    "finished": {
+      "label": "Finished",
+      "title": "Installation finished",
+      "subtitle": "Soplos Linux is installed on your computer"
+    }
+  },
+  "finished": {
+    "done": "{name} is installed on your computer.",
+    "restart": "Restart to start using it. You can also stay in the live session and restart whenever you want.",
+    "media": "When the computer turns off, remove the installation USB stick or DVD.",
+    "welcome": "At your first login Soplos Welcome opens, with the drivers, the updates and everything needed to set the computer up your way."
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "kicker": "Willkommen bei",
+  "introText": "Während der Installation lernen Sie die Werkzeuge kennen, die Sie begleiten werden.",
+  "editions": {
+    "tyron": "Xfce, <b>leicht und schnell</b>.",
+    "tyson": "Plasma, <b>leistungsstark und anpassbar</b>.",
+    "boro": "GNOME, <b>klar und modern</b>."
+  },
+  "outroTitle": "Eine Familie.",
+  "outroText": "Tyron, Tyson und Boro teilen dieselben Werkzeuge. Soplos Welcome erwartet Sie beim ersten Start.",
+  "apps": {
+    "welcome": {
+      "cat": "Willkommen",
+      "tag": "Ihr Computer, <b>startklar</b>.",
+      "desc": "Ein Ort, um das System zu aktualisieren, Treiber und Kernel zu installieren, die Sicherheit zu stärken und es für Spiele zu optimieren.",
+      "chips": [
+        "Aktualisieren",
+        "Treiber",
+        "Sicherheit",
+        "Gaming"
+      ]
+    },
+    "store": {
+      "cat": "Software",
+      "tag": "Alle Software, <b>an einem Ort</b>.",
+      "desc": "Finden, installieren, aktualisieren und entfernen Sie Anwendungen aus APT, Flatpak, Snap und AppImage und spielen Sie Firmware-Updates mit fwupd ein.",
+      "chips": [
+        "APT · Flatpak · Snap",
+        "AppStream und Flathub",
+        "Firmware mit fwupd"
+      ]
+    },
+    "theme-manager": {
+      "cat": "Desktop · Tyron",
+      "tag": "Komplette Designs <b>für Tyron</b>.",
+      "desc": "Der Designmanager von Xfce: Desktop-Designs anwenden, erstellen, exportieren und importieren, Hintergründe durchsuchen und die Leiste einrichten.",
+      "chips": [
+        "Designgalerie",
+        "Hintergründe",
+        "Leiste"
+      ]
+    },
+    "look-manager": {
+      "cat": "Desktop · Tyson",
+      "tag": "Das Aussehen von Plasma, <b>wie Sie es wollen</b>.",
+      "desc": "Designs und Desktop-Anordnung für Tyson: was Theme Manager und Layout Switcher unter Xfce und GNOME tun, jetzt für Plasma.",
+      "chips": [
+        "Designs",
+        "Anordnung",
+        "Plasma"
+      ]
+    },
+    "layout-switcher": {
+      "cat": "Desktop · Boro",
+      "tag": "Vier GNOME-Desktops, <b>ein Klick</b>.",
+      "desc": "Soplos, Dock, Tiling und GNOME. Es installiert fehlende Erweiterungen und wendet die Einstellungen jeder Anordnung an.",
+      "chips": [
+        "Soplos",
+        "Dock",
+        "Tiling",
+        "GNOME"
+      ]
+    },
+    "gaming-panel": {
+      "cat": "Gaming",
+      "tag": "Leistung, <b>sofort</b>.",
+      "desc": "Ein Overlay-Panel, das sich mit Strg+Umschalt+G öffnet und GameMode live während des Spielens steuert.",
+      "chips": [
+        "Strg+Umschalt+G",
+        "GameMode live",
+        "Boro · Tyson · Tyron"
+      ]
+    },
+    "appimage-manager": {
+      "cat": "Software",
+      "tag": "Ihre AppImages, <b>im Desktop integriert</b>.",
+      "desc": "Es verschiebt sie nach ~/AppImages, extrahiert ihr Symbol, erstellt den Menüeintrag und sucht Updates auf GitHub, GitLab oder Codeberg.",
+      "chips": [
+        "Menüeintrag",
+        "Symbol und Metadaten",
+        "Updates"
+      ]
+    },
+    "webapp-manager": {
+      "cat": "Desktop",
+      "tag": "Jede Website, <b>als Anwendung</b>.",
+      "desc": "Macht aus einer Seite eine eigene App: eigenes Fenster, eigenes Symbol in der Leiste und ein isoliertes Browserprofil.",
+      "chips": [
+        "Eigenes Fenster",
+        "Isoliertes Profil",
+        "Ihr Browser"
+      ]
+    },
+    "kernel-installer": {
+      "cat": "System",
+      "tag": "Herunterladen, patchen <b>und den Kernel installieren</b>.",
+      "desc": "Ein grafischer Assistent, der den Linux-Kernel vom Quellcode bis in Ihren Systemstart bringt.",
+      "chips": [
+        "Herunterladen",
+        "Patchen",
+        "Bauen und installieren"
+      ]
+    },
+    "grub-editor": {
+      "cat": "Systemstart",
+      "tag": "Der Bootloader, <b>ohne eine Datei anzufassen</b>.",
+      "desc": "Wählen Sie den Standardeintrag und die Wartezeit, bearbeiten Sie die Kernelparameter und ändern Sie das Aussehen des Menüs.",
+      "chips": [
+        "Kernelparameter",
+        "Designs und Hintergründe",
+        "Farben und Schriften"
+      ]
+    },
+    "plymouth-manager": {
+      "cat": "Systemstart",
+      "tag": "Der Startbildschirm, <b>nach Ihrem Geschmack</b>.",
+      "desc": "Eine Designgalerie mit echter Vorschau, Installation aus einer Datei und Entfernen der Designs, die Sie nicht mehr wollen.",
+      "chips": [
+        "Echte Vorschau",
+        "Aus Datei installieren",
+        "X11 und Wayland"
+      ]
+    },
+    "repo-selector": {
+      "cat": "System",
+      "tag": "APT-Quellen <b>unter Kontrolle</b>.",
+      "desc": "Quellen ein- und ausschalten, .list-Dateien auf DEB822 umstellen, den schnellsten Spiegel mit einem echten Test finden und GPG-Schlüssel verwalten.",
+      "chips": [
+        "DEB822",
+        "Geschwindigkeitstest",
+        "GPG-Schlüssel"
+      ]
+    },
+    "system-service": {
+      "cat": "System",
+      "tag": "systemd-Dienste, <b>ohne Befehlszeile</b>.",
+      "desc": "Dienste und Timer starten, stoppen und aktivieren, Protokolle lesen und herausfinden, was den Start verlangsamt. Jede Änderung lässt sich rückgängig machen.",
+      "chips": [
+        "Dienste und Timer",
+        "Protokolle",
+        "Rückgängig machen"
+      ]
+    },
+    "sys-cleaner": {
+      "cat": "Wartung",
+      "tag": "Platz zurückgewinnen, <b>nur was Sie bestätigen</b>.",
+      "desc": "Es sucht Caches, Protokolle, temporäre Dateien, Reste von Flatpak und Snap und alte Kernel und erklärt alles vor dem Löschen.",
+      "chips": [
+        "Caches und Protokolle",
+        "Alte Kernel",
+        "Sie entscheiden"
+      ]
+    }
+  },
+  "soplos": {
+    "cat": "Die Distribution",
+    "tag": "Debian, <b>sofort einsatzbereit</b>.",
+    "desc": "Die stabile Basis von Debian mit eigenen Kerneln, Timeshift-Schnappschüssen auf btrfs und drei Desktops mit denselben Werkzeugen.",
+    "chips": [
+      "Debian-Basis",
+      "Soplos-Kernel",
+      "Timeshift und btrfs",
+      "GRUB · systemd-boot · Limine"
+    ]
+  },
+  "familyCat": "Die Editionen",
+  "familyTitle": "Drei Editionen",
+  "installing": "Wird installiert",
+  "cards": {
+    "tyron": "Leicht und schnell. Läuft gut mit wenig Speicher.",
+    "tyson": "Leistungsstark und bis ins Detail anpassbar.",
+    "boro": "Klar und modern, mit vier wählbaren Anordnungen."
+  },
+  "editionSlides": {
+    "tyron": [
+      {
+        "cat": "Tyron · Xfce",
+        "tag": "Leicht, <b>schnell und stabil</b>.",
+        "desc": "Xfce braucht sehr wenig Speicher und startet in Sekunden: Es gibt bescheidenen Computern ein neues Leben und fliegt auf modernen.",
+        "chips": [
+          "Wenig Speicher",
+          "Schneller Start",
+          "Sehr stabil"
+        ]
+      },
+      {
+        "cat": "Tyron · Xfce",
+        "tag": "Klassisch <b>und nach Ihrem Geschmack</b>.",
+        "desc": "Leiste, Menü und Desktop wie gewohnt, und alles einstellbar: Mit Theme Manager ändern Sie in einem Moment das ganze Design, die Hintergründe und die Leiste.",
+        "chips": [
+          "Leiste nach Maß",
+          "Theme Manager",
+          "Hintergründe"
+        ]
+      }
+    ],
+    "tyson": [
+      {
+        "cat": "Tyson · KDE Plasma",
+        "tag": "Leistungsstark <b>und modern</b>.",
+        "desc": "KDE Plasma vereint gepflegte Effekte, Widgets auf dem Desktop und in der Leiste und Optionen für alles, mit Wayland ab Werk.",
+        "chips": [
+          "Widgets",
+          "Wayland",
+          "Effekte"
+        ]
+      },
+      {
+        "cat": "Tyson · KDE Plasma",
+        "tag": "Ihr Desktop, <b>Stück für Stück</b>.",
+        "desc": "Leisten, Designs, Symbole und Anordnung: Look Manager vereint an einem Ort alles, was Plasma zu einem Desktop nach Maß macht.",
+        "chips": [
+          "Look Manager",
+          "Designs",
+          "Anordnung"
+        ]
+      }
+    ],
+    "boro": [
+      {
+        "cat": "Boro · GNOME",
+        "tag": "Klar, <b>ohne Ablenkung</b>.",
+        "desc": "GNOME rückt in den Mittelpunkt, was Sie tun: eine Aktivitätenübersicht, um alles zu finden, dynamische Arbeitsflächen und Touchpad-Gesten.",
+        "chips": [
+          "Aktivitäten",
+          "Arbeitsflächen",
+          "Gesten"
+        ]
+      },
+      {
+        "cat": "Boro · GNOME",
+        "tag": "Vier Desktops <b>in einem</b>.",
+        "desc": "Mit Layout Switcher wählen Sie zwischen Soplos, Dock, Tiling und reinem GNOME: vom klassischen Desktop bis zur Kachelanordnung, mit einem Klick.",
+        "chips": [
+          "Soplos",
+          "Dock",
+          "Tiling",
+          "GNOME"
+        ]
+      }
+    ]
+  }
+}

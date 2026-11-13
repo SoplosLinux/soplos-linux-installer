@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "soplos-linux-installer",
+  "version": "3.0.0-alpha",
+  "identifier": "org.soplos.linuxinstaller",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Soplos Linux Installer",
+        "width": 1100,
+        "height": 720,
+        "minWidth": 960,
+        "minHeight": 640,
+        "resizable": true,
+        "decorations": false,
+        "transparent": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "deb"
+    ],
+    "publisher": "Sergi Perich",
+    "homepage": "https://soplos.org",
+    "copyright": "Copyright © 2026 Sergi Perich",
+    "license": "GPL-3.0-or-later",
+    "licenseFile": "../LICENSE",
+    "category": "Utility",
+    "shortDescription": "Installer of Soplos Linux",
+    "longDescription": "The installer of Soplos Linux. It copies the system to the disk, lets you choose GRUB, systemd-boot or Limine as the boot loader, and installs the drivers the hardware needs.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.png"
+    ],
+    "linux": {
+      "deb": {
+        "section": "admin",
+        "priority": "optional",
+        "depends": [
+          "sudo",
+          "curl",
+          "util-linux",
+          "parted",
+          "dosfstools",
+          "e2fsprogs",
+          "btrfs-progs",
+          "xfsprogs",
+          "squashfs-tools",
+          "cryptsetup",
+          "ntfs-3g",
+          "efibootmgr"
+        ],
+        "changelog": "../CHANGELOG.md",
+        "desktopTemplate": "resources/debian/soplos-linux-installer.desktop.hbs",
+        "files": {
+          "/usr/share/doc/soplos-linux-installer/copyright": "resources/debian/copyright",
+          "/usr/share/soplos-linux-installer/editions/boro.json": "resources/editions/boro.json",
+          "/usr/share/soplos-linux-installer/editions/tyron.json": "resources/editions/tyron.json",
+          "/usr/share/soplos-linux-installer/editions/tyson.json": "resources/editions/tyson.json"
+        }
+      }
+    },
+    "resources": [
+      "resources/vbox/VBoxLinuxAdditions.run"
+    ]
+  }
+}

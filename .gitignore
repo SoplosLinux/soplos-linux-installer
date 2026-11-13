@@ -1,0 +1,8 @@
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/gen/
+
+# The production Calamares configuration of each edition: a local reference
+# for the port, not part of the program.
+scripts_*/

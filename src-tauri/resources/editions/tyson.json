@@ -1,0 +1,37 @@
+{
+  "codename": "tyson",
+  "name": "Soplos Linux Tyson",
+  "requirements": {
+    "diskGb": 28,
+    "memoryGb": 3.6
+  },
+  "internetProbe": "https://raw.githubusercontent.com/SoplosLinux/soplos-kernels/main/",
+  "geoipUrl": "https://geoip.kde.org/v1/calamares",
+  "displayManager": "plasmalogin",
+  "removePackages": [
+    "live-config",
+    "live-config-doc",
+    "live-config-systemd",
+    "calamares-settings-debian",
+    "calamares",
+    "soplos-welcome-live",
+    "soplos-linux-installer",
+    "calamares-extensions-data"
+  ],
+  "installPackages": [
+    "soplos-welcome"
+  ],
+  "removeFiles": [
+    "/etc/calamares",
+    "/usr/share/applications/calamares-install-soplos.desktop",
+    "/etc/sudoers.d/liveuser",
+    "/usr/local/bin/remove-liveuser.sh",
+    "/usr/local/bin/setup-desktop.sh",
+    "/usr/local/bin/remove-calamares.sh",
+    "/usr/local/bin/remove-sourceslist.sh",
+    "/usr/local/bin/remove-data.sh",
+    "/usr/local/bin/clean-modules.sh",
+    "/etc/apt/sources.list",
+    "/usr/local/bin/fix-plasmalogin-locale.sh"
+  ]
+}

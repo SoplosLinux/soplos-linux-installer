@@ -1,0 +1,243 @@
+{
+  "kicker": "Bun venit în",
+  "introText": "Cât timp se instalează, descoperiți instrumentele care vă vor însoți.",
+  "editions": {
+    "tyron": "Xfce, <b>ușor și rapid</b>.",
+    "tyson": "Plasma, <b>puternic și pe măsura dvs.</b>",
+    "boro": "GNOME, <b>curat și modern</b>."
+  },
+  "outroTitle": "O familie.",
+  "outroText": "Tyron, Tyson și Boro au aceleași instrumente. Soplos Welcome vă așteaptă la prima pornire.",
+  "apps": {
+    "welcome": {
+      "cat": "Bun venit",
+      "tag": "Computerul dvs., <b>pregătit</b>.",
+      "desc": "Un singur loc pentru a actualiza sistemul, a instala drivere și nuclee, a întări securitatea și a-l optimiza pentru jocuri.",
+      "chips": [
+        "Actualizare",
+        "Drivere",
+        "Securitate",
+        "Jocuri"
+      ]
+    },
+    "store": {
+      "cat": "Software",
+      "tag": "Tot software-ul, <b>într-un singur loc</b>.",
+      "desc": "Găsiți, instalați, actualizați și eliminați aplicații din APT, Flatpak, Snap și AppImage și aplicați actualizări de firmware cu fwupd.",
+      "chips": [
+        "APT · Flatpak · Snap",
+        "AppStream și Flathub",
+        "Firmware cu fwupd"
+      ]
+    },
+    "theme-manager": {
+      "cat": "Desktop · Tyron",
+      "tag": "Teme complete <b>pentru Tyron</b>.",
+      "desc": "Managerul de teme Xfce: aplicați, creați, exportați și importați teme, răsfoiți imagini de fundal și configurați panoul.",
+      "chips": [
+        "Galerie de teme",
+        "Fundaluri",
+        "Panou"
+      ]
+    },
+    "look-manager": {
+      "cat": "Desktop · Tyson",
+      "tag": "Aspectul Plasma, <b>cum vreți dvs.</b>",
+      "desc": "Teme și aranjarea desktopului pentru Tyson: ce fac Theme Manager și Layout Switcher în Xfce și GNOME, acum în Plasma.",
+      "chips": [
+        "Teme",
+        "Aranjare",
+        "Plasma"
+      ]
+    },
+    "layout-switcher": {
+      "cat": "Desktop · Boro",
+      "tag": "Patru desktopuri GNOME, <b>un singur clic</b>.",
+      "desc": "Soplos, Dock, Tiling și GNOME. Instalează extensiile lipsă și aplică setările fiecărei aranjări.",
+      "chips": [
+        "Soplos",
+        "Dock",
+        "Tiling",
+        "GNOME"
+      ]
+    },
+    "gaming-panel": {
+      "cat": "Jocuri",
+      "tag": "Performanță, <b>pe loc</b>.",
+      "desc": "Un panou suprapus care se deschide cu Ctrl+Shift+G și controlează GameMode în timp real cât jucați.",
+      "chips": [
+        "Ctrl+Shift+G",
+        "GameMode în timp real",
+        "Boro · Tyson · Tyron"
+      ]
+    },
+    "appimage-manager": {
+      "cat": "Software",
+      "tag": "AppImage-urile dvs., <b>integrate în desktop</b>.",
+      "desc": "Le mută în ~/AppImages, extrage pictograma, creează intrarea din meniu și caută actualizări pe GitHub, GitLab sau Codeberg.",
+      "chips": [
+        "Intrare în meniu",
+        "Pictogramă și metadate",
+        "Actualizări"
+      ]
+    },
+    "webapp-manager": {
+      "cat": "Desktop",
+      "tag": "Orice site, <b>ca aplicație</b>.",
+      "desc": "Transformă un site într-o aplicație proprie: fereastră proprie, pictogramă proprie în bară și profil de browser izolat.",
+      "chips": [
+        "Fereastră proprie",
+        "Profil izolat",
+        "Browserul dvs."
+      ]
+    },
+    "kernel-installer": {
+      "cat": "Sistem",
+      "tag": "Descărcați, aplicați patch-uri <b>și instalați nucleul</b>.",
+      "desc": "Un asistent grafic care duce nucleul Linux de la codul sursă până la pornirea sistemului.",
+      "chips": [
+        "Descărcare",
+        "Patch-uri",
+        "Compilare și instalare"
+      ]
+    },
+    "grub-editor": {
+      "cat": "Pornire",
+      "tag": "Programul de pornire, <b>fără a atinge vreun fișier</b>.",
+      "desc": "Alegeți intrarea implicită și timpul de așteptare, editați parametrii nucleului și schimbați aspectul meniului.",
+      "chips": [
+        "Parametrii nucleului",
+        "Teme și fundaluri",
+        "Culori și fonturi"
+      ]
+    },
+    "plymouth-manager": {
+      "cat": "Pornire",
+      "tag": "Ecranul de pornire, <b>după gustul dvs.</b>",
+      "desc": "Galerie de teme cu previzualizare reală, instalare din fișier și ștergerea celor pe care nu le mai vreți.",
+      "chips": [
+        "Previzualizare reală",
+        "Instalare din fișier",
+        "X11 și Wayland"
+      ]
+    },
+    "repo-selector": {
+      "cat": "Sistem",
+      "tag": "Depozitele APT <b>sub control</b>.",
+      "desc": "Activați sau dezactivați depozite, treceți fișierele .list la DEB822, găsiți cea mai rapidă oglindă cu un test real și gestionați cheile GPG.",
+      "chips": [
+        "DEB822",
+        "Test de viteză",
+        "Chei GPG"
+      ]
+    },
+    "system-service": {
+      "cat": "Sistem",
+      "tag": "Servicii systemd, <b>fără linie de comandă</b>.",
+      "desc": "Porniți, opriți și activați servicii și temporizatoare, citiți jurnalele și aflați ce încetinește pornirea. Orice schimbare se poate anula.",
+      "chips": [
+        "Servicii și temporizatoare",
+        "Jurnale",
+        "Anulare"
+      ]
+    },
+    "sys-cleaner": {
+      "cat": "Întreținere",
+      "tag": "Recuperați spațiu, <b>doar ce confirmați</b>.",
+      "desc": "Caută cache-uri, jurnale, fișiere temporare, resturi Flatpak și Snap și nuclee vechi și explică fiecare element înainte de ștergere.",
+      "chips": [
+        "Cache și jurnale",
+        "Nuclee vechi",
+        "Dvs. decideți"
+      ]
+    }
+  },
+  "soplos": {
+    "cat": "Distribuția",
+    "tag": "Debian, <b>gata de folosit</b>.",
+    "desc": "Baza stabilă Debian cu nuclee proprii, instantanee Timeshift pe btrfs și trei desktopuri care au aceleași instrumente.",
+    "chips": [
+      "Bază Debian",
+      "Nuclee Soplos",
+      "Timeshift și btrfs",
+      "GRUB · systemd-boot · Limine"
+    ]
+  },
+  "familyCat": "Edițiile",
+  "familyTitle": "Trei ediții",
+  "installing": "Se instalează",
+  "cards": {
+    "tyron": "Ușor și rapid. Merge bine cu puțină memorie.",
+    "tyson": "Puternic și personalizabil până la ultimul detaliu.",
+    "boro": "Curat și modern, cu patru aranjări la alegere."
+  },
+  "editionSlides": {
+    "tyron": [
+      {
+        "cat": "Tyron · Xfce",
+        "tag": "Ușor, <b>rapid și stabil</b>.",
+        "desc": "Xfce folosește foarte puțină memorie și pornește în câteva secunde: dă o viață nouă computerelor modeste și zboară pe cele moderne.",
+        "chips": [
+          "Puțină memorie",
+          "Pornire rapidă",
+          "Foarte stabil"
+        ]
+      },
+      {
+        "cat": "Tyron · Xfce",
+        "tag": "Clasic <b>și după gustul dvs.</b>",
+        "desc": "Panoul, meniul și desktopul obișnuite, toate configurabile: cu Theme Manager schimbați într-o clipă tema completă, fundalurile și panoul.",
+        "chips": [
+          "Panou pe măsură",
+          "Theme Manager",
+          "Fundaluri"
+        ]
+      }
+    ],
+    "tyson": [
+      {
+        "cat": "Tyson · KDE Plasma",
+        "tag": "Puternic <b>și modern</b>.",
+        "desc": "KDE Plasma reunește efecte îngrijite, widgeturi pe desktop și în panou și opțiuni pentru orice, cu Wayland implicit.",
+        "chips": [
+          "Widgeturi",
+          "Wayland",
+          "Efecte"
+        ]
+      },
+      {
+        "cat": "Tyson · KDE Plasma",
+        "tag": "Desktopul dvs., <b>bucată cu bucată</b>.",
+        "desc": "Panouri, teme, pictograme și aranjare: Look Manager adună într-un singur loc tot ce face din Plasma un desktop pe măsura dvs.",
+        "chips": [
+          "Look Manager",
+          "Teme",
+          "Aranjare"
+        ]
+      }
+    ],
+    "boro": [
+      {
+        "cat": "Boro · GNOME",
+        "tag": "Curat, <b>fără distrageri</b>.",
+        "desc": "GNOME pune accentul pe ce faceți: o privire de ansamblu a activităților pentru a găsi totul, spații de lucru dinamice și gesturi pe touchpad.",
+        "chips": [
+          "Activități",
+          "Spații de lucru",
+          "Gesturi"
+        ]
+      },
+      {
+        "cat": "Boro · GNOME",
+        "tag": "Patru desktopuri <b>într-unul</b>.",
+        "desc": "Cu Layout Switcher alegeți între Soplos, Dock, Tiling și GNOME pur: de la desktopul tradițional la mozaic, cu un clic.",
+        "chips": [
+          "Soplos",
+          "Dock",
+          "Tiling",
+          "GNOME"
+        ]
+      }
+    ]
+  }
+}

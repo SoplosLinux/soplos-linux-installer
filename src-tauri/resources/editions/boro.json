@@ -1,0 +1,35 @@
+{
+  "codename": "boro",
+  "name": "Soplos Linux Boro",
+  "requirements": {
+    "diskGb": 18,
+    "memoryGb": 1.8
+  },
+  "internetProbe": "https://raw.githubusercontent.com/SoplosLinux/soplos-kernels/main/",
+  "geoipUrl": "https://geoip.kde.org/v1/calamares",
+  "displayManager": "gdm3",
+  "removePackages": [
+    "live-config",
+    "live-config-doc",
+    "live-config-systemd",
+    "calamares-settings-debian",
+    "calamares",
+    "soplos-welcome-live",
+    "soplos-linux-installer"
+  ],
+  "installPackages": [
+    "soplos-welcome"
+  ],
+  "removeFiles": [
+    "/etc/calamares",
+    "/usr/share/applications/calamares-install-soplos.desktop",
+    "/etc/sudoers.d/liveuser",
+    "/usr/local/bin/remove-liveuser.sh",
+    "/usr/local/bin/setup-desktop.sh",
+    "/usr/local/bin/remove-calamares.sh",
+    "/usr/local/bin/remove-sourceslist.sh",
+    "/usr/local/bin/remove-data.sh",
+    "/usr/local/bin/clean-modules.sh",
+    "/etc/apt/sources.list"
+  ]
+}

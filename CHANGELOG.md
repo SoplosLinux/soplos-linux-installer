@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.0-2-beta] - 2026-11-14
+
+### Fixed
+- The folders of the new user (Documents, Downloads...) were made in
+  English, because the helper runs every command with `LC_ALL=C`, which
+  outweighed the language passed to `xdg-user-dirs-update`. At the first
+  login the desktop asked to rename them to the system's language, and the
+  bookmarks pointed to the English names. They are made now as the
+  `setup-desktop.sh` of Calamares made them, with `su -` (a clean login
+  environment that reads `/etc/default/locale`), so they are in the
+  system's language from the start. A failure is written to the log.
+
 ## [3.0.0-1-beta] - 2026-11-14
 
 ### Added

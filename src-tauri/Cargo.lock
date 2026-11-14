@@ -3381,7 +3381,7 @@ dependencies = [
 
 [[package]]
 name = "soplos-linux-installer"
-version = "3.0.0-1-beta"
+version = "3.0.0-2-beta"
 dependencies = [
  "gettext",
  "serde",

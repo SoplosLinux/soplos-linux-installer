@@ -254,9 +254,14 @@ pub fn users(ctx: &mut Ctx, plan: &Plan) -> Result<(), String> {
     let root = if u.same_root_password { &u.password } else { &u.root_password };
     ctx.chroot(&["chpasswd"], Some(Stdin::Secret(format!("{}:{}\nroot:{}\n", u.login, u.password, root))))?;
 
-    // The XDG folders (Documents, Downloads...) in the user's language.
-    let lang = if plan.locale.is_empty() { "en_US.UTF-8" } else { plan.locale.as_str() };
-    let _ = ctx.chroot(&["runuser", "-u", &u.login, "--", "env", &format!("LANG={lang}"), "xdg-user-dirs-update"], None);
+    // The XDG folders (Documents, Downloads...) in the system's language, as
+    // the setup-desktop.sh of Calamares made them: a login shell starts with
+    // a clean environment (without the LC_ALL=C of the helper, which made
+    // the folders English and asked to rename them at the first login) and
+    // reads /etc/default/locale, written in step 4b.
+    if let Err(e) = ctx.chroot(&["su", "-", &u.login, "-c", "xdg-user-dirs-update"], None) {
+        ctx.log(&format!("WARNING: the XDG folders were not created ({e}); they are created at the first login."));
+    }
     ctx.run("chmod", &["755", &t(&format!("/home/{}", u.login))], None)?;
     Ok(())
 }

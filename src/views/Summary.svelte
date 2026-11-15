@@ -88,7 +88,9 @@
         : $_("disk.swapNone")
       : $plan.disk.swap === "none"
         ? $_("disk.swapNone")
-        : $plan.disk.swap === "hibernate"
+        : parts.some((p) => p.fs === "swap" && p.action === "use")
+          ? $_("summary.swapShared")
+          : $plan.disk.swap === "hibernate"
           ? $_("summary.swapHibernate")
           : $_("summary.swapPlain");
 

@@ -269,6 +269,7 @@
     "rootOwn": "Its own password",
     "swapPlain": "8 GiB swap",
     "swapHibernate": "Swap with hibernation",
+    "swapShared": "The existing swap, shared",
     "wipes": "Everything on {disk} will be erased.",
     "shrinks": "{part} will be shrunk to {size}. Its data is kept.",
     "formats": "{part} will be formatted as {fs}.",

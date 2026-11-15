@@ -297,6 +297,11 @@ fn luks_open(ctx: &mut Ctx, plan: &Plan, dev: &str, name: &str, volumes: &mut Vo
     Ok(format!("/dev/mapper/{name}"))
 }
 
+/// The file system already on a partition, "" when it has none or it cannot be read.
+fn fs_type(ctx: &mut Ctx, dev: &str) -> String {
+    ctx.read("blkid", &["-o", "value", "-s", "TYPE", dev]).map(|s| s.trim().to_string()).unwrap_or_default()
+}
+
 /// Writes the file systems, with LUKS under the ones that ask for it
 /// (DESIGN.md, 5.4), and mounts everything at /target.
 pub fn format_and_mount(ctx: &mut Ctx, plan: &Plan, placed: &[Placed], state: &DiskState) -> Result<Volumes, String> {
@@ -314,6 +319,12 @@ pub fn format_and_mount(ctx: &mut Ctx, plan: &Plan, placed: &[Placed], state: &D
         }
         if part.fs == "swap" {
             if !part.writes() && part.action != "use" {
+                continue;
+            }
+            // The swap of the system next to Soplos, used as it is: mkswap
+            // would give it a new UUID and that system would lose its swap.
+            if part.action == "use" && !plan.disk.encrypt && fs_type(ctx, &p.dev) == "swap" {
+                volumes.swap = Some((p.dev.clone(), p.dev.clone(), "plain".into()));
                 continue;
             }
             if plan.disk.encrypt && plan.disk.swap == "hibernate" {

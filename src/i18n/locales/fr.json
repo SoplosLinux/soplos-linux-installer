@@ -269,6 +269,7 @@
     "rootOwn": "Son propre mot de passe",
     "swapPlain": "Swap de 8 Gio",
     "swapHibernate": "Swap avec hibernation",
+    "swapShared": "Le swap existant, partagé",
     "wipes": "Tout ce qui se trouve sur {disk} sera effacé.",
     "shrinks": "{part} sera réduite à {size}. Ses données sont conservées.",
     "formats": "{part} sera formatée en {fs}.",

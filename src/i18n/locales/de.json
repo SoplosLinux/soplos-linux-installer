@@ -269,6 +269,7 @@
     "rootOwn": "Eigenes Passwort",
     "swapPlain": "8 GiB Swap",
     "swapHibernate": "Swap mit Ruhezustand",
+    "swapShared": "Der vorhandene Swap, gemeinsam genutzt",
     "wipes": "Alles auf {disk} wird gelöscht.",
     "shrinks": "{part} wird auf {size} verkleinert. Die Daten bleiben erhalten.",
     "formats": "{part} wird als {fs} formatiert.",

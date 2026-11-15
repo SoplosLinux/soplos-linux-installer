@@ -269,6 +269,7 @@
     "rootOwn": "Parolă proprie",
     "swapPlain": "Swap de 8 GiB",
     "swapHibernate": "Swap cu hibernare",
+    "swapShared": "Swap-ul existent, partajat",
     "wipes": "Tot ce se află pe {disk} va fi șters.",
     "shrinks": "{part} va fi micșorată la {size}. Datele ei se păstrează.",
     "formats": "{part} va fi formatată ca {fs}.",

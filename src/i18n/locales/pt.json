@@ -269,6 +269,7 @@
     "rootOwn": "Palavra-passe própria",
     "swapPlain": "Swap de 8 GiB",
     "swapHibernate": "Swap com hibernação",
+    "swapShared": "A swap existente, partilhada",
     "wipes": "Será apagado tudo o que há em {disk}.",
     "shrinks": "{part} será reduzida para {size}. Os seus dados mantêm-se.",
     "formats": "{part} será formatada como {fs}.",

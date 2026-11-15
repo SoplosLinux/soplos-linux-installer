@@ -103,6 +103,8 @@ export interface Options {
   filesystem: "btrfs" | "ext4" | "xfs";
   encrypt: boolean;
   swap: number;
+  /** The swap is for hibernation: it is never shared with another system. */
+  hibernate: boolean;
   /** The smallest root the edition needs. */
   minRoot: number;
 }
@@ -177,11 +179,22 @@ const keep = (p: Partition): Planned => ({
   label: p.label || p.partlabel,
 });
 
+/** The swap partition of the system already on the disk, when Soplos can
+ * share it instead of making its own: a plain swap, as another Linux leaves
+ * it. Not for hibernation (the other system would write over the image) nor
+ * with encryption (the swap would be formatted with a key and the other
+ * system would lose it). */
+export function sharedSwap(disk: Disk, o: Options): Partition | undefined {
+  if (o.swap <= 0 || o.hibernate || o.encrypt) return undefined;
+  return disk.partitions.find((p) => p.fstype === "swap");
+}
+
 /** What has to be added next to an existing system, beyond /boot, root and swap. */
-function alongsideExtras(disk: Disk, o: Options): { pieces: Piece[]; separateBoot: boolean; esp?: Partition } {
+function alongsideExtras(disk: Disk, o: Options): { pieces: Piece[]; separateBoot: boolean; esp?: Partition; swap?: Partition } {
   const pieces: Piece[] = [];
   let separateBoot = true;
   const esp = disk.partitions.find(isEsp);
+  const swap = sharedSwap(disk, o);
   if (o.firmware === "uefi") {
     if (!esp) pieces.push(fresh(espSize(o.bootloader), "vfat", "/boot/efi", GUID.esp));
     else if (o.bootloader === "systemd-boot" && esp.size < KERNELS_FAT) {
@@ -198,13 +211,13 @@ function alongsideExtras(disk: Disk, o: Options): { pieces: Piece[]; separateBoo
     }
     if (o.bootloader === "limine") pieces.push(fresh(KERNELS_FAT, "vfat", "/boot/limine", GUID.basicData));
   }
-  return { pieces, separateBoot, esp };
+  return { pieces, separateBoot, esp, swap };
 }
 
 /** Space Soplos needs next to another system, root included. */
 export function alongsideNeed(disk: Disk, o: Options): number {
-  const { pieces, separateBoot } = alongsideExtras(disk, o);
-  return pieces.reduce((s, p) => s + p.size, 0) + (separateBoot ? BOOT_SIZE : 0) + o.swap + o.minRoot;
+  const { pieces, separateBoot, swap } = alongsideExtras(disk, o);
+  return pieces.reduce((s, p) => s + p.size, 0) + (separateBoot ? BOOT_SIZE : 0) + (swap ? 0 : o.swap) + o.minRoot;
 }
 
 /** The free space that follows a partition, up to the next one or the end. */
@@ -215,17 +228,19 @@ export function spaceAfter(disk: Disk, part: Partition): number {
 
 /** Shrinks `target` to `newSize` and installs in the space freed after it. */
 export function alongsideLayout(disk: Disk, target: Partition, newSize: number, o: Options): Layout | null {
-  const { pieces, separateBoot, esp } = alongsideExtras(disk, o);
+  const { pieces, separateBoot, esp, swap } = alongsideExtras(disk, o);
   const start = alignUp(target.start + newSize);
   const next = disk.partitions.find((p) => p.start > target.start);
   const end = next ? alignDown(next.start) : usableEnd(disk);
-  const placed = place([...pieces, ...newSystem(o, separateBoot)], start, end);
+  const placed = place([...pieces, ...newSystem(swap ? { ...o, swap: 0 } : o, separateBoot)], start, end);
   if (!placed) return null;
   const root = placed.find((p) => p.mount === "/");
   if (!root || root.size < o.minRoot) return null;
   const existing = disk.partitions.map((p) => {
     if (p.path === target.path) return { ...keep(p), action: "shrink" as Action, size: newSize };
     if (o.firmware === "uefi" && esp && p.path === esp.path) return { ...keep(p), action: "use" as Action, mount: "/boot/efi" };
+    // Used as it is: the helper does not format a swap it is told to use.
+    if (swap && p.path === swap.path) return { ...keep(p), action: "use" as Action, fs: "swap" };
     return keep(p);
   });
   return { newTable: false, parts: [...existing, ...placed].sort((a, b) => a.start - b.start) };

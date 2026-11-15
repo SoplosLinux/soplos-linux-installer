@@ -86,6 +86,7 @@
     filesystem: $plan.disk.filesystem,
     encrypt: $plan.disk.encrypt,
     swap: swapSize($plan.disk.swap, ramBytes),
+    hibernate: $plan.disk.swap === "hibernate",
     minRoot,
   } satisfies Options;
 

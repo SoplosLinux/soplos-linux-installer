@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.0-3-beta] - 2026-11-15
+
+### Fixed
+- Installing alongside another Linux made a second swap partition even when
+  the disk already had one, so the existing swap was left unused. The
+  existing swap is now shared: it is written in the fstab of Soplos as it
+  is, and no new one is made. Soplos still makes its own swap when
+  hibernation is chosen (the other system would write over the image) or
+  when the disk is encrypted (the swap would be formatted with a key and
+  the other system would lose it). The summary shows "The existing swap,
+  shared".
+- A swap partition marked as "use" (alongside, or in manual partitioning)
+  was formatted again with `mkswap`, which gave it a new UUID and left the
+  other system without swap. An existing swap is now used without
+  formatting it.
+
 ## [3.0.0-2-beta] - 2026-11-14
 
 ### Fixed

@@ -9,13 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 - Installing alongside another Linux made a second swap partition even when
-  the disk already had one, so the existing swap was left unused. The
-  existing swap is now shared: it is written in the fstab of Soplos as it
-  is, and no new one is made. Soplos still makes its own swap when
-  hibernation is chosen (the other system would write over the image) or
-  when the disk is encrypted (the swap would be formatted with a key and
-  the other system would lose it). The summary shows "The existing swap,
-  shared".
+  the disk already had one, so the existing swap was left unused. A machine
+  has one swap for all its systems now: when the disk already has a swap,
+  Soplos always shares it as it is (written in its fstab, not formatted,
+  and not encrypted when Soplos is), whatever the swap choice, and never
+  makes another one. The disk step shows "The existing swap, shared" with
+  its size instead of the swap choice, and so does the summary. With no
+  swap on the disk the choice is the same as before.
 - A swap partition marked as "use" (alongside, or in manual partitioning)
   was formatted again with `mkswap`, which gave it a new UUID and left the
   other system without swap. An existing swap is now used without

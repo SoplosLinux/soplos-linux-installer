@@ -321,9 +321,11 @@ pub fn format_and_mount(ctx: &mut Ctx, plan: &Plan, placed: &[Placed], state: &D
             if !part.writes() && part.action != "use" {
                 continue;
             }
-            // The swap of the system next to Soplos, used as it is: mkswap
-            // would give it a new UUID and that system would lose its swap.
-            if part.action == "use" && !plan.disk.encrypt && fs_type(ctx, &p.dev) == "swap" {
+            // The swap of the system next to Soplos, shared as it is, also
+            // when Soplos is encrypted: mkswap would give it a new UUID, and
+            // a key would format it at every start, and in both cases that
+            // system would lose its swap.
+            if part.action == "use" && fs_type(ctx, &p.dev) == "swap" {
                 volumes.swap = Some((p.dev.clone(), p.dev.clone(), "plain".into()));
                 continue;
             }

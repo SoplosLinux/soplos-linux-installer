@@ -81,16 +81,18 @@
     return out;
   })();
 
+  // Manual: the swap the user set (a kept one is not used). Alongside: the
+  // swap of the other system, shared, when there is one.
   $: swapText =
     $plan.disk.mode === "manual"
-      ? parts.some((p) => p.fs === "swap")
+      ? parts.some((p) => p.fs === "swap" && p.action !== "keep")
         ? $_("summary.yes")
         : $_("disk.swapNone")
-      : $plan.disk.swap === "none"
+      : parts.some((p) => p.fs === "swap" && p.action === "use")
+        ? $_("summary.swapShared")
+        : $plan.disk.swap === "none"
         ? $_("disk.swapNone")
-        : parts.some((p) => p.fs === "swap" && p.action === "use")
-          ? $_("summary.swapShared")
-          : $plan.disk.swap === "hibernate"
+        : $plan.disk.swap === "hibernate"
           ? $_("summary.swapHibernate")
           : $_("summary.swapPlain");
 

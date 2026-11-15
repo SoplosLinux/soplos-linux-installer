@@ -103,8 +103,6 @@ export interface Options {
   filesystem: "btrfs" | "ext4" | "xfs";
   encrypt: boolean;
   swap: number;
-  /** The swap is for hibernation: it is never shared with another system. */
-  hibernate: boolean;
   /** The smallest root the edition needs. */
   minRoot: number;
 }
@@ -179,22 +177,17 @@ const keep = (p: Partition): Planned => ({
   label: p.label || p.partlabel,
 });
 
-/** The swap partition of the system already on the disk, when Soplos can
- * share it instead of making its own: a plain swap, as another Linux leaves
- * it. Not for hibernation (the other system would write over the image) nor
- * with encryption (the swap would be formatted with a key and the other
- * system would lose it). */
-export function sharedSwap(disk: Disk, o: Options): Partition | undefined {
-  if (o.swap <= 0 || o.hibernate || o.encrypt) return undefined;
-  return disk.partitions.find((p) => p.fstype === "swap");
-}
+/** The swap partition already on the disk. Next to another system Soplos
+ * shares it, as it is: one swap for every system of the machine, never a
+ * second one. */
+export const existingSwap = (disk: Disk) => disk.partitions.find((p) => p.fstype === "swap");
 
 /** What has to be added next to an existing system, beyond /boot, root and swap. */
 function alongsideExtras(disk: Disk, o: Options): { pieces: Piece[]; separateBoot: boolean; esp?: Partition; swap?: Partition } {
   const pieces: Piece[] = [];
   let separateBoot = true;
   const esp = disk.partitions.find(isEsp);
-  const swap = sharedSwap(disk, o);
+  const swap = existingSwap(disk);
   if (o.firmware === "uefi") {
     if (!esp) pieces.push(fresh(espSize(o.bootloader), "vfat", "/boot/efi", GUID.esp));
     else if (o.bootloader === "systemd-boot" && esp.size < KERNELS_FAT) {
@@ -239,7 +232,7 @@ export function alongsideLayout(disk: Disk, target: Partition, newSize: number, 
   const existing = disk.partitions.map((p) => {
     if (p.path === target.path) return { ...keep(p), action: "shrink" as Action, size: newSize };
     if (o.firmware === "uefi" && esp && p.path === esp.path) return { ...keep(p), action: "use" as Action, mount: "/boot/efi" };
-    // Used as it is: the helper does not format a swap it is told to use.
+    // Shared as it is: the helper does not format (nor encrypt) a swap it is told to use.
     if (swap && p.path === swap.path) return { ...keep(p), action: "use" as Action, fs: "swap" };
     return keep(p);
   });

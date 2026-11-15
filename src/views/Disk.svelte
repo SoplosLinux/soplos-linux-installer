@@ -17,6 +17,7 @@
     alignUp,
     alignDown,
     swapSize,
+    existingSwap,
     eraseLayout,
     alongsideLayout,
     alongsideNeed,
@@ -86,7 +87,6 @@
     filesystem: $plan.disk.filesystem,
     encrypt: $plan.disk.encrypt,
     swap: swapSize($plan.disk.swap, ramBytes),
-    hibernate: $plan.disk.swap === "hibernate",
     minRoot,
   } satisfies Options;
 
@@ -208,6 +208,10 @@
   $: if (JSON.stringify(computed) !== JSON.stringify($plan.disk.layout)) {
     setDisk({ layout: computed });
   }
+
+  // Next to another system with a swap, that swap is shared: one for every
+  // system of the machine.
+  $: diskSwap = $plan.disk.mode === "alongside" && disk ? existingSwap(disk) : undefined;
 
   $: problems =
     $plan.disk.mode === "manual" && computed && disk
@@ -488,19 +492,28 @@
                 onChange={setFilesystem}
               />
             </div>
-            <div class="grid grid-cols-[7.5rem_minmax(0,1fr)] items-center gap-2">
-              <span class="text-[0.82rem] text-text">{$_("disk.swap")}</span>
-              <Select
-                label={$_("disk.swap")}
-                value={$plan.disk.swap}
-                options={[
-                  { value: "none", label: $_("disk.swapNone") },
-                  { value: "swap", label: $_("disk.swapNormal") },
-                  { value: "hibernate", label: $_("disk.swapHibernate", { values: { size: size(swapSize("hibernate", ramBytes)) } }) },
-                ]}
-                onChange={setSwap}
-              />
-            </div>
+            <!-- Next to another system that has a swap, that swap is shared and
+                 there is nothing to choose (see alongsideExtras). -->
+            {#if diskSwap}
+              <div class="grid grid-cols-[7.5rem_minmax(0,1fr)] items-center gap-2">
+                <span class="text-[0.82rem] text-text">{$_("disk.swap")}</span>
+                <span class="text-[0.88rem] text-text-bright truncate">{$_("summary.swapShared")} · {size(diskSwap.size)}</span>
+              </div>
+            {:else}
+              <div class="grid grid-cols-[7.5rem_minmax(0,1fr)] items-center gap-2">
+                <span class="text-[0.82rem] text-text">{$_("disk.swap")}</span>
+                <Select
+                  label={$_("disk.swap")}
+                  value={$plan.disk.swap}
+                  options={[
+                    { value: "none", label: $_("disk.swapNone") },
+                    { value: "swap", label: $_("disk.swapNormal") },
+                    { value: "hibernate", label: $_("disk.swapHibernate", { values: { size: size(swapSize("hibernate", ramBytes)) } }) },
+                  ]}
+                  onChange={setSwap}
+                />
+              </div>
+            {/if}
           </div>
         </div>
       {:else}

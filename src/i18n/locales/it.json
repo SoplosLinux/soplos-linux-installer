@@ -191,7 +191,9 @@
       "espSmall": "Con questo boot loader la partizione EFI deve essere grande almeno quanto /boot.",
       "noBiosGrub": "Il BIOS con tabella GPT richiede una partizione di avvio BIOS (1 MiB).",
       "noLimineFat": "Limine su BIOS richiede una partizione FAT32 per /boot/limine.",
-      "needsFormat": "/, /boot e /home richiedono ext4, btrfs o xfs: segnale da formattare.",
+      "needsFormat": "/, /boot, /home, /opt, /srv, /usr e /var richiedono ext4, btrfs, xfs, F2FS o JFS: segnale da formattare.",
+      "badMount": "Un punto di montaggio per i dati deve essere un percorso completo, come /mnt/data, fuori dalle cartelle del sistema.",
+      "unknownFs": "Una partizione di dati mantenuta così com'è ha un file system che non si può montare: segnala da formattare.",
       "noRoomForSwap": "Con questo swap non entra nel disco: scegli «Senza swap».",
       "mbrFour": "MBR consente al massimo 4 partizioni primarie."
     },
@@ -209,8 +211,14 @@
       "esp": "/boot/efi (EFI)",
       "limine": "/boot/limine",
       "swap": "Swap",
-      "biosgrub": "Avvio BIOS"
+      "biosgrub": "Avvio BIOS",
+      "opt": "/opt",
+      "srv": "/srv",
+      "usr": "/usr",
+      "var": "/var",
+      "custom": "Altro (dati)…"
     },
+    "mountPoint": "Punto di montaggio",
     "newPartition": "Nuova partizione",
     "use": "Uso",
     "format": "Formatta",

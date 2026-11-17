@@ -114,7 +114,8 @@ pub fn write_tables(ctx: &mut Ctx, volumes: &Volumes, hibernate: bool) -> Result
             info.root_uuid = id.clone();
             info.btrfs = fs == "btrfs";
         }
-        let pass = if mount == "/" { 1 } else if fs == "vfat" || fs == "ext4" { 2 } else { 0 };
+        // Checked at boot when the file system has its own fsck; xfs and btrfs, and NTFS, do not.
+        let pass = if mount == "/" { 1 } else if ["vfat", "ext4", "f2fs", "jfs", "exfat"].contains(&fs.as_str()) { 2 } else { 0 };
         fstab.push_str(&format!("UUID={id} {mount} {fs} defaults,{options} 0 {pass}\n"));
     }
 

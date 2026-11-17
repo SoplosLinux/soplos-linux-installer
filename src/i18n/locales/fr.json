@@ -191,7 +191,9 @@
       "espSmall": "Avec ce chargeur d’amorçage, la partition EFI doit être au moins aussi grande que /boot.",
       "noBiosGrub": "Le BIOS avec une table GPT a besoin d’une partition d’amorçage BIOS (1 Mio).",
       "noLimineFat": "Limine en BIOS a besoin d’une partition FAT32 pour /boot/limine.",
-      "needsFormat": "/, /boot et /home ont besoin d’ext4, btrfs ou xfs : cochez-les pour les formater.",
+      "needsFormat": "/, /boot, /home, /opt, /srv, /usr et /var ont besoin d’ext4, btrfs, xfs, F2FS ou JFS : cochez-les pour les formater.",
+      "badMount": "Un point de montage de données doit être un chemin complet, comme /mnt/data, hors des dossiers du système.",
+      "unknownFs": "Une partition de données gardée telle quelle a un système de fichiers qui ne peut pas être monté : cochez-la pour la formater.",
       "noRoomForSwap": "Avec ce swap, cela ne tient pas sur le disque : choisissez « Sans swap ».",
       "mbrFour": "MBR permet au plus 4 partitions primaires."
     },
@@ -209,8 +211,14 @@
       "esp": "/boot/efi (EFI)",
       "limine": "/boot/limine",
       "swap": "Swap",
-      "biosgrub": "Amorçage BIOS"
+      "biosgrub": "Amorçage BIOS",
+      "opt": "/opt",
+      "srv": "/srv",
+      "usr": "/usr",
+      "var": "/var",
+      "custom": "Autre (données)…"
     },
+    "mountPoint": "Point de montage",
     "newPartition": "Nouvelle partition",
     "use": "Usage",
     "format": "Formater",

@@ -191,7 +191,9 @@
       "espSmall": "Cu acest program de pornire partiția EFI trebuie să fie cel puțin cât /boot.",
       "noBiosGrub": "BIOS cu tabel GPT are nevoie de o partiție de pornire BIOS (1 MiB).",
       "noLimineFat": "Limine pe BIOS are nevoie de o partiție FAT32 pentru /boot/limine.",
-      "needsFormat": "/, /boot și /home au nevoie de ext4, btrfs sau xfs: marcați-le pentru formatare.",
+      "needsFormat": "/, /boot, /home, /opt, /srv, /usr și /var au nevoie de ext4, btrfs, xfs, F2FS sau JFS: marcați-le pentru formatare.",
+      "badMount": "Un punct de montare pentru date trebuie să fie o cale completă, ca /mnt/data, în afara folderelor sistemului.",
+      "unknownFs": "O partiție de date păstrată așa cum este are un sistem de fișiere care nu poate fi montat: marcați-o pentru formatare.",
       "noRoomForSwap": "Cu acest swap nu încape pe disc: alegeți „Fără swap”.",
       "mbrFour": "MBR permite cel mult 4 partiții primare."
     },
@@ -209,8 +211,14 @@
       "esp": "/boot/efi (EFI)",
       "limine": "/boot/limine",
       "swap": "Swap",
-      "biosgrub": "Pornire BIOS"
+      "biosgrub": "Pornire BIOS",
+      "opt": "/opt",
+      "srv": "/srv",
+      "usr": "/usr",
+      "var": "/var",
+      "custom": "Altul (date)…"
     },
+    "mountPoint": "Punct de montare",
     "newPartition": "Partiție nouă",
     "use": "Utilizare",
     "format": "Formatează",

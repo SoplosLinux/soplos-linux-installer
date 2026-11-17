@@ -191,7 +191,9 @@
       "espSmall": "Mit diesem Bootloader muss die EFI-Partition mindestens so groß wie /boot sein.",
       "noBiosGrub": "BIOS mit GPT-Tabelle braucht eine BIOS-Boot-Partition (1 MiB).",
       "noLimineFat": "Limine unter BIOS braucht eine FAT32-Partition für /boot/limine.",
-      "needsFormat": "/, /boot und /home brauchen ext4, btrfs oder xfs: markieren Sie sie zum Formatieren.",
+      "needsFormat": "/, /boot, /home, /opt, /srv, /usr und /var brauchen ext4, btrfs, xfs, F2FS oder JFS: markieren Sie sie zum Formatieren.",
+      "badMount": "Ein Einhängepunkt für Daten muss ein vollständiger Pfad wie /mnt/data sein, außerhalb der Systemordner.",
+      "unknownFs": "Eine unverändert übernommene Datenpartition hat ein Dateisystem, das nicht eingehängt werden kann: markieren Sie sie zum Formatieren.",
       "noRoomForSwap": "Mit diesem Swap passt es nicht auf das Laufwerk: wählen Sie „Kein Swap“.",
       "mbrFour": "MBR erlaubt höchstens 4 primäre Partitionen."
     },
@@ -209,8 +211,14 @@
       "esp": "/boot/efi (EFI)",
       "limine": "/boot/limine",
       "swap": "Swap",
-      "biosgrub": "BIOS-Boot"
+      "biosgrub": "BIOS-Boot",
+      "opt": "/opt",
+      "srv": "/srv",
+      "usr": "/usr",
+      "var": "/var",
+      "custom": "Andere (Daten)…"
     },
+    "mountPoint": "Einhängepunkt",
     "newPartition": "Neue Partition",
     "use": "Verwendung",
     "format": "Formatieren",

@@ -53,7 +53,8 @@ export interface Planned {
   /** keep: leave it alone. shrink: make it smaller, data kept. use: mount it
    * as it is. format: new file system on an existing partition. create: new. */
   action: Action;
-  /** The file system it ends with: "vfat", "ext4", "btrfs", "xfs", "swap",
+  /** The file system it ends with: "vfat", "ext4", "btrfs", "xfs", "f2fs",
+   * "jfs", "exfat", "ntfs", "swap",
    * "" for the BIOS boot partition, or the current one when kept. */
   fs: string;
   mount: string;
@@ -270,10 +271,37 @@ export function currentLayout(disk: Disk): Layout {
   return { newTable: false, parts: disk.partitions.map(keep) };
 }
 
+// --- Mount points and file systems ----------------------------------------
+
+/** The mount points of the system that can have a partition of their own,
+ * as Calamares offers them. */
+export const SYSTEM_MOUNTS = ["/", "/boot", "/home", "/opt", "/srv", "/usr", "/var"];
+
+/** What the installed system can live on. vfat, exFAT and NTFS keep no Unix
+ * permissions, so they are only for data. */
+export const LINUX_FS = ["btrfs", "ext4", "xfs", "f2fs", "jfs"];
+/** For a partition of data (a mount point of the user's own). */
+export const DATA_FS = [...LINUX_FS, "exfat", "ntfs", "vfat"];
+
+/** Where the system itself lives, or a tool of the system: never a mount point of data. */
+const RESERVED = ["/bin", "/boot", "/dev", "/etc", "/lib", "/lib32", "/lib64", "/libx32", "/proc", "/root", "/run", "/sbin", "/sys", "/target"];
+
+/** A mount point of the user's own: an absolute path with plain characters,
+ * not one of the system's. */
+export function validMount(path: string): boolean {
+  if (!/^\/[A-Za-z0-9._-]+(\/[A-Za-z0-9._-]+)*$/.test(path) || path.length > 200) return false;
+  if (path.split("/").some((piece) => piece === "." || piece === "..")) return false;
+  if (SYSTEM_MOUNTS.includes(path)) return true;
+  return !RESERVED.some((r) => path === r || path.startsWith(r + "/"));
+}
+
+/** A mount point that is not one of the system's: a partition of data. */
+export const isDataMount = (mount: string) => mount !== "" && !SYSTEM_MOUNTS.includes(mount) && mount !== "/boot/efi" && mount !== "/boot/limine";
+
 export function parttypeFor(fs: string, mount: string): string {
   if (mount === "/boot/efi") return GUID.esp;
   if (fs === "swap") return GUID.swap;
-  if (fs === "vfat") return GUID.basicData;
+  if (fs === "vfat" || fs === "exfat" || fs === "ntfs") return GUID.basicData;
   if (fs === "biosgrub") return GUID.biosGrub;
   return GUID.linux;
 }
@@ -300,12 +328,15 @@ export function manualProblems(layout: Layout, o: Pick<Options, "firmware" | "bo
     if (gpt && !layout.parts.some((p) => p.parttype === GUID.biosGrub)) problems.push("noBiosGrub");
     if (o.bootloader === "limine" && at("/boot/limine")?.fs !== "vfat") problems.push("noLimineFat");
   }
+  // A partition kept as it is must already have a file system its use can live on.
   for (const p of layout.parts) {
-    if (["/", "/boot", "/home"].includes(p.mount) && p.action === "use" && !["ext4", "btrfs", "xfs"].includes(p.fs)) {
+    if (SYSTEM_MOUNTS.includes(p.mount) && p.action === "use" && !LINUX_FS.includes(p.fs) && !(p.mount === "/boot" && p.fs === "vfat")) {
       problems.push("needsFormat");
       break;
     }
   }
+  if (layout.parts.some((p) => isDataMount(p.mount) && !validMount(p.mount))) problems.push("badMount");
+  if (layout.parts.some((p) => isDataMount(p.mount) && p.action === "use" && !DATA_FS.includes(p.fs))) problems.push("unknownFs");
   // MBR: four primary partitions at most (no extended ones are made) and
   // no disks beyond 2 TiB.
   const mbr = layout.newTable ? layout.table === "msdos" : table === "dos";
@@ -340,12 +371,16 @@ export const FS_COLOR: Record<string, string> = {
   ext3: "#ffa766",
   ext2: "#ffa766",
   xfs: "#ef5a33", // Soplos accent
+  f2fs: "#e8954f",
+  jfs: "#c96f3b",
+  exfat: "#d4b04a",
   ntfs: "#8e8e93",
   swap: "#5c5c61",
   "": "#b8b8bd",
 };
 /** The name shown for a file system: vfat is what Linux calls FAT32. */
-export const fsLabel = (fs: string) => (fs === "vfat" ? "FAT32" : fs === "ntfs" ? "NTFS" : fs || "—");
+const FS_NAMES: Record<string, string> = { vfat: "FAT32", ntfs: "NTFS", exfat: "exFAT", f2fs: "F2FS", jfs: "JFS" };
+export const fsLabel = (fs: string) => FS_NAMES[fs] ?? (fs || "—");
 
 export const fsColor = (fs: string) => FS_COLOR[fs] ?? "#a3a3a8";
 

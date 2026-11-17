@@ -277,6 +277,85 @@ fn mapper_name(mount: &str) -> &'static str {
     }
 }
 
+/// The mount points of the system that can have a partition of their own
+/// (the ones Calamares offers). Any other mount point holds data.
+const SYSTEM_MOUNTS: [&str; 9] = ["/", "/boot", "/home", "/opt", "/srv", "/usr", "/var", "/boot/efi", "/boot/limine"];
+
+/// Where the system itself lives: never a mount point of data.
+const RESERVED: [&str; 14] = ["/bin", "/boot", "/dev", "/etc", "/lib", "/lib32", "/lib64", "/libx32", "/proc", "/root", "/run", "/sbin", "/sys", "/target"];
+
+/// The uid and gid of the user the installer creates: the live user is
+/// deleted first, so it takes the first one (see system::users).
+const FIRST_USER: &str = "uid=1000,gid=1000";
+
+fn is_data_mount(mount: &str) -> bool {
+    !mount.is_empty() && !SYSTEM_MOUNTS.contains(&mount)
+}
+
+/// A mount point the plan may ask for: one of the system's, or an absolute
+/// path with plain characters outside the system's own folders. It becomes
+/// a folder under /target, so nothing may climb out of it.
+pub fn valid_mount(mount: &str) -> bool {
+    if SYSTEM_MOUNTS.contains(&mount) {
+        return true;
+    }
+    let pieces: Vec<&str> = mount.split('/').skip(1).collect();
+    mount.starts_with('/')
+        && mount.len() <= 200
+        && !pieces.is_empty()
+        && pieces.iter().all(|p| !p.is_empty() && *p != "." && *p != ".." && p.chars().all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | '-')))
+        && !RESERVED.iter().any(|r| mount == *r || mount.starts_with(&format!("{r}/")))
+}
+
+/// The type mount and fstab take: NTFS goes through ntfs-3g, the kernel of
+/// Soplos has no ntfs3.
+fn mount_type(fs: &str) -> &str {
+    if fs == "ntfs" { "ntfs-3g" } else { fs }
+}
+
+/// The options of a mount. File systems without Unix permissions belong to
+/// the user; partitions of data do not stop the boot when they fail.
+fn mount_options(fs: &str, mount: &str, ssd: bool) -> String {
+    let data = is_data_mount(mount);
+    let mut options = match fs {
+        "vfat" if !data => "umask=0077".to_string(),
+        "vfat" | "exfat" => format!("{FIRST_USER},umask=0022"),
+        "ntfs" => format!("{FIRST_USER},umask=0022,windows_names"),
+        "btrfs" => format!("noatime,compress=zstd:1{}", if ssd { ",discard=async" } else { "" }),
+        _ => "noatime".to_string(),
+    };
+    if data {
+        options.push_str(",nofail");
+    }
+    options
+}
+
+/// The file system of a partition, written with its label ("" for none).
+fn make_fs(ctx: &mut Ctx, fs: &str, label: &str, target: &str) -> Result<(), String> {
+    let with_label = |flag: &'static str, mut args: Vec<String>| {
+        if !label.is_empty() {
+            args.insert(0, label.to_string());
+            args.insert(0, flag.to_string());
+        }
+        args
+    };
+    let (tool, args): (&str, Vec<String>) = match fs {
+        "vfat" => ("mkfs.fat", vec!["-F".into(), "32".into(), "-n".into(), if label.is_empty() { "DATA".into() } else { label.into() }, target.into()]),
+        "ext4" => ("mkfs.ext4", vec!["-F".into(), "-L".into(), label.into(), target.into()]),
+        "btrfs" => ("mkfs.btrfs", vec!["-f".into(), "-L".into(), label.into(), target.into()]),
+        "xfs" => ("mkfs.xfs", vec!["-f".into(), "-L".into(), label.into(), target.into()]),
+        "f2fs" => ("mkfs.f2fs", { let mut a = with_label("-l", vec![target.into()]); a.insert(0, "-f".into()); a }),
+        "jfs" => ("mkfs.jfs", { let mut a = with_label("-L", vec![target.into()]); a.insert(0, "-q".into()); a }),
+        "exfat" => ("mkfs.exfat", with_label("-L", vec![target.into()])),
+        // -Q: quick, without writing zeros over the whole partition.
+        "ntfs" => ("mkfs.ntfs", { let mut a = with_label("-L", vec![target.into()]); a.insert(0, "-F".into()); a.insert(0, "-Q".into()); a }),
+        other => return Err(format!("unknown file system: {other}")),
+    };
+    let refs: Vec<&str> = args.iter().map(String::as_str).collect();
+    ctx.run(tool, &refs, None)?;
+    Ok(())
+}
+
 fn label_for(part: &Part) -> &'static str {
     match (part.fs.as_str(), part.mount.as_str()) {
         ("vfat", "/boot/efi") => "EFI",
@@ -312,6 +391,10 @@ pub fn format_and_mount(ctx: &mut Ctx, plan: &Plan, placed: &[Placed], state: &D
 
     // Formatting.
     let mut sources: Vec<(usize, String)> = Vec::new();
+    // Each mount point becomes a folder under /target: checked before anything is written.
+    if let Some(bad) = placed.iter().map(|p| p.part.mount.as_str()).find(|m| !m.is_empty() && !valid_mount(m)) {
+        return Err(format!("not a valid mount point: {bad}"));
+    }
     for (i, p) in placed.iter().enumerate() {
         let part = &p.part;
         if part.parttype.to_lowercase() == GUID_BIOS_GRUB {
@@ -348,14 +431,7 @@ pub fn format_and_mount(ctx: &mut Ctx, plan: &Plan, placed: &[Placed], state: &D
             if part.encrypt {
                 target = luks_open(ctx, plan, &p.dev, mapper_name(&part.mount), &mut volumes)?;
             }
-            let label = label_for(part);
-            match part.fs.as_str() {
-                "vfat" => ctx.run("mkfs.fat", &["-F", "32", "-n", if label.is_empty() { "DATA" } else { label }, &target], None)?,
-                "ext4" => ctx.run("mkfs.ext4", &["-F", "-L", label, &target], None)?,
-                "btrfs" => ctx.run("mkfs.btrfs", &["-f", "-L", label, &target], None)?,
-                "xfs" => ctx.run("mkfs.xfs", &["-f", "-L", label, &target], None)?,
-                other => return Err(format!("unknown file system: {other}")),
-            };
+            make_fs(ctx, &part.fs, label_for(part), &target)?;
         }
         if !part.mount.is_empty() {
             sources.push((i, target));
@@ -375,11 +451,7 @@ pub fn format_and_mount(ctx: &mut Ctx, plan: &Plan, placed: &[Placed], state: &D
     for (i, source) in &sources {
         let part = &placed[*i].part;
         let fs = part.fs.as_str();
-        let options = match fs {
-            "vfat" => "umask=0077".to_string(),
-            "btrfs" => format!("noatime,compress=zstd:1{}", if volumes.ssd { ",discard=async" } else { "" }),
-            _ => "noatime".to_string(),
-        };
+        let options = mount_options(fs, &part.mount, volumes.ssd);
         let dir = if part.mount == "/" { TARGET.to_string() } else { format!("{TARGET}{}", part.mount) };
         if part.mount == "/" && fs == "btrfs" {
             // Subvolumes @ and @home, as Calamares makes them and Timeshift
@@ -403,8 +475,9 @@ pub fn format_and_mount(ctx: &mut Ctx, plan: &Plan, placed: &[Placed], state: &D
             continue;
         }
         ctx.run("mkdir", &["-p", &dir], None)?;
-        ctx.run("mount", &["-t", fs, "-o", &options, source, &dir], None)?;
-        volumes.mounts.push((source.clone(), part.mount.clone(), fs.to_string(), options));
+        let kind = mount_type(fs);
+        ctx.run("mount", &["-t", kind, "-o", &options, source, &dir], None)?;
+        volumes.mounts.push((source.clone(), part.mount.clone(), kind.to_string(), options));
     }
     Ok(volumes)
 }
@@ -547,6 +620,52 @@ mod tests {
         assert!(!all.contains("discard=async"));
         assert_eq!(placed[3].dev, "/dev/nvme0n1p4");
         assert_eq!(placed[4].dev, "/dev/nvme0n1p5");
+    }
+
+    #[test]
+    fn mount_points_of_the_system_and_of_data() {
+        let linux = "0fc63daf-8483-4772-8e79-3d69d8477de4";
+        let plan = Plan {
+            disk: DiskPlan {
+                device: "/dev/sdb".into(),
+                layout: Some(Layout {
+                    new_table: true,
+                    table: Some("gpt".into()),
+                    parts: vec![
+                        part("", MIB, GIB, "create", "vfat", "/boot/efi", GUID_ESP, false),
+                        part("", MIB + GIB, 30 * GIB, "create", "f2fs", "/", linux, false),
+                        part("", MIB + 31 * GIB, 10 * GIB, "create", "jfs", "/var", linux, false),
+                        part("", MIB + 41 * GIB, 50 * GIB, "create", "ntfs", "/mnt/data", GUID_BASIC_DATA, false),
+                        part("", MIB + 91 * GIB, 20 * GIB, "create", "exfat", "/srv/share", GUID_BASIC_DATA, false),
+                    ],
+                }),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let state = DiskState { sector: 512, table: String::new(), parts: vec![], rotational: false };
+        let (out, _) = commands(&plan, &state);
+        let all = out.join("\n");
+        println!("{all}");
+        assert!(all.contains("mkfs.f2fs -f -l Soplos /dev/sdb2"));
+        assert!(all.contains("mkfs.jfs -q /dev/sdb3"));
+        assert!(all.contains("mkfs.ntfs -Q -F /dev/sdb4"));
+        assert!(all.contains("mkfs.exfat /dev/sdb5"));
+        assert!(all.contains("mount -t ntfs-3g -o uid=1000,gid=1000,umask=0022,windows_names,nofail /dev/sdb4 /target/mnt/data"));
+        assert!(all.contains("mount -t jfs -o noatime /dev/sdb3 /target/var"), "a mount point of the system has no nofail");
+        // / before /var, /var before nothing deeper; the ESP keeps its umask.
+        assert!(all.find("/target/var").unwrap() > all.find("/dev/sdb2 /target").unwrap());
+        assert!(all.contains("umask=0077"));
+    }
+
+    #[test]
+    fn only_safe_mount_points() {
+        for good in ["/", "/var", "/boot/efi", "/mnt/data", "/srv/share", "/media/Disco_2"] {
+            assert!(valid_mount(good), "{good}");
+        }
+        for bad in ["", "mnt", "/etc", "/etc/x", "/boot/x", "/mnt/../etc", "/mnt/a b", "/mnt//x", "/mnt/x/", "/proc", "/target/x"] {
+            assert!(!valid_mount(bad), "{bad}");
+        }
     }
 
     #[test]

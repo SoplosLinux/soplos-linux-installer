@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.0] - 2026-11-17
+
+First stable release.
+
+### Added
+- Manual partitioning offers the rest of the mount points of Calamares,
+  `/opt`, `/srv`, `/usr` and `/var`, for those who give each one a partition
+  of its own, and "Other (data)", a mount point written by hand (`/mnt/data`
+  by default) for partitions of data. The mount point is checked in the
+  window and again as root: a full path with plain characters, outside the
+  folders of the system.
+- More file systems: F2FS and JFS for the system, and exFAT and NTFS for
+  data. An existing partition of data can be mounted as it is, without
+  formatting it, and is written in the fstab.
+- Partitions of data are mounted with `nofail`, so a disk that fails or is
+  missing does not stop the boot. exFAT, NTFS and FAT32 belong to the user
+  (uid 1000); NTFS goes through ntfs-3g. The package depends on `f2fs-tools`,
+  `jfsutils` and `exfatprogs`.
+
+### Fixed
+- Manual partitioning gave `/boot` btrfs by default instead of ext4, the file
+  system of the automatic layouts. Changing the use of a partition kept the
+  file system of its previous use; each use now starts with its own default.
+- FAT32 is no longer offered for `/` and the other mount points of the
+  system: it keeps no Unix permissions and the system cannot live on it.
+
 ## [3.0.0-3-beta] - 2026-11-15
 
 ### Fixed

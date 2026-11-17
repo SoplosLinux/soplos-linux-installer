@@ -16,6 +16,8 @@
     gaps,
     currentLayout,
     parttypeFor,
+    LINUX_FS,
+    DATA_FS,
     fsColor,
     fsLabel,
     formatSize,
@@ -32,7 +34,10 @@
 
   $: size = (bytes: number) => formatSize(bytes, $locale ?? "en");
 
-  type Use = "" | "/" | "/home" | "/boot" | "/boot/efi" | "/boot/limine" | "swap" | "biosgrub";
+  // "custom": a mount point the user writes, for a partition of data.
+  type Use = "" | "/" | "/home" | "/boot" | "/opt" | "/srv" | "/usr" | "/var" | "/boot/efi" | "/boot/limine" | "swap" | "biosgrub" | "custom";
+  /** What a mount point of the user's own starts with. */
+  const DATA_MOUNT = "/mnt/data";
   // Only the uses the chosen boot loader has: /boot/efi on UEFI, the BIOS
   // boot partition on BIOS, and the FAT of Limine only for Limine on BIOS
   // (on UEFI its kernels go to the ESP).
@@ -41,11 +46,17 @@
     "/",
     "/home",
     "/boot",
+    // The rest of the mount points Calamares offers, for those who give each one its own partition.
+    "/opt",
+    "/srv",
+    "/usr",
+    "/var",
     ...(firmware === "bios" ? [] : ["/boot/efi"]),
     ...(firmware === "bios" && bootloader === "limine" ? ["/boot/limine"] : []),
     "swap",
     // The BIOS boot partition exists only on GPT.
     ...(firmware === "bios" && kind === "gpt" ? ["biosgrub"] : []),
+    "custom",
   ] as Use[];
 
   /** The table the disk ends with: the new one, or the one it has. */
@@ -63,10 +74,15 @@
     "/": "root",
     "/home": "home",
     "/boot": "boot",
+    "/opt": "opt",
+    "/srv": "srv",
+    "/usr": "usr",
+    "/var": "var",
     "/boot/efi": "esp",
     "/boot/limine": "limine",
     swap: "swap",
     biosgrub: "biosgrub",
+    custom: "custom",
   };
   $: useOptions = USES.map((u) => ({ value: u, label: $_(`disk.uses.${USE_KEY[u]}`) }));
 
@@ -74,16 +90,28 @@
     if (use === "/boot/efi" || use === "/boot/limine") return ["vfat"];
     if (use === "swap") return ["swap"];
     if (use === "biosgrub") return [""];
-    return ["btrfs", "ext4", "xfs", "vfat"];
+    // The first one is the default: /boot is ext4, as in the automatic layouts (DESIGN.md).
+    if (use === "/boot") return ["ext4", "btrfs", "xfs", "vfat"];
+    // Data: also the file systems Windows and macOS read.
+    if (use === "custom" || use === "") return DATA_FS;
+    return LINUX_FS;
   }
 
+  const KNOWN = new Set<string>(["", "/", "/home", "/boot", "/opt", "/srv", "/usr", "/var", "/boot/efi", "/boot/limine"]);
   const useOf = (p: Planned): Use =>
-    p.parttype === GUID.biosGrub ? "biosgrub" : p.fs === "swap" && p.action !== "keep" ? "swap" : (p.mount as Use);
+    p.parttype === GUID.biosGrub
+      ? "biosgrub"
+      : p.fs === "swap" && p.action !== "keep"
+        ? "swap"
+        : KNOWN.has(p.mount)
+          ? (p.mount as Use)
+          : "custom";
   const writes = (p: Planned) => p.action === "create" || p.action === "format";
   const original = (p: Planned) => disk.partitions.find((d) => d.path === p.path);
 
-  /** A partition with a new use, written or not with the file system given. */
-  function rebuild(p: Planned, use: Use, format: boolean, fs: string): Planned {
+  /** A partition with a new use, written or not with the file system given.
+   * `custom` is the mount point of a "custom" use. */
+  function rebuild(p: Planned, use: Use, format: boolean, fs: string, custom = DATA_MOUNT): Planned {
     const isNew = !p.path;
     const choices = fsChoices(use);
     // Some uses need their own file system: a partition that does not have
@@ -92,7 +120,7 @@
     const mustFormat = isNew || (use !== "" && use !== "biosgrub" && !choices.includes(current));
     const write = use === "biosgrub" ? isNew : format || mustFormat;
     const finalFs = use === "biosgrub" ? "" : write ? (choices.includes(fs) ? fs : choices[0]) : current;
-    const mount = use === "swap" || use === "biosgrub" ? "" : use;
+    const mount = use === "swap" || use === "biosgrub" ? "" : use === "custom" ? custom : use;
     return {
       ...p,
       mount,
@@ -102,13 +130,23 @@
     };
   }
 
+  // A new use starts with its own default file system (ext4 for /boot), not
+  // with the one the partition had for the previous use.
   function setUse(index: number, p: Planned, value: string) {
-    update(index, rebuild(p, value as Use, writes(p), p.fs));
+    const use = value as Use;
+    const same = use === useOf(p);
+    update(index, rebuild(p, use, writes(p), same ? p.fs : fsChoices(use)[0], same ? p.mount : DATA_MOUNT));
+  }
+
+  /** The mount point of a partition of data, as the user types it. */
+  function setMount(index: number, p: Planned, value: string) {
+    update(index, { ...p, mount: value.trim() });
   }
 
   function chooseNewUse(value: string) {
     newUse = value as Use;
     newFs = fsChoices(newUse)[0];
+    newMount = DATA_MOUNT;
     newSizeGiB = toGiB(usualSize(newUse, creatingSize));
     // The swap goes to the end of the disk, the rest from the start.
     newAt = newUse === "swap" ? "end" : "start";
@@ -131,6 +169,7 @@
   let newSizeGiB = 0;
   let newUse: Use = "/";
   let newFs = "btrfs";
+  let newMount = DATA_MOUNT;
   /** Where the new partition goes in the free space. */
   let newAt: "start" | "end" = "start";
 
@@ -166,7 +205,7 @@
     // block is slid to the right.
     const start = newAt === "end" ? alignDown(creatingAt + gapSize - bytes) : creatingAt;
     const blank: Planned = { path: "", start, size: bytes, action: "create", fs: newFs, mount: "", parttype: GUID.linux, encrypt: false, label: "" };
-    const part = rebuild(blank, newUse, true, newFs);
+    const part = rebuild(blank, newUse, true, newFs, newMount.trim());
     onChange({ ...layout, parts: [...layout.parts, part].sort((a, b) => a.start - b.start) });
     creatingAt = null;
   }
@@ -244,7 +283,20 @@
               </p>
             </div>
           </div>
-          <Select label={$_("disk.use")} value={use} options={useOptions} onChange={(v) => setUse(row.index, p, v)} />
+          <div class="flex flex-col gap-1 min-w-0">
+            <Select label={$_("disk.use")} value={use} options={useOptions} onChange={(v) => setUse(row.index, p, v)} />
+            {#if use === "custom"}
+              <input
+                type="text"
+                spellcheck="false"
+                aria-label={$_("disk.mountPoint")}
+                placeholder={DATA_MOUNT}
+                value={p.mount}
+                on:change={(e) => setMount(row.index, p, e.currentTarget.value)}
+                class="w-full bg-surface-2 border border-border rounded px-2 py-1 text-[0.82rem] text-text-bright outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+              />
+            {/if}
+          </div>
           {#if use === "biosgrub"}
             <span></span>
           {:else if p.path}
@@ -253,7 +305,7 @@
                 type="checkbox"
                 class="w-4 h-4 accent-primary shrink-0"
                 checked={writes(p)}
-                on:change={(e) => update(row.index, rebuild(p, use, e.currentTarget.checked, p.fs || "btrfs"))}
+                on:change={(e) => update(row.index, rebuild(p, use, e.currentTarget.checked, p.fs || fsChoices(use)[0], p.mount))}
               />
               {#if writes(p)}
                 <div class="flex-1 min-w-0">
@@ -261,7 +313,7 @@
                     label={$_("disk.filesystem")}
                     value={p.fs}
                     options={fsChoices(use).map((f) => ({ value: f, label: fsLabel(f) }))}
-                    onChange={(v) => update(row.index, rebuild(p, use, true, v))}
+                    onChange={(v) => update(row.index, rebuild(p, use, true, v, p.mount))}
                   />
                 </div>
               {:else}
@@ -273,7 +325,7 @@
               label={$_("disk.filesystem")}
               value={p.fs}
               options={fsChoices(use).map((f) => ({ value: f, label: fsLabel(f) }))}
-              onChange={(v) => update(row.index, rebuild(p, use, true, v))}
+              onChange={(v) => update(row.index, rebuild(p, use, true, v, p.mount))}
             />
           {/if}
           <button
@@ -302,12 +354,24 @@
                 />
                 GiB
               </label>
-              <Select
-                label={$_("disk.use")}
-                value={newUse}
-                options={useOptions}
-                onChange={chooseNewUse}
-              />
+              <div class="flex flex-col gap-1 min-w-0">
+                <Select
+                  label={$_("disk.use")}
+                  value={newUse}
+                  options={useOptions}
+                  onChange={chooseNewUse}
+                />
+                {#if newUse === "custom"}
+                  <input
+                    type="text"
+                    spellcheck="false"
+                    aria-label={$_("disk.mountPoint")}
+                    placeholder={DATA_MOUNT}
+                    bind:value={newMount}
+                    class="w-full bg-surface-2 border border-border rounded px-2 py-1 text-[0.82rem] text-text-bright outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                  />
+                {/if}
+              </div>
               <Select
                 label={$_("disk.filesystem")}
                 value={newFs}

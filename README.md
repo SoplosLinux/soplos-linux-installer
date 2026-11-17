@@ -1,6 +1,6 @@
 # Soplos Linux Installer 3.0
 
-![Version](https://img.shields.io/badge/version-3.0.0--beta-blue)
+![Version](https://img.shields.io/badge/version-3.0.0-blue)
 ![License](https://img.shields.io/badge/license-GPL--3.0--or--later-green)
 ![Platform](https://img.shields.io/badge/platform-Linux-lightgrey)
 ![Tauri](https://img.shields.io/badge/Tauri-2-orange)
@@ -55,7 +55,11 @@ The installer can be used without the mouse, as Calamares.
   stock, BORE + NTsync, Zen, RT or X3D, latest or LTS.
 - **Disk:** erase the disk, install alongside another system, or manual
   partitioning; btrfs (with the `@` and `@home` subvolumes Timeshift uses),
-  ext4 or xfs; optional encryption; swap.
+  ext4 or xfs; optional encryption; swap. Manual partitioning offers the
+  mount points of Calamares (`/`, `/boot`, `/home`, `/opt`, `/srv`, `/usr`,
+  `/var`) and mount points of data of your own, with btrfs, ext4, xfs, F2FS
+  and JFS for the system and also exFAT, NTFS and FAT32 for data. A partition
+  of data can be kept as it is and is written in the fstab with `nofail`.
 - **Drivers for the hardware:** the hardware is detected as Soplos Welcome
   does, and during the installation the missing drivers are installed and
   the ones that do not apply are removed.

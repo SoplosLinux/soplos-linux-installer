@@ -143,7 +143,7 @@
       "alongsideUnavailable": "No partition can be shrunk.",
       "manual": "Manual",
       "manualDetail": "You decide the partitions, their uses and file systems.",
-      "manualUnavailable": ""
+      "manualUnavailable": "Choose a disk first."
     },
     "shrinkWhich": "Partition to shrink",
     "measuring": "Measuring the space in use…",

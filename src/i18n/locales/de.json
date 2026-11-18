@@ -143,7 +143,7 @@
       "alongsideUnavailable": "Keine Partition kann verkleinert werden.",
       "manual": "Manuell",
       "manualDetail": "Sie bestimmen Partitionen, ihre Verwendung und Dateisysteme.",
-      "manualUnavailable": ""
+      "manualUnavailable": "Wählen Sie zuerst eine Festplatte."
     },
     "shrinkWhich": "Zu verkleinernde Partition",
     "measuring": "Belegter Platz wird gemessen…",

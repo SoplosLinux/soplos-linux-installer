@@ -143,7 +143,7 @@
       "alongsideUnavailable": "Нет раздела, который можно уменьшить.",
       "manual": "Вручную",
       "manualDetail": "Вы сами задаёте разделы, их назначение и файловые системы.",
-      "manualUnavailable": ""
+      "manualUnavailable": "Сначала выберите диск."
     },
     "shrinkWhich": "Уменьшаемый раздел",
     "measuring": "Измерение занятого места…",

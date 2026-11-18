@@ -143,7 +143,7 @@
       "alongsideUnavailable": "Nessuna partizione può essere ridotta.",
       "manual": "Manuale",
       "manualDetail": "Decidi tu le partizioni, i loro usi e i file system.",
-      "manualUnavailable": ""
+      "manualUnavailable": "Scegli prima un disco."
     },
     "shrinkWhich": "Partizione da ridurre",
     "measuring": "Misurazione dello spazio usato…",

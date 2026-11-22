@@ -70,6 +70,7 @@
         "desktopTemplate": "resources/debian/soplos-linux-installer.desktop.hbs",
         "files": {
           "/usr/share/doc/soplos-linux-installer/copyright": "resources/debian/copyright",
+          "/usr/share/metainfo/org.soplos.linuxinstaller.metainfo.xml": "resources/appstream/org.soplos.linuxinstaller.metainfo.xml",
           "/usr/share/soplos-linux-installer/editions/boro.json": "resources/editions/boro.json",
           "/usr/share/soplos-linux-installer/editions/tyron.json": "resources/editions/tyron.json",
           "/usr/share/soplos-linux-installer/editions/tyson.json": "resources/editions/tyson.json"

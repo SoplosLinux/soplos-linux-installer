@@ -15,7 +15,7 @@ The installer of Soplos Linux, for Tyron (Xfce), Tyson (Plasma) and Boro
 | ![Boot loader](src-tauri/resources/screenshots/screenshot03.png) Boot loader: GRUB, systemd-boot or Limine | ![Kernel](src-tauri/resources/screenshots/screenshot04.png) Kernel: the kind of installation and the Soplos kernel for the processor |
 | ![Disk](src-tauri/resources/screenshots/screenshot05.png) Disk: the disk as it will be, before anything is touched | ![User](src-tauri/resources/screenshots/screenshot06.png) User: the account, the computer name and the passwords |
 | ![Summary](src-tauri/resources/screenshots/screenshot07.png) Summary: everything chosen, and what will be done to the disk | ![Editions](src-tauri/resources/screenshots/screenshot08.png) Installation: the presentation of the three editions |
-| ![Programs](src-tauri/resources/screenshots/screenshot09.png) Installation: the programs of Soplos, one by one | |
+| ![Finished](src-tauri/resources/screenshots/screenshot09.png) Finished: install done, and the computer can restart | |
 
 ## Status
 

@@ -31,6 +31,12 @@ First stable release.
 - FAT32 is no longer offered for `/` and the other mount points of the
   system: it keeps no Unix permissions and the system cannot live on it.
 
+### Changed
+- New screenshots of the nine steps, in English: Welcome, Location, Boot
+  loader, Kernel, Disk, User, Summary, the presentation of the three editions
+  and the end of the installation. The corner of the window shows the release
+  and no longer a beta version.
+
 ## [3.0.0-3-beta] - 2026-11-15
 
 ### Fixed

@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.0-1] - 2026-11-25
+
+### Added
+- From the live session the installer looks for a newer version of itself in
+  the Soplos repository when it opens (`apt-get update` and
+  `apt-cache policy`). If there is one, it offers to update: it installs the
+  new `soplos-linux-installer`, closes and opens again. Without network,
+  outside the live session or when it is already the latest, it says nothing.
+  The installed system is copied from the squashfs, so the update stays in the
+  live session.
+
+### Fixed
+- The installation left a second kernel next to the chosen one: the stock
+  kernel of the image (`linux-soplos-v1`) came back in a newer version. The
+  purge removed the image and headers of the kernel of the image but not its
+  metapackage, and apt upgraded the metapackage to the newer kernel of the
+  repository. The Soplos kernel metapackages of the image are now purged with
+  it, except the one of the kernel installed.
+- The corner of the window showed the Debian revision of a version without a
+  stage ("3.0.0-1"). It now shows "3.0.0"; About still shows the whole
+  version.
+
 ## [3.0.0] - 2026-11-17
 
 First stable release.

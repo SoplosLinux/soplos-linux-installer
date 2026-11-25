@@ -75,6 +75,13 @@
       } catch {
         edition = "";
       }
+      // A newer installer in the repository: offered before anything else.
+      api
+        .invoke<string | null>("check_update")
+        .then((version) => {
+          if (version && STEPS[$current] === "welcome") updateVersion = version;
+        })
+        .catch(() => {});
       try {
         const win = getCurrentWindow();
         frameless = !(await win.isDecorated());
@@ -109,6 +116,27 @@
 
   function back() {
     if ($current > 0) goTo($current - 1);
+  }
+
+  // The update of the installer itself (commands/update.rs): it installs the
+  // new version, opens it and closes this window.
+  let updateVersion: string | null = null;
+  let updating = false;
+  let updateFailed = false;
+
+  async function applyUpdate() {
+    updating = true;
+    updateFailed = false;
+    try {
+      await api.invoke("apply_update");
+    } catch {
+      updating = false;
+      updateFailed = true;
+    }
+  }
+
+  function skipUpdate() {
+    if (!updating) updateVersion = null;
   }
 
   // The last word before any disk is touched.
@@ -239,6 +267,26 @@
       onConfirm={startInstall}
     >
       {$_("confirm.body")}
+    </Modal>
+  {/if}
+
+  {#if updateVersion}
+    <Modal
+      variant="confirm"
+      title={$_("update.title")}
+      confirmLabel={$_("update.accept")}
+      cancelLabel={$_("update.later")}
+      confirmDisabled={updating}
+      onClose={skipUpdate}
+      onConfirm={applyUpdate}
+    >
+      {#if updating}
+        {$_("update.working")}
+      {:else if updateFailed}
+        {$_("update.failed")}
+      {:else}
+        {$_("update.body", { values: { version: updateVersion } })}
+      {/if}
     </Modal>
   {/if}
 

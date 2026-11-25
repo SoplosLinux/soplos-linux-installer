@@ -34,6 +34,14 @@
     "body": "Modificările alese pentru disc se fac acum și nu pot fi anulate. Asigură-te că ai o copie a tot ce vrei să păstrezi.",
     "accept": "Instalează"
   },
+  "update": {
+    "title": "Este disponibilă o versiune nouă a programului de instalare",
+    "body": "Versiunea {version} a Soplos Linux Installer este disponibilă și aduce corecturi pentru instalare. Se recomandă actualizarea: programul de instalare se va actualiza, se va închide și se va deschide din nou.",
+    "accept": "Actualizează",
+    "later": "Continuă fără actualizare",
+    "working": "Se actualizează programul de instalare. Se va deschide din nou când termină.",
+    "failed": "Programul de instalare nu a putut fi actualizat. Poți încerca din nou sau continua cu această versiune."
+  },
   "welcome": {
     "greeting": "Bun venit la Soplos Linux",
     "intro": "Acest program copiază Soplos Linux pe calculatorul tău, configurează încărcătorul de pornire pe care îl alegi și instalează driverele de care are nevoie hardware-ul tău.",

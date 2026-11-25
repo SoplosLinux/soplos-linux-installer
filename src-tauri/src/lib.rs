@@ -31,6 +31,8 @@ pub fn run() {
             commands::kernels::get_kernels,
             commands::install::start_install,
             commands::install::reboot,
+            commands::update::check_update,
+            commands::update::apply_update,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Soplos Linux Installer");

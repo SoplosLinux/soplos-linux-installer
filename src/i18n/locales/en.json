@@ -34,6 +34,14 @@
     "body": "The changes chosen for the disk are made now and cannot be undone. Make sure you have a copy of anything you want to keep.",
     "accept": "Install"
   },
+  "update": {
+    "title": "A new version of the installer is available",
+    "body": "Version {version} of Soplos Linux Installer is available and brings fixes for the installation. Updating is recommended: the installer will update, close and open again.",
+    "accept": "Update",
+    "later": "Continue without updating",
+    "working": "Updating the installer. It will open again when it finishes.",
+    "failed": "The installer could not be updated. You can try again or continue with this version."
+  },
   "welcome": {
     "greeting": "Welcome to Soplos Linux",
     "intro": "This installer copies Soplos Linux to your computer, sets up the boot loader you choose and installs the drivers your hardware needs.",

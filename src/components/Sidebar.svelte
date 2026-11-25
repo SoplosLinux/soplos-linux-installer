@@ -25,8 +25,9 @@
     boro: "Boro",
   };
 
-  // "3.0.0-1-alpha" -> "3.0.0-alpha": the Debian revision in the middle is not shown.
-  $: cleanVersion = appVersion.replace(/-\d+-/, "-");
+  // The Debian revision is not shown: "3.0.0-1-alpha" -> "3.0.0-alpha",
+  // "3.0.0-1" -> "3.0.0". About still shows the whole version.
+  $: cleanVersion = appVersion.replace(/-\d+(?=-|$)/, "");
   $: footerLabel = [EDITION_LABELS[edition] ?? "", cleanVersion].filter(Boolean).join(" · ") || "Soplos Linux Installer";
 </script>
 

@@ -34,6 +34,14 @@
     "body": "Los cambios elegidos para el disco se hacen ahora y no se pueden deshacer. Asegúrate de tener una copia de todo lo que quieras conservar.",
     "accept": "Instalar"
   },
+  "update": {
+    "title": "Hay una versión nueva del instalador",
+    "body": "La versión {version} de Soplos Linux Installer está disponible y trae correcciones para la instalación. Se recomienda actualizar: el instalador se actualizará, se cerrará y se abrirá de nuevo.",
+    "accept": "Actualizar",
+    "later": "Continuar sin actualizar",
+    "working": "Actualizando el instalador. Se abrirá de nuevo cuando termine.",
+    "failed": "No se pudo actualizar el instalador. Puedes volver a intentarlo o continuar con esta versión."
+  },
   "welcome": {
     "greeting": "Bienvenido a Soplos Linux",
     "intro": "Este instalador copia Soplos Linux en tu ordenador, prepara el gestor de arranque que elijas e instala los drivers que necesita tu hardware.",

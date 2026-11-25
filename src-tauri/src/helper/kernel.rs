@@ -98,6 +98,19 @@ fn packages_of(ctx: &mut Ctx, release: &str) -> Vec<String> {
     out
 }
 
+/// The Soplos kernel metapackages installed in the target (linux-soplos-*).
+fn metapackages(ctx: &mut Ctx) -> Vec<String> {
+    if ctx.dry_run {
+        return vec!["<metapackage of the kernel of the image>".into()];
+    }
+    ctx.read("chroot", &[TARGET, "dpkg-query", "-W", "--showformat=${Package} ${Status}\\n", "linux-soplos-*"])
+        .unwrap_or_default()
+        .lines()
+        .filter(|l| l.ends_with("install ok installed"))
+        .filter_map(|l| l.split_whitespace().next().map(str::to_string))
+        .collect()
+}
+
 /// The package of a flavor for a level: ("lts-zen", 3) -> linux-soplos-lts-zen-v3.
 /// A flavor that is not a plain name falls back to the stock kernel.
 pub fn package_for(flavor: &str, level: u8) -> String {
@@ -119,11 +132,13 @@ pub fn install(ctx: &mut Ctx, flavor: &str) {
     ctx.log(&format!("Processor: x86-64-v{level} -> {chosen}"));
     let before = releases(ctx);
 
+    let mut kept = chosen.clone();
     let mut installed = ctx.run_progress("chroot", &[TARGET, "apt-get", "-y", "install", &chosen], 0, 0);
     if let Err(e) = &installed {
         if chosen != stock {
             ctx.log(&format!("WARNING: {chosen} was not installed ({e}); trying {stock}."));
             installed = ctx.run_progress("chroot", &[TARGET, "apt-get", "-y", "install", &stock], 0, 0);
+            kept = stock.clone();
         }
     }
     if let Err(e) = installed {
@@ -148,6 +163,10 @@ pub fn install(ctx: &mut Ctx, flavor: &str) {
     for release in &before {
         old.extend(packages_of(ctx, release));
     }
+    // The metapackage of the image (linux-soplos-v1...) goes too: left alone,
+    // apt upgrades it when the repository has a newer kernel of its flavor and
+    // the purge brings that kernel back next to the chosen one.
+    old.extend(metapackages(ctx).into_iter().filter(|p| *p != kept));
     if ctx.dry_run {
         old = vec!["<packages of the kernel of the image>".into()];
     }

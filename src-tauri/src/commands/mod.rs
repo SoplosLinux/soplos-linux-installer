@@ -4,3 +4,4 @@ pub mod install;
 pub mod kernels;
 pub mod location;
 pub mod requirements;
+pub mod update;

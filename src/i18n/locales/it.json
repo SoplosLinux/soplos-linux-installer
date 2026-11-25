@@ -34,6 +34,14 @@
     "body": "Le modifiche scelte per il disco vengono applicate ora e non si possono annullare. Assicurati di avere una copia di tutto ciò che vuoi conservare.",
     "accept": "Installa"
   },
+  "update": {
+    "title": "È disponibile una nuova versione del programma di installazione",
+    "body": "La versione {version} di Soplos Linux Installer è disponibile e porta correzioni per l'installazione. Si consiglia di aggiornare: il programma di installazione si aggiornerà, si chiuderà e si riaprirà.",
+    "accept": "Aggiorna",
+    "later": "Continua senza aggiornare",
+    "working": "Aggiornamento del programma di installazione. Si riaprirà al termine.",
+    "failed": "Non è stato possibile aggiornare il programma di installazione. Puoi riprovare o continuare con questa versione."
+  },
   "welcome": {
     "greeting": "Benvenuto in Soplos Linux",
     "intro": "Questo programma copia Soplos Linux sul tuo computer, configura il boot loader che scegli e installa i driver di cui ha bisogno il tuo hardware.",

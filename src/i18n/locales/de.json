@@ -34,6 +34,14 @@
     "body": "Die für die Festplatte gewählten Änderungen werden jetzt vorgenommen und können nicht rückgängig gemacht werden. Stellen Sie sicher, dass Sie eine Kopie von allem haben, was Sie behalten möchten.",
     "accept": "Installieren"
   },
+  "update": {
+    "title": "Eine neue Version des Installationsprogramms ist verfügbar",
+    "body": "Version {version} von Soplos Linux Installer ist verfügbar und bringt Korrekturen für die Installation. Eine Aktualisierung wird empfohlen: Das Installationsprogramm wird aktualisiert, geschlossen und erneut geöffnet.",
+    "accept": "Aktualisieren",
+    "later": "Ohne Aktualisierung fortfahren",
+    "working": "Das Installationsprogramm wird aktualisiert. Es öffnet sich erneut, wenn es fertig ist.",
+    "failed": "Das Installationsprogramm konnte nicht aktualisiert werden. Sie können es erneut versuchen oder mit dieser Version fortfahren."
+  },
   "welcome": {
     "greeting": "Willkommen bei Soplos Linux",
     "intro": "Dieses Installationsprogramm kopiert Soplos Linux auf Ihren Computer, richtet den gewählten Bootloader ein und installiert die Treiber, die Ihre Hardware braucht.",

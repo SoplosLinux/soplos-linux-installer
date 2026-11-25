@@ -34,6 +34,14 @@
     "body": "Les modifications choisies pour le disque sont faites maintenant et ne peuvent pas être annulées. Assurez-vous d'avoir une copie de tout ce que vous voulez garder.",
     "accept": "Installer"
   },
+  "update": {
+    "title": "Une nouvelle version de l'installateur est disponible",
+    "body": "La version {version} de Soplos Linux Installer est disponible et apporte des corrections pour l'installation. La mise à jour est recommandée : l'installateur sera mis à jour, se fermera et s'ouvrira à nouveau.",
+    "accept": "Mettre à jour",
+    "later": "Continuer sans mettre à jour",
+    "working": "Mise à jour de l'installateur. Il s'ouvrira à nouveau une fois terminé.",
+    "failed": "L'installateur n'a pas pu être mis à jour. Vous pouvez réessayer ou continuer avec cette version."
+  },
   "welcome": {
     "greeting": "Bienvenue dans Soplos Linux",
     "intro": "Cet installateur copie Soplos Linux sur votre ordinateur, configure le chargeur d'amorçage que vous choisissez et installe les pilotes dont votre matériel a besoin.",

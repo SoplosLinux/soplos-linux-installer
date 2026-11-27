@@ -132,6 +132,11 @@ The user assigns mount points and file systems to existing or new partitions,
 for example the user's own layout: `/boot/efi`, `/boot`, `/` on btrfs, `/home`
 on xfs. If `/home` is on its own partition, the root btrfs has only `@`.
 
+An existing NTFS, ext or btrfs partition that is not in use can be shrunk,
+with the same measure and margin as alongside another system (5.3); the space
+freed is free space for new partitions. A shrunk partition keeps its data and
+takes no use. Partitions are not grown nor moved.
+
 Rules checked before going on, with the button blocked until they are met:
 
 - UEFI: there is a FAT32 ESP with the esp flag mounted at `/boot/efi`.

@@ -242,7 +242,11 @@
     "atEnd": "Am Ende",
     "deleteAll": "Alle löschen",
     "required": "Benötigt:",
-    "manualHint": "Erstellen Sie die Partitionen im freien Platz."
+    "manualHint": "Erstellen Sie die Partitionen im freien Platz.",
+    "resize": "Größe ändern",
+    "resized": "Verkleinert von {from}; die Daten bleiben erhalten.",
+    "resizeLimits": "Von {min} bis {max}",
+    "noShrinkRoom": "Diese Partition kann nicht verkleinert werden: Sie ist fast voll."
   },
   "user": {
     "account": "Ihr Konto",

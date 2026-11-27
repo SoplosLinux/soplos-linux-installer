@@ -243,6 +243,27 @@ export function alongsideLayout(disk: Disk, target: Partition, newSize: number, 
 /** The partitions an existing system can give space from. */
 export const SHRINKABLE = ["ntfs", "ext4", "ext3", "ext2", "btrfs"];
 
+// A shrunk partition ends on a MiB, even when an old one does not start on
+// one: the free space after it then starts where a new partition can.
+export const sizeEndingBelow = (part: Partition, size: number) => alignDown(part.start + size) - part.start;
+const sizeEndingAbove = (part: Partition, size: number) => alignUp(part.start + size) - part.start;
+
+/** The smallest size a partition can be left with: what its system uses
+ * (`minBytes`) plus a margin to go on working, 10 % and at least 2 GiB. */
+export function smallestSize(part: Partition, minBytes: number): number {
+  return Math.min(sizeEndingAbove(part, minBytes + Math.max(minBytes * 0.1, 2 * GiB)), part.size);
+}
+
+/** The largest size it can be left with when `free` bytes have to be left
+ * after it, counting from its start to `limit`. Never more than it has:
+ * shrinking does not grow a partition. */
+export function largestSize(part: Partition, limit: number, free: number): number {
+  // What is made in the space left after it ends on a MiB too.
+  const end = free > 0 ? alignDown(limit) : limit;
+  const size = sizeEndingBelow(part, end - part.start - free);
+  return size >= part.size ? part.size : size;
+}
+
 // --- Manual -------------------------------------------------------------
 
 export interface Gap {

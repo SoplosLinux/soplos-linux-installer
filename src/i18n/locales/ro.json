@@ -242,7 +242,11 @@
     "atEnd": "La sfârșit",
     "deleteAll": "Șterge toate",
     "required": "Necesare:",
-    "manualHint": "Creați partițiile în spațiul liber."
+    "manualHint": "Creați partițiile în spațiul liber.",
+    "resize": "Redimensionează",
+    "resized": "Micșorată de la {from}; datele se păstrează.",
+    "resizeLimits": "De la {min} la {max}",
+    "noShrinkRoom": "Această partiție nu poate fi micșorată: este aproape plină."
   },
   "user": {
     "account": "Contul dvs.",

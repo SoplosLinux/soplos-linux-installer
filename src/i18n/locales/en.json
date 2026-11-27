@@ -242,7 +242,11 @@
     "atEnd": "At the end",
     "deleteAll": "Delete all",
     "required": "Needed:",
-    "manualHint": "Create the partitions in the free space."
+    "manualHint": "Create the partitions in the free space.",
+    "resize": "Resize",
+    "resized": "Shrunk from {from}; the data is kept.",
+    "resizeLimits": "From {min} to {max}",
+    "noShrinkRoom": "This partition cannot be shrunk: it is nearly full."
   },
   "user": {
     "account": "Your account",

@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.0-2] - 2026-11-27
+
+### Added
+- Manual partitioning resizes existing partitions. An NTFS, ext or btrfs
+  partition that is not in use has a Resize button: it is measured, and its
+  new size is chosen with a slider or typed in GiB, between what its system
+  uses plus a margin (10 %, at least 2 GiB) and the space it can take. The
+  space freed takes new partitions. A shrunk partition keeps its data and
+  takes no use; it can be given back its size while that space stays free, and
+  Reset undoes everything. Partitions are not grown nor moved. The warning to
+  keep a copy of the data shows whenever a partition shrinks.
+
+### Fixed
+- Alongside another system, with partitions that do not start or end on a
+  MiB, the slider at its right end could leave "Next" disabled with no
+  message. A shrunk partition and the space made after it now end on a MiB.
+- Alongside another system, with a lot of free space after the partition, the
+  slider could go past the size of the partition, which would have grown it
+  instead of shrinking it. It now stops at its size.
+
 ## [3.0.0-1] - 2026-11-25
 
 ### Added

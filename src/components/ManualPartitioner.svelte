@@ -1,6 +1,7 @@
 <script lang="ts">
   import { _, locale } from "svelte-i18n";
-  import { Plus, Trash2, RotateCcw, FilePlus2 } from "lucide-svelte";
+  import { Plus, Trash2, RotateCcw, FilePlus2, Scaling, LoaderCircle, TriangleAlert } from "lucide-svelte";
+  import { api } from "../lib/api";
   import Select from "./Select.svelte";
   import {
     type Disk,
@@ -21,11 +22,16 @@
     fsColor,
     fsLabel,
     formatSize,
+    usableEnd,
+    smallestSize,
+    largestSize,
+    sizeEndingBelow,
+    SHRINKABLE,
   } from "../lib/partitioning";
 
   // The manual table (DESIGN.md, 5.2): each partition gets a use and, if it
-  // is written, a file system; free space can take new partitions. Nothing
-  // is touched until the installation starts.
+  // is written, a file system; an existing one can be shrunk, and free space
+  // can take new partitions. Nothing is touched until the installation starts.
   export let disk: Disk;
   export let layout: Layout;
   export let firmware: Firmware;
@@ -67,6 +73,7 @@
 
   function newTable(table: "gpt" | "msdos") {
     creatingAt = null;
+    resizing = null;
     onChange({ newTable: true, table, parts: [] });
   }
   const USE_KEY: Record<Use, string> = {
@@ -159,7 +166,66 @@
   }
 
   function remove(index: number) {
+    resizing = null;
     onChange({ ...layout, parts: layout.parts.filter((_, i) => i !== index) });
+  }
+
+  // --- Resizing ------------------------------------------------------------
+
+  // Shrinking keeps the data, so a shrunk partition takes no use: the table
+  // on the disk is only made smaller for a partition that is kept.
+
+  interface ShrinkInfo {
+    minBytes: number | null;
+    error: string | null;
+  }
+  let probes: Record<string, ShrinkInfo | "probing"> = {};
+  /** The path of the partition being resized, and the size being chosen. */
+  let resizing: string | null = null;
+  let resizeBytes = 0;
+
+  const canResize = (p: Planned) => {
+    const o = original(p);
+    return !!o && !layout.newTable && SHRINKABLE.includes(o.fstype) && o.mountpoints.length === 0 && (p.action === "keep" || p.action === "shrink");
+  };
+
+  async function startResize(p: Planned) {
+    const o = original(p);
+    if (!o) return;
+    creatingAt = null;
+    resizing = o.path;
+    resizeBytes = p.size;
+    if (probes[o.path]) return;
+    probes = { ...probes, [o.path]: "probing" };
+    const info = await api
+      .invoke<ShrinkInfo>("partition_min_size", { path: o.path, fstype: o.fstype })
+      .catch(() => ({ minBytes: null, error: "nosudo" }));
+    probes = { ...probes, [o.path]: info };
+  }
+
+  $: edited = layout.parts.find((p) => p.path !== "" && p.path === resizing);
+  $: editedDisk = disk.partitions.find((d) => d.path === resizing);
+  $: probe = resizing ? probes[resizing] : undefined;
+  $: resizeMin = editedDisk && probe && probe !== "probing" && probe.minBytes != null ? smallestSize(editedDisk, probe.minBytes) : 0;
+  // It can take back what it had, as far as the next partition of the plan.
+  $: resizeMax =
+    edited && editedDisk
+      ? largestSize(editedDisk, Math.min(usableEnd(disk), ...layout.parts.filter((p) => p.start > edited.start).map((p) => p.start)), 0)
+      : 0;
+  $: canShrink = !!editedDisk && resizeMin > 0 && resizeMin < editedDisk.size && resizeMin <= resizeMax;
+
+  /** A size inside the limits, ending on a MiB unless it is the whole partition. */
+  function withinLimits(bytes: number): number {
+    if (!editedDisk || bytes >= resizeMax) return resizeMax;
+    return Math.max(sizeEndingBelow(editedDisk, bytes), resizeMin);
+  }
+
+  function applyResize() {
+    if (!edited || !editedDisk) return;
+    const bytes = withinLimits(resizeBytes);
+    const index = layout.parts.indexOf(edited);
+    resizing = null;
+    update(index, { ...edited, size: bytes, action: bytes < editedDisk.size ? "shrink" : "keep" });
   }
 
   // --- New partitions ----------------------------------------------------
@@ -188,6 +254,7 @@
   const toGiB = (bytes: number) => Math.floor((bytes / GiB) * 100) / 100;
 
   function startCreate(gapStart: number, gapSize: number) {
+    resizing = null;
     creatingAt = gapStart;
     creatingSize = gapSize;
     chooseNewUse(layout.parts.some((p) => p.mount === "/") ? "/home" : "/");
@@ -260,6 +327,7 @@
       class="flex items-center gap-1.5 rounded px-2.5 py-1 text-[0.8rem] text-text hover:bg-surface-2 hover:text-text-bright disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-text"
       on:click={() => {
         creatingAt = null;
+        resizing = null;
         onChange(currentLayout(disk));
       }}
     >
@@ -273,7 +341,7 @@
       {#if row.kind === "part"}
         {@const p = row.p}
         {@const use = useOf(p)}
-        <li class="grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-3 px-4 py-2">
+        <li class="grid grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_4.25rem] items-center gap-3 px-4 py-2">
           <div class="flex items-center gap-2 min-w-0">
             <span class="w-2.5 h-2.5 rounded-sm shrink-0" style="background: {fsColor(p.fs)}"></span>
             <div class="min-w-0">
@@ -283,6 +351,11 @@
               </p>
             </div>
           </div>
+          {#if p.action === "shrink"}
+            <p class="col-span-2 text-[0.8rem] text-warning">
+              {$_("disk.resized", { values: { from: size(original(p)?.size ?? 0) } })}
+            </p>
+          {:else}
           <div class="flex flex-col gap-1 min-w-0">
             <Select label={$_("disk.use")} value={use} options={useOptions} onChange={(v) => setUse(row.index, p, v)} />
             {#if use === "custom"}
@@ -328,15 +401,81 @@
               onChange={(v) => update(row.index, rebuild(p, use, true, v, p.mount))}
             />
           {/if}
-          <button
-            type="button"
-            class="grid place-items-center w-8 h-8 rounded text-text-muted hover:bg-danger/15 hover:text-danger"
-            title={$_("disk.delete")}
-            aria-label={$_("disk.delete")}
-            on:click={() => remove(row.index)}
-          >
-            <Trash2 size={15} />
-          </button>
+          {/if}
+          <div class="flex justify-end gap-1">
+            {#if canResize(p)}
+              <button
+                type="button"
+                class="grid place-items-center w-8 h-8 rounded text-text-muted hover:bg-primary/15 hover:text-primary"
+                title={$_("disk.resize")}
+                aria-label={$_("disk.resize")}
+                on:click={() => startResize(p)}
+              >
+                <Scaling size={15} />
+              </button>
+            {/if}
+            <button
+              type="button"
+              class="grid place-items-center w-8 h-8 rounded text-text-muted hover:bg-danger/15 hover:text-danger"
+              title={$_("disk.delete")}
+              aria-label={$_("disk.delete")}
+              on:click={() => remove(row.index)}
+            >
+              <Trash2 size={15} />
+            </button>
+          </div>
+          {#if resizing && resizing === p.path}
+            <div class="col-span-4 flex items-center gap-3 rounded border border-border bg-surface-2/40 px-3 py-2">
+              {#if probe === "probing" || probe === undefined}
+                <p class="flex-1 flex items-center gap-2 text-[0.82rem] text-text-muted">
+                  <LoaderCircle size={14} class="animate-spin" />
+                  {$_("disk.measuring")}
+                </p>
+              {:else if probe.error || !canShrink}
+                <p class="flex-1 flex items-start gap-2 text-[0.82rem] text-danger">
+                  <TriangleAlert size={15} class="shrink-0 mt-0.5" />
+                  {probe.error
+                    ? $_(`disk.shrinkErrors.${probe.error}`, { default: $_("disk.shrinkErrors.unreadable") })
+                    : $_("disk.noShrinkRoom")}
+                </p>
+              {:else}
+                <input
+                  type="range"
+                  class="flex-1 min-w-0 accent-primary"
+                  min={resizeMin}
+                  max={resizeMax}
+                  step="any"
+                  value={resizeBytes}
+                  on:input={(e) => (resizeBytes = withinLimits(Number(e.currentTarget.value)))}
+                  aria-label={$_("disk.resize")}
+                />
+                <label class="shrink-0 flex items-center gap-2 text-[0.82rem] text-text">
+                  <input
+                    type="number"
+                    step="0.01"
+                    min={toGiB(resizeMin)}
+                    max={toGiB(resizeMax)}
+                    value={toGiB(resizeBytes)}
+                    on:change={(e) => {
+                      resizeBytes = withinLimits(Number(e.currentTarget.value) * GiB);
+                      e.currentTarget.value = String(toGiB(resizeBytes));
+                    }}
+                    class="w-24 bg-surface-2 border border-border rounded px-2 py-1.5 text-[0.85rem] text-text-bright outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                  />
+                  GiB
+                </label>
+                <span class="shrink-0 text-[0.75rem] text-text-muted">
+                  {$_("disk.resizeLimits", { values: { min: size(resizeMin), max: size(resizeMax) } })}
+                </span>
+                <button type="button" class="shrink-0 rounded px-3 py-1.5 text-[0.8rem] bg-primary text-white hover:bg-primary-hover" on:click={applyResize}>
+                  {$_("disk.resize")}
+                </button>
+              {/if}
+              <button type="button" class="shrink-0 rounded px-2.5 py-1.5 text-[0.8rem] text-text hover:bg-surface-2" on:click={() => (resizing = null)}>
+                {$_("common.cancel")}
+              </button>
+            </div>
+          {/if}
         </li>
       {:else}
         {@const g = row.gap}

@@ -242,7 +242,11 @@
     "atEnd": "Alla fine",
     "deleteAll": "Elimina tutte",
     "required": "Necessarie:",
-    "manualHint": "Crea le partizioni nello spazio libero."
+    "manualHint": "Crea le partizioni nello spazio libero.",
+    "resize": "Ridimensiona",
+    "resized": "Ridotta da {from}; i dati vengono conservati.",
+    "resizeLimits": "Da {min} a {max}",
+    "noShrinkRoom": "Questa partizione non si può ridurre: è quasi piena."
   },
   "user": {
     "account": "Il tuo account",

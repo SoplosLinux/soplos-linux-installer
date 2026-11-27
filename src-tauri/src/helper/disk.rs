@@ -622,6 +622,53 @@ mod tests {
         assert_eq!(placed[4].dev, "/dev/nvme0n1p5");
     }
 
+    /// A manual table that shrinks one partition, deletes another and creates
+    /// the system in the space of both.
+    #[test]
+    fn manual_with_a_shrunk_partition() {
+        let linux = "0fc63daf-8483-4772-8e79-3d69d8477de4";
+        let existing = |n: u32, start: u64, parttype: &str| Existing {
+            path: format!("/dev/sdb{n}"),
+            number: n,
+            start,
+            parttype: parttype.into(),
+            mounted: false,
+        };
+        let state = DiskState {
+            sector: 512,
+            table: "gpt".into(),
+            rotational: true,
+            parts: vec![existing(1, MIB, GUID_ESP), existing(2, MIB + GIB, linux), existing(3, MIB + 101 * GIB, linux)],
+        };
+        let plan = Plan {
+            disk: DiskPlan {
+                device: "/dev/sdb".into(),
+                layout: Some(Layout {
+                    new_table: false,
+                    table: None,
+                    parts: vec![
+                        part("/dev/sdb1", MIB, GIB, "use", "vfat", "/boot/efi", GUID_ESP, false),
+                        part("/dev/sdb2", MIB + GIB, 40 * GIB, "shrink", "ext4", "", linux, false),
+                        part("", MIB + 41 * GIB, 80 * GIB, "create", "btrfs", "/", linux, false),
+                    ],
+                }),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+        let (out, placed) = commands(&plan, &state);
+        let all = out.join("\n");
+        println!("{all}");
+        let at = |what: &str| all.find(what).unwrap_or_else(|| panic!("missing: {what}"));
+        // The third one goes, the file system shrinks before its partition
+        // and the new one comes last.
+        assert!(at("sfdisk --delete /dev/sdb 3") < at("e2fsck -f -y /dev/sdb2"));
+        assert!(at("resize2fs /dev/sdb2 41943040K") < at("sfdisk --no-reread -N 2 /dev/sdb"));
+        assert!(at("sfdisk --no-reread -N 2 /dev/sdb") < at("sfdisk --append /dev/sdb"));
+        assert!(!all.contains("mkfs.ext4"), "the shrunk partition keeps its data");
+        assert_eq!(placed[2].dev, "/dev/sdb3");
+    }
+
     #[test]
     fn mount_points_of_the_system_and_of_data() {
         let linux = "0fc63daf-8483-4772-8e79-3d69d8477de4";

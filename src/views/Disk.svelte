@@ -14,8 +14,9 @@
     type Options,
     GiB,
     MiB,
-    alignUp,
-    alignDown,
+    smallestSize,
+    largestSize,
+    sizeEndingBelow,
     swapSize,
     existingSwap,
     eraseLayout,
@@ -153,18 +154,15 @@
 
   $: target = disk?.partitions.find((p) => p.path === $plan.disk.shrink?.partition);
   $: probe = target ? probes[target.path] : undefined;
-  // The other system keeps what it uses plus a margin to go on working:
-  // 10 % and at least 2 GiB.
-  $: keepMin =
-    target && probe && probe !== "probing" && probe.minBytes != null
-      ? Math.min(alignUp(probe.minBytes + Math.max(probe.minBytes * 0.1, 2 * GiB)), target.size)
-      : 0;
-  $: keepMax = target && disk ? alignDown(target.size + spaceAfter(disk, target) - alongsideNeed(disk, options)) : 0;
+  // The other system keeps what it uses plus a margin (smallestSize).
+  $: keepMin = target && probe && probe !== "probing" && probe.minBytes != null ? smallestSize(target, probe.minBytes) : 0;
+  $: keepMax =
+    target && disk ? largestSize(target, target.start + target.size + spaceAfter(disk, target), alongsideNeed(disk, options)) : 0;
   $: shrinkable = keepMin > 0 && keepMax >= keepMin;
 
   // A first proposal: half of what can be given, for each side.
   $: if ($plan.disk.mode === "alongside" && shrinkable && $plan.disk.shrink && !$plan.disk.shrink.newSize) {
-    setDisk({ shrink: { ...$plan.disk.shrink, newSize: alignDown((keepMin + keepMax) / 2) } });
+    setDisk({ shrink: { ...$plan.disk.shrink, newSize: sizeEndingBelow(target!, (keepMin + keepMax) / 2) } });
   }
   $: if ($plan.disk.shrink && shrinkable && $plan.disk.shrink.newSize) {
     const clamped = Math.min(Math.max($plan.disk.shrink.newSize, keepMin), keepMax);
@@ -173,7 +171,7 @@
 
   function onSlide(e: Event) {
     const value = Number((e.currentTarget as HTMLInputElement).value);
-    if ($plan.disk.shrink) setDisk({ shrink: { ...$plan.disk.shrink, newSize: alignDown(value) } });
+    if ($plan.disk.shrink && target) setDisk({ shrink: { ...$plan.disk.shrink, newSize: sizeEndingBelow(target, value) } });
   }
 
   $: targetName = (p: Partition) =>
@@ -262,7 +260,7 @@
           },
         ]
       : []),
-    ...($plan.disk.mode === "alongside" && computed ? [{ tone: "warning", text: $_("disk.backupNote") }] : []),
+    ...(computed?.parts.some((p) => p.action === "shrink") ? [{ tone: "warning", text: $_("disk.backupNote") }] : []),
   ];
   $: message = messages.length
     ? { ...messages[0], more: messages.length - 1, all: messages.map((m) => m.text).join("\n") }
